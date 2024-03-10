@@ -20,10 +20,10 @@ const Header = () => {
               style={{ width: "7rem", height: "7rem" }}
               className="py-2 ms-5"
             />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color:'black' }}>
-              News
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, color:'black',ml:3 }}>
+               Name User
             </Typography>
-            <Button >Login</Button>
+           
           </Toolbar>
         </AppBar>
       </Box>

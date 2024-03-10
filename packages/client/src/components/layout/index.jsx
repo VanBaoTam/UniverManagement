@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import Header from "./header";
 function MainLayout({children }) {
  
@@ -8,11 +8,8 @@ function MainLayout({children }) {
         <Grid item xs={12} sx={{ background: "tomato" }}>
           <Header />
         </Grid>
-        <Grid item xs={12} sx={{ background: "white", minHeight: "37rem" }}>
-          {children}
-        </Grid>
-        <Grid item xs={12} sx={{ background: "lime" }}>
-          
+        <Grid item xs={12} sx={{ background: "white", minHeight: "37rem" }}>       
+            {children}
         </Grid>
       </Grid>
     </Box>
