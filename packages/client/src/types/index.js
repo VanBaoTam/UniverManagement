@@ -124,3 +124,63 @@ export const attendanceFacesCols = [
     width: 120,
   },
 ];
+
+export const classCols = [
+  {
+    field: "class",
+    headerName: "Mã lớp",
+    width: 80,
+  },
+  {
+    field: "courseId",
+    headerName: "Mã môn học",
+    width: 150,
+  },
+  {
+    field: "courseName",
+    headerName: "Môn học",
+    width: 200,
+  },
+  {
+    field: "instructorName",
+    headerName: "Giảng viên",
+    width: 300,
+  },
+  {
+    field: "startDate",
+    headerName: "Ngày mở lớp",
+    width: 200,
+  },
+  {
+    field: "endDate",
+    headerName: "Ngày kết thúc",
+    width: 200,
+  },
+];
+export const userCols = [
+  {
+    field: "userId",
+    headerName: "Mã người dùng",
+    width: 80,
+  },
+  {
+    field: "userRole",
+    headerName: "Role",
+    width: 150,
+  },
+  {
+    field: "userName",
+    headerName: "Họ tên",
+    width: 300,
+  },
+  {
+    field: "userEmal",
+    headerName: "Email",
+    width: 200,
+  },
+  {
+    field: "userPhonenumber",
+    headerName: "SĐT",
+    width: 200,
+  },
+];

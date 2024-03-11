@@ -114,3 +114,41 @@ export const attendanceFaceRow = [
     isAttendanced: "YES",
   },
 ];
+export const classRow = [
+  {
+    id: 1,
+    class: "1",
+    courseId: "THCB001",
+    courseName: "Tin hoc co ban",
+    instructorName: "Văn Bảo Tâm",
+    startDate: "11/03/2024",
+    endDate: "11/03/2024",
+  },
+  {
+    id: 2,
+    class: "1",
+    courseId: "THCB001",
+    courseName: "Tin hoc co ban",
+    instructorName: "Văn Bảo Tâm",
+    startDate: "11/03/2024",
+    endDate: "11/03/2024",
+  },
+];
+export const userRow = [
+  {
+    id: 1,
+    userId: "1",
+    userRole: "USR01",
+    userName: "Văn Bảo Tâm",
+    userEmal: "vanbaotam@gmail.com",
+    userPhonenumber: "035555555",
+  },
+  {
+    id: 1,
+    userId: "1",
+    userRole: "USR01",
+    userName: "Văn Bảo Tâm",
+    userEmal: "vanbaotam@gmail.com",
+    userPhonenumber: "035555555",
+  },
+];

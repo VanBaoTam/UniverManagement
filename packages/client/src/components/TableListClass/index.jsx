@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TABLELIST_CLASSS } from "../../constants/common";
-import { Button } from "@mui/material";
-import { YELLOW_COLOR } from "../../constants/color";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import ModalClass from "../ModalClass";
+import { DataGrid } from "@mui/x-data-grid";
+import { classCols } from "../../types";
+import { classRow } from "../../constants";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -25,64 +17,16 @@ const style = {
 };
 
 export default function TableListClass() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   return (
-    <React.Fragment>
-      <TableContainer component={Paper} sx={{}}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {TABLELIST_CLASSS.map((cot) => (
-                <TableCell key={cot.id}>{cot.column}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            <TableCell>a</TableCell>
-            <TableCell>b</TableCell>
-            <TableCell>c</TableCell>
-            <TableCell>d</TableCell>
-            <TableCell>e</TableCell>
-            <TableCell>e</TableCell>
-            <TableCell>
-              <Button
-                variant="contained"
-                sx={{
-                  background:
-                    "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%)",
-                  mr: 1,
-                }}
-              >
-                Xoá
-              </Button>
-
-              <Button
-                variant="contained"
-                sx={{
-                  background: YELLOW_COLOR,
-                  color: "black",
-                }}
-                onClick={handleOpen}
-              >
-                Sửa
-              </Button>
-            </TableCell>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <ModalClass />
-        </Box>
-      </Modal>
-    </React.Fragment>
+    <Paper sx={{ mt: 3, overflowX: "auto" }}>
+      <div style={{ minWidth: 960 }}>
+        <DataGrid
+          rows={classRow}
+          columns={classCols}
+          pageSizeOptions={[10]}
+          checkboxSelection
+        />
+      </div>
+    </Paper>
   );
 }

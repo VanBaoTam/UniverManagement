@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Modal } from "@mui/material";
 import SidebarAdmin from "../SidebarAdmin";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
 import TableListClass from "../../../components/TableListClass";
 import ModalAddClass from "../../../components/ModalAddClass";
 const style = {
@@ -47,7 +47,11 @@ const ListClassAdmin = () => {
                   <Grid
                     xs={6}
                     sx={{ display: "flex", justifyContent: "flex-end" }}
-                  ></Grid>
+                  >
+                    <Button variant="contained" sx={{ background: RED_COLOR }}>
+                      Xóa
+                    </Button>
+                  </Grid>
                 </Grid>
                 <TableListClass />
               </Grid>

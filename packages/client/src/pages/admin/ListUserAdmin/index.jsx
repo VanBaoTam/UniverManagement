@@ -19,31 +19,6 @@ const ListUserAdmin = () => {
                 <SidebarAdmin />
               </Grid>
               <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
-                <form className="my-3">
-                  <Grid container>
-                    <Grid xs={3}>
-                      <TextField
-                        id="outlined-basic"
-                        label="Tìm kiếm"
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        sx={{ background: "white" }}
-                        required
-                      />
-                    </Grid>
-                    <Grid xs={4}>
-                      <Button
-                        variant="contained"
-                        type="submit"
-                        sx={{ background: GREY_COLOR, ml: 1 }}
-                      >
-                        Tìm kiếm
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </form>
-
                 <TableListUser />
               </Grid>
             </Grid>

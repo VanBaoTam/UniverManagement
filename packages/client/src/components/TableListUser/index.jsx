@@ -1,41 +1,56 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import React from "react";
 import Paper from "@mui/material/Paper";
-import { TABLELIST_USERS } from "../../constants/common";
+import { DataGrid } from "@mui/x-data-grid";
+import { userCols } from "../../types";
+import { userRow } from "../../constants";
 import { Button } from "@mui/material";
+import { RED_COLOR } from "../../constants/color";
 
-export default function TableListUser() {
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+
+  bgcolor: "background.paper",
+  borderRadius: "10px",
+  boxShadow: 24,
+  p: 4,
+};
+
+export default function TableListClass() {
+  const renderButtonCell = (params) => {
+    return (
+      <Button
+        onClick={() => handleClick(params.row)}
+        sx={{ background: RED_COLOR }}
+      >
+        Vô Hiệu
+      </Button>
+    );
+  };
+
+  const handleClick = (row) => {
+    console.log("Button clicked for row:", row);
+  };
+
   return (
-    <TableContainer component={Paper} sx={{}}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            {TABLELIST_USERS.map((cot) => (
-              <TableCell key={cot.id}>{cot.column}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          <TableCell>a</TableCell>
-          <TableCell>b</TableCell> <TableCell>c</TableCell>
-          <TableCell>d</TableCell> <TableCell>e</TableCell>
-          <TableCell>
-            <Button
-              variant="contained"
-              sx={{
-                background: "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%)",
-              }}
-            >
-              Vô hiệu
-            </Button>
-          </TableCell>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper sx={{ mt: 3, overflowX: "auto", maxWidth: 1100 }}>
+      <div style={{ Width: 960 }}>
+        <DataGrid
+          rows={userRow}
+          columns={[
+            ...userCols,
+            {
+              field: "action",
+              headerName: "Thao Tác",
+              renderCell: renderButtonCell,
+            },
+          ]}
+          pageSizeOptions={[10]}
+        />
+      </div>
+    </Paper>
   );
 }
