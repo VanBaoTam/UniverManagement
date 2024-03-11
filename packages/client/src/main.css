@@ -1,0 +1,14 @@
+/* Hide scrollbar */
+* {
+      box-sizing: border-box;
+    }
+    
+    .root::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .root {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    

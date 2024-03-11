@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toast from "./components/toast";
+import Home from "./pages/home";
+import MainLayout from "./components/layout";
+import AttendanceInstructor from "./pages/instructor/AttendanceInstructor";
+import ListUserAdmin from "./pages/admin/ListUserAdmin";
+import ListClassAdmin from "./pages/admin/ListClassAdmin";
+import SubjectAttendanceStudent from "./pages/student/SubjectAttendanceStudent";
+import InformationStudent from "./pages/student/InformationStudent";
+import ChangePasswordStudent from "./pages/student/ChangePasswordStudent";
+import InformationInstructor from "./pages/instructor/InformationInstructor";
+import ChangePasswordInstructor from "./pages/instructor/ChangePasswordInstructor";
+import AttendanceFaceInstructor from "./pages/instructor/AttendanceFaceInstructor";
+import ListAttendanceInstructor from "./pages/instructor/ListAttendanceInstructor";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <React.Fragment>
+      <BrowserRouter>
+        <CssBaseline />
+        <ScrollToTop />
+        <Toast />
+        <MainLayout>
+          <Routes>
+            <Route path="/" index element={<Home />} />
+            <Route path="/ListUserAdmin" index element={<ListUserAdmin />} />
+            <Route path="/ListClassAdmin" index element={<ListClassAdmin />} />
+
+            <Route
+              path="/AttendanceInstructor"
+              index
+              element={<AttendanceInstructor />}
+            />
+            <Route
+              path="/InformationInstructor"
+              index
+              element={<InformationInstructor />}
+            />
+            <Route
+              path="/ChangePasswordInstructor"
+              index
+              element={<ChangePasswordInstructor />}
+            />
+            <Route
+              path="/AttendanceFaceInstructor"
+              index
+              element={<AttendanceFaceInstructor />}
+            />
+            <Route
+              path="/ListAttendanceInstructor"
+              index
+              element={<ListAttendanceInstructor />}
+            />
+
+            <Route
+              path="/SubjectAttendanceStudent"
+              index
+              element={<SubjectAttendanceStudent />}
+            />
+            <Route
+              path="/InformationStudent"
+              index
+              element={<InformationStudent />}
+            />
+            <Route
+              path="/ChangePasswordStudent"
+              index
+              element={<ChangePasswordStudent />}
+            />
+          </Routes>
+        </MainLayout>
+      </BrowserRouter>
+    </React.Fragment>
+  );
 }
 
-export default App
+export default App;
