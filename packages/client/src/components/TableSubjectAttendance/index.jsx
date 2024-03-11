@@ -1,49 +1,36 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import React, { useCallback, useState } from "react";
 import Paper from "@mui/material/Paper";
-import { TABLESUBJECT_ATTENDANCES } from "../../constants/common";
-import { Checkbox } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { CourseAttendanceCols } from "../../types";
+import { CourseAttendanceRow } from "../../constants";
 
 export default function TableSubjectAttendance() {
-  return (
-    <TableContainer component={Paper} sx={{}}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            {TABLESUBJECT_ATTENDANCES.map((cot) => (
-              <TableCell key={cot.id}>{cot.column}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
+  const [ids, setIds] = useState([]);
 
-        <TableBody>
-          <TableCell>a</TableCell>
-          <TableCell>b</TableCell> <TableCell>c</TableCell>
-          <TableCell>s</TableCell>
-          <TableCell>
-            <Checkbox />
-          </TableCell>
-          <TableCell>
-            <Checkbox />
-          </TableCell>
-          <TableCell>
-            <Checkbox />
-          </TableCell>
-          <TableCell>
-            <Checkbox />
-          </TableCell>
-          <TableCell>
-            <Checkbox />
-          </TableCell>
-          <TableCell>
-            <Checkbox />
-          </TableCell>
-        </TableBody>
-      </Table>
-    </TableContainer>
+  const handleSelectionModel = useCallback((ids) => {
+    if (!ids.length) {
+      return;
+    }
+    setIds(ids);
+  }, []);
+  return (
+    <Paper sx={{ mt: 3, overflowX: "auto" }}>
+      <div style={{ minWidth: 960 }}>
+        <DataGrid
+          rows={CourseAttendanceRow}
+          columns={CourseAttendanceCols}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+              },
+            },
+          }}
+          pageSizeOptions={[10]}
+          checkboxSelection
+          onRowSelectionModelChange={handleSelectionModel}
+        />
+      </div>
+    </Paper>
   );
 }
