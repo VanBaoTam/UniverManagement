@@ -1,5 +1,7 @@
 import { google } from "googleapis";
 import credentials from "../constants/univer-management-3379390da56d.json" assert { type: "json" };
+import { CredentialsValidation } from "../constants/common.js";
+import { datasource } from "../datasource/index.js";
 
 export class AdminService {
     static instance;
@@ -13,7 +15,7 @@ export class AdminService {
 
     async createCourse(req, res) {
         try {
-            const title = req.body.title; // Lấy tiêu đề từ body của yêu cầu
+            const title = req.body.title;
             const SCOPES = [
                 "https://www.googleapis.com/auth/spreadsheets",
                 "https://www.googleapis.com/auth/drive.file",
@@ -62,7 +64,29 @@ export class AdminService {
         }
     }
 
-    async updateCourse(req, res) {}
+    async getUsers(req, res) {
+        const account_id = req.params.accountId;
+
+        if (!CredentialsValidation("id", account_id))
+            return res.status(400).json({ message: "Invalid Account id" });
+        const dataQuery =
+            "select account_id,role_id,name,email,phone_number from accounts join profiles on accounts.profile_id = profiles.profile_id";
+        const dataValues = await datasource.query(dataQuery);
+        if (!dataValues.rows[0])
+            return res.status(404).json({ message: "Profile not found" });
+        const userList = dataValues.rows.map((user) => {
+            return {
+                accountId: user.account_id,
+                role: user.role_id,
+                name: user.name,
+                email: user.email,
+                phoneNumber: user.phone_number,
+            };
+        });
+        return res
+            .status(200)
+            .json({ message: "Get list successfully", userList });
+    }
     async deleteCourse(req, res) {}
 }
 

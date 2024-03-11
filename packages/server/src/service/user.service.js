@@ -107,44 +107,82 @@ export class UserService {
     }
 
     async updateProfile(req, res) {
-        const account_id = req.body.accountId;
+        try {
+            const account_id = req.body.accountId;
 
-        if (!CredentialsValidation("id", account_id))
-            return res.status(400).json({ message: "Invalid Account Id" });
+            if (!CredentialsValidation("id", account_id))
+                return res.status(400).json({ message: "Invalid Account Id" });
 
-        const dataQuery =
-            "select profiles.profile_id, phone_number,address,email from accounts join profiles on accounts.profile_id=profiles.profile_id where account_id = $1";
-        const dataValues = [account_id];
-        const dataResult = await datasource.query(dataQuery, dataValues);
-        if (!dataResult.rows[0])
-            return res.status(404).json({ message: "Profile not found!" });
-        const profile = {
-            profile_id: dataResult.rows[0].profile_id,
-            email: req.body.email ?? dataResult.rows[0].email,
-            phoneNumber:
-                req.body.phone_number ?? dataResult.rows[0].phone_number,
-            address: req.body.address ?? dataResult.rows[0].address,
-        };
-        if (
-            !CredentialsValidation("email", profile.email) ||
-            !CredentialsValidation("phone", profile.phoneNumber)
-        )
-            return res
-                .status(400)
-                .json({ message: "Invalid email or phone number" });
-        const updateQuery =
-            "update profiles set email = $1,phone_number = $2, address = $3 where profile_id = $4";
-        const updateValues = [
-            profile.email,
-            profile.phoneNumber,
-            profile.address,
-            profile.profile_id,
-        ];
-        await datasource.query(updateQuery, updateValues);
-        return res.status(200).json("Profile updated successfully");
+            const dataQuery =
+                "select profiles.profile_id, phone_number,address,email from accounts join profiles on accounts.profile_id=profiles.profile_id where account_id = $1";
+            const dataValues = [account_id];
+            const dataResult = await datasource.query(dataQuery, dataValues);
+            if (!dataResult.rows[0])
+                return res.status(404).json({ message: "Profile not found!" });
+            const profile = {
+                profile_id: dataResult.rows[0].profile_id,
+                email: req.body.email ?? dataResult.rows[0].email,
+                phoneNumber:
+                    req.body.phone_number ?? dataResult.rows[0].phone_number,
+                address: req.body.address ?? dataResult.rows[0].address,
+            };
+            if (
+                !CredentialsValidation("email", profile.email) ||
+                !CredentialsValidation("phone", profile.phoneNumber)
+            )
+                return res
+                    .status(400)
+                    .json({ message: "Invalid email or phone number" });
+            const updateQuery =
+                "update profiles set email = $1,phone_number = $2, address = $3 where profile_id = $4";
+            const updateValues = [
+                profile.email,
+                profile.phoneNumber,
+                profile.address,
+                profile.profile_id,
+            ];
+            await datasource.query(updateQuery, updateValues);
+            return res.status(200).json("Profile updated successfully");
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Internal Server Errors",
+            });
+        }
     }
     async changePassword(req, res) {
-        res.send(" get available orders");
+        try {
+            const { account_id, password, retypePassword } = req.body ?? {};
+
+            if (
+                (!password && !CredentialsValidation("password", password)) ||
+                (!retypePassword &&
+                    !CredentialsValidation("password", retypePassword))
+            )
+                return res
+                    .status(400)
+                    .json({ message: "Invalid password or retypePassword" });
+            if (password != retypePassword)
+                return res.status(400).json({ message: "Password mismatch" });
+            const authQuery =
+                "select account_id from accounts where account_id = $1";
+            const authValues = [account_id];
+            const authResult = await datasource.query(authQuery, authValues);
+            if (!authResult.rows[0])
+                return res.status(404).json({ message: "Account not found" });
+            const updateQuery =
+                "update accounts set password = $1 where account_id = $2";
+            const updateValues = [password, account_id];
+            await datasource.query(updateQuery, updateValues);
+            return res
+                .status(200)
+                .json({ message: "Password changed successfully" });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Internal Server Errors",
+            });
+        }
     }
 }
 

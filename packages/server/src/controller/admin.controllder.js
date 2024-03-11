@@ -16,8 +16,8 @@ export class AdminController {
     async createCourse(req, res) {
         return await adminServiceInstance.createCourse(req, res);
     }
-    async post(req, res) {
-        return await adminServiceInstance.post(req, res);
+    async getUsers(req, res) {
+        return await adminServiceInstance.getUsers(req, res);
     }
 }
 
