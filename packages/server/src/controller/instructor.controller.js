@@ -1,13 +1,13 @@
-import { suplidorServiceInstance } from "../service/index.js";
+import { instructorServiceInstance } from "../service/index.js";
 
 //------------------------------------------------
-export class SuplidorController {
+export class InstructorController {
     static instance;
 
     //------------------------------------------------
     static getInstance() {
         if (!this.instance) {
-            this.instance = new SuplidorController();
+            this.instance = new InstructorController();
         }
         return this.instance;
     }
@@ -15,15 +15,15 @@ export class SuplidorController {
     //-----------------------------------------------
 
     async getAvailableOrders(req, res) {
-        return await suplidorServiceInstance.getAvailableOrders(req, res);
+        return await instructorServiceInstance.getAvailableOrders(req, res);
     }
     async changeOpenTime(req, res) {
-        return await suplidorServiceInstance.changeOpenTime(req, res);
+        return await instructorServiceInstance.changeOpenTime(req, res);
     }
     async createDiscount(req, res) {
-        return await suplidorServiceInstance.createDiscount(req, res);
+        return await instructorServiceInstance.createDiscount(req, res);
     }
 }
 
 //------------------------------------------------
-export const suplidorInstance = SuplidorController.getInstance();
+export const instructorInstance = InstructorController.getInstance();

@@ -4,8 +4,6 @@ import { authenToken } from "../middlewares/authen.js";
 
 // -----------------------------------------------
 const adminRouter = Router();
-adminRouter.get("/", authenToken, adminInstance.get);
-adminRouter.post("/", authenToken, adminInstance.post);
-
+adminRouter.post("/createcourse", adminInstance.createCourse);
 // -----------------------------------------------
 export { adminRouter };

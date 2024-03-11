@@ -1,4 +1,4 @@
-export * from "./employee.service.js";
-export * from "./food.service.js";
-export * from "./suplidor.service.js";
+export * from "./admin.service.js";
+
+export * from "./instructor.service.js";
 export * from "./user.service.js";

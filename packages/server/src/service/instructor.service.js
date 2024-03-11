@@ -1,26 +1,27 @@
 //------------------------------------------------
-export class SuplidorService {
+export class InstructorService {
     static instance;
 
     //------------------------------------------------
     static getInstance() {
         if (!this.instance) {
-            this.instance = new SuplidorService();
+            this.instance = new InstructorService();
         }
         return this.instance;
     }
 
     // -----------------------------------------------
-    async getAvailableOrders(req, res) {
-        res.send(" get available orders");
-    }
-    async changeOpenTime(req, res) {
+
+    async statistic(req, res) {
         res.send(" change open time");
     }
-    async createDiscount(req, res) {
-        res.send("create Discount");
+    async manualAttendance(req, res) {
+        res.send(" change open time");
+    }
+    async openAttendance(req, res) {
+        res.send(" change open time");
     }
 }
 
 //------------------------------------------------
-export const suplidorServiceInstance = SuplidorService.getInstance();
+export const instructorServiceInstance = InstructorService.getInstance();

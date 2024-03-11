@@ -13,8 +13,8 @@ export class AdminController {
     }
 
     //-----------------------------------------------
-    async get(req, res) {
-        return await adminServiceInstance.get(req, res);
+    async createCourse(req, res) {
+        return await adminServiceInstance.createCourse(req, res);
     }
     async post(req, res) {
         return await adminServiceInstance.post(req, res);
