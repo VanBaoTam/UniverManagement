@@ -21,7 +21,7 @@ const AttendanceFaceInstructor = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
-    <>
+    <React.forwardRef>
       <Box
         sx={{
           backgroundColor: "#f5f5f5",
@@ -118,7 +118,7 @@ const AttendanceFaceInstructor = () => {
           </Box>
         </Modal>
       </Box>
-    </>
+    </React.forwardRef>
   );
 };
 export default AttendanceFaceInstructor;

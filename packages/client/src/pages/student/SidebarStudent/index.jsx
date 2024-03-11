@@ -4,7 +4,7 @@ import { SIDEBAR_STUDENTS } from "../../../constants/common";
 
 const SidebarStudent = () => {
   return (
-    <>
+    <React.Fragment>
       <div style={{ display: "flex", height: "100%", minHeight: "800px" }}>
         <Sidebar>
           <Menu
@@ -38,7 +38,7 @@ const SidebarStudent = () => {
           </Menu>
         </Sidebar>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 export default SidebarStudent;

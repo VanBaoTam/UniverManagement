@@ -17,11 +17,11 @@ const ModalAddClass = () => {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(false);
-    const handleClose = () => setOpen(true);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(false);
+  const handleClose = () => setOpen(true);
   return (
-    <>
+    <React.Fragment>
       {" "}
       <form className="my-3">
         <Grid
@@ -190,7 +190,7 @@ const ModalAddClass = () => {
           </Grid>
         </Grid>{" "}
       </form>
-    </>
+    </React.Fragment>
   );
 };
 export default ModalAddClass;

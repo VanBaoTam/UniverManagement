@@ -30,7 +30,7 @@ export default function TableListClass() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
-    <>
+    <React.Fragment>
       <TableContainer component={Paper} sx={{}}>
         <Table aria-label="simple table">
           <TableHead>
@@ -82,6 +82,6 @@ export default function TableListClass() {
           <ModalClass />
         </Box>
       </Modal>
-    </>
+    </React.Fragment>
   );
 }

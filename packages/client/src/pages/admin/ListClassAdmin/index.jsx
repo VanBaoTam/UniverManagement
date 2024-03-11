@@ -16,11 +16,11 @@ const style = {
   p: 4,
 };
 const ListClassAdmin = () => {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -65,7 +65,7 @@ const ListClassAdmin = () => {
           <ModalAddClass />
         </Box>
       </Modal>
-    </>
+    </React.Fragment>
   );
 };
 export default ListClassAdmin;

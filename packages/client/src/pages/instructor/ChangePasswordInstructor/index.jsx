@@ -6,7 +6,7 @@ import { BLUE_COLOR } from "../../../constants/color";
 
 const ChangePasswordInstructor = () => {
   return (
-    <>
+    <React.Fragment>
       {" "}
       <Box
         sx={{
@@ -84,7 +84,7 @@ const ChangePasswordInstructor = () => {
                   <Grid xs={5}>
                     {" "}
                     <Button
-                    type="submit"
+                      type="submit"
                       variant="contained"
                       fullWidth
                       sx={{ py: 2, fontSize: "1.2rem", background: BLUE_COLOR }}
@@ -98,7 +98,7 @@ const ChangePasswordInstructor = () => {
           </Grid>
         </Container>
       </Box>
-    </>
+    </React.Fragment>
   );
 };
 export default ChangePasswordInstructor;

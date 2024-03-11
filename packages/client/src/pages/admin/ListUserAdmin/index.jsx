@@ -5,7 +5,7 @@ import { GREY_COLOR } from "../../../constants/color";
 import TableListUser from "../../../components/TableListUser";
 const ListUserAdmin = () => {
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -19,9 +19,7 @@ const ListUserAdmin = () => {
                 <SidebarAdmin />
               </Grid>
               <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
-                <form className="my-3"
-                
-                >
+                <form className="my-3">
                   <Grid container>
                     <Grid xs={3}>
                       <TextField
@@ -45,15 +43,14 @@ const ListUserAdmin = () => {
                     </Grid>
                   </Grid>
                 </form>
-                
-                  <TableListUser />
-               
+
+                <TableListUser />
               </Grid>{" "}
             </Grid>
           </Box>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 export default ListUserAdmin;

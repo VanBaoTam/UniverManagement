@@ -22,7 +22,7 @@ const InformationInstructor = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -98,7 +98,7 @@ const InformationInstructor = () => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 export default InformationInstructor;

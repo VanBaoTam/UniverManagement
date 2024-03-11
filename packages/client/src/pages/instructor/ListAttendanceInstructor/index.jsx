@@ -1,17 +1,26 @@
 import * as React from "react";
-import { Box, Button, Container, FormControl, Grid, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import SidebarInstructor from "../SidebarInstructor";
 import { GREY_COLOR } from "../../../constants/color";
 import TableListAttendance from "../../../components/TableListAttendance";
 const ListAttendanceInstructor = () => {
-        const [age, setAge] = React.useState("");
+  const [age, setAge] = React.useState("");
 
-        const handleChange = (event) => {
-          setAge(event.target.value);
-        };
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -58,7 +67,7 @@ const ListAttendanceInstructor = () => {
                           required
                         />
                       </Grid>
-                      <Grid xs={4} sx={{pl:1}}>
+                      <Grid xs={4} sx={{ pl: 1 }}>
                         <Button
                           variant="contained"
                           fullWidth
@@ -77,7 +86,7 @@ const ListAttendanceInstructor = () => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 export default ListAttendanceInstructor;

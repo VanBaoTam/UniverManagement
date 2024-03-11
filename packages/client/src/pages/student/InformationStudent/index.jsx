@@ -22,7 +22,7 @@ const InformationStudent = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -98,7 +98,7 @@ const InformationStudent = () => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 export default InformationStudent;

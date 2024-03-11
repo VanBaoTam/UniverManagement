@@ -4,7 +4,7 @@ import SidebarInstructor from "../SidebarInstructor";
 import TableAttendanceInstructor from "../../../components/TableAttendanceInstructor";
 const AttendanceInstructor = () => {
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -18,13 +18,13 @@ const AttendanceInstructor = () => {
                 <SidebarInstructor />
               </Grid>
               <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
-                <TableAttendanceInstructor/>
-                </Grid>{" "}
+                <TableAttendanceInstructor />
+              </Grid>{" "}
             </Grid>
           </Box>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 export default AttendanceInstructor;

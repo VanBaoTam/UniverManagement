@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { SIDEBAR_ADMINS } from "../../../constants/common";
 const SidebarAdmin = () => {
   return (
-    <>
+    <React.Fragment>
       <div style={{ display: "flex", height: "100%", minHeight: "800px" }}>
         <Sidebar>
           <Menu
@@ -37,7 +37,7 @@ const SidebarAdmin = () => {
           </Menu>
         </Sidebar>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 export default SidebarAdmin;

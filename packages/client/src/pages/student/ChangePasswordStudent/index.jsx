@@ -6,7 +6,7 @@ import { BLUE_COLOR } from "../../../constants/color";
 
 const ChangePasswordStudent = () => {
   return (
-    <>
+    <React.Fragment>
       {" "}
       <Box
         sx={{
@@ -98,7 +98,7 @@ const ChangePasswordStudent = () => {
           </Grid>
         </Container>
       </Box>
-    </>
+    </React.Fragment>
   );
 };
 export default ChangePasswordStudent;

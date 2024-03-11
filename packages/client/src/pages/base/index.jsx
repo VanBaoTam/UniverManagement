@@ -3,7 +3,7 @@ import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import SidebarAdmin from "../SidebarAdmin";
 const Base = () => {
   return (
-    <>
+    <React.Fragment>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -21,7 +21,7 @@ const Base = () => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 export default Base;
