@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-
+import { routes } from "./src/route/index.js";
 import cors from "cors";
 // -----------------------------------------------
 dotenv.config();
@@ -12,11 +12,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // -----------------------------------------------
-app.get("/", (_, res) => {
-  res.send("Hello Fooder Server!");
-});
+routes(app);
 
 // -----------------------------------------------
 app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
