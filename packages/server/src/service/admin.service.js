@@ -63,7 +63,6 @@ export class AdminService {
             });
         }
     }
-
     async getUsers(req, res) {
         const account_id = req.params.accountId;
 

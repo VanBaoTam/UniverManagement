@@ -8,6 +8,5 @@ userRouter.post("/login", userInstance.login);
 userRouter.get("/getprofile/:accountId", authenToken, userInstance.getProfile);
 userRouter.put("/updateprofile", authenToken, userInstance.updateProfile);
 userRouter.put("/changepassword", authenToken, userInstance.changePassword);
-
 // -----------------------------------------------
 export { userRouter };
