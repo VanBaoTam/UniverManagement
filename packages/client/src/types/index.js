@@ -1,25 +1,5 @@
 //COLS
-export const listAttendancesCols = [
-  {
-    field: "id",
-    headerName: "STT",
-    width: 80,
-  },
-  {
-    field: "studentId",
-    headerName: "Mã sinh viên",
-    width: 150,
-  },
-  {
-    field: "studentName",
-    headerName: "Họ tên sinh viên",
-    width: 200,
-  },
-  {
-    field: "class",
-    headerName: "Lớp",
-    width: 120,
-  },
+const times = [
   {
     field: "times_1",
     headerName: "Buổi 1",
@@ -97,6 +77,30 @@ export const listAttendancesCols = [
   },
 ];
 
+export const listAttendancesCols = [
+  {
+    field: "id",
+    headerName: "STT",
+    width: 80,
+  },
+  {
+    field: "studentId",
+    headerName: "Mã sinh viên",
+    width: 150,
+  },
+  {
+    field: "studentName",
+    headerName: "Họ tên sinh viên",
+    width: 200,
+  },
+  {
+    field: "class",
+    headerName: "Lớp",
+    width: 120,
+  },
+  ...times,
+];
+
 export const attendanceFacesCols = [
   {
     field: "id",
@@ -123,4 +127,28 @@ export const attendanceFacesCols = [
     headerName: "Điểm danh",
     width: 120,
   },
+];
+
+export const CourseAttendanceCols = [
+  {
+    field: "id",
+    headerName: "STT",
+    width: 80,
+  },
+  {
+    field: "courseName",
+    headerName: "Môn học",
+    width: 150,
+  },
+  {
+    field: "startDate",
+    headerName: "Ngày bắt đầu",
+    width: 200,
+  },
+  {
+    field: "endDate",
+    headerName: "Ngày kết thúc",
+    width: 120,
+  },
+  ...times,
 ];
