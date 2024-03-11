@@ -1,41 +1,36 @@
-import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import React, { useCallback, useState } from "react";
 import Paper from "@mui/material/Paper";
-import { TABLE_ATTENDANCE_FACES } from "../../constants/common";
-import { MAIN_COLOR } from "../../constants/color";
+import { DataGrid } from "@mui/x-data-grid";
+import { attendanceFacesCols } from "../../types";
+import { attendanceFaceRow } from "../../constants";
 
 export default function TableAttendanceFace() {
-  return (
-    <TableContainer component={Paper} sx={{ mt: 3 }}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            {TABLE_ATTENDANCE_FACES.map((cot) => (
-              <TableCell key={cot.id}>{cot.column}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
+  const [ids, setIds] = useState([]);
 
-        <TableBody>
-          <TableCell>a</TableCell>
-          <TableCell>b</TableCell> <TableCell>c</TableCell>
-          <TableCell>d</TableCell> <TableCell>e</TableCell>
-          <TableCell
-            sx={{
-              background: MAIN_COLOR,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            Đã điểm danh
-          </TableCell>
-        </TableBody>
-      </Table>
-    </TableContainer>
+  const handleSelectionModel = useCallback((ids) => {
+    if (!ids.length) {
+      return;
+    }
+    setIds(ids);
+  }, []);
+  return (
+    <Paper sx={{ mt: 3, overflowX: "auto" }}>
+      <div style={{ minWidth: 960 }}>
+        <DataGrid
+          rows={attendanceFaceRow}
+          columns={attendanceFacesCols}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+              },
+            },
+          }}
+          pageSizeOptions={[10]}
+          checkboxSelection
+          onRowSelectionModelChange={handleSelectionModel}
+        />
+      </div>
+    </Paper>
   );
 }

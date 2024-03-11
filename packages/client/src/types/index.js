@@ -96,3 +96,31 @@ export const listAttendancesCols = [
     width: 80,
   },
 ];
+
+export const attendanceFacesCols = [
+  {
+    field: "id",
+    headerName: "STT",
+    width: 80,
+  },
+  {
+    field: "studentId",
+    headerName: "Mã sinh viên",
+    width: 150,
+  },
+  {
+    field: "studentName",
+    headerName: "Họ tên sinh viên",
+    width: 200,
+  },
+  {
+    field: "class",
+    headerName: "Lớp",
+    width: 120,
+  },
+  {
+    field: "isAttendanced",
+    headerName: "Điểm danh",
+    width: 120,
+  },
+];
