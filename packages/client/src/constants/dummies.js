@@ -144,12 +144,23 @@ export const userRow = [
     userPhonenumber: "035555555",
   },
   {
-    id: 1,
+    id: 2,
     userId: "1",
     userRole: "USR01",
     userName: "Văn Bảo Tâm",
     userEmal: "vanbaotam@gmail.com",
     userPhonenumber: "035555555",
+  },
+];
+export const attendanceCourseRow = [
+  {
+    id: 1,
+    class: "1",
+    courseName: "Tin hoc co ban",
+    shift: "Ca 1",
+    day: "Mon",
+    startDate: "11/03/2024",
+    endDate: "11/03/2024",
   },
 ];
 export const CourseAttendanceRow = [

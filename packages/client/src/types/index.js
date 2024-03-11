@@ -181,7 +181,7 @@ export const userCols = [
   {
     field: "userId",
     headerName: "Mã người dùng",
-    width: 80,
+    width: 150,
   },
   {
     field: "userRole",
@@ -201,6 +201,39 @@ export const userCols = [
   {
     field: "userPhonenumber",
     headerName: "SĐT",
+    width: 200,
+  },
+];
+
+export const attendanceCourseCol = [
+  {
+    field: "class",
+    headerName: "Mã lớp",
+    width: 80,
+  },
+  {
+    field: "courseName",
+    headerName: "Môn học",
+    width: 150,
+  },
+  {
+    field: "shift",
+    headerName: "Ca",
+    width: 300,
+  },
+  {
+    field: "day",
+    headerName: "Thứ",
+    width: 200,
+  },
+  {
+    field: "startDate",
+    headerName: "Ngày mở lớp",
+    width: 200,
+  },
+  {
+    field: "endDate",
+    headerName: "Ngày kết thúc",
     width: 200,
   },
 ];
