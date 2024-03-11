@@ -36,7 +36,7 @@ export default function TableListClass() {
   };
 
   return (
-    <Paper sx={{ mt: 3, overflowX: "auto", maxWidth: 1100 }}>
+    <Paper sx={{ mt: 3, overflowX: "auto", maxWidth: 1200 }}>
       <div style={{ Width: 960 }}>
         <DataGrid
           rows={userRow}

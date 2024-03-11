@@ -153,6 +153,12 @@ export const classCols = [
   {
     field: "startDate",
     headerName: "Ngày mở lớp",
+    width: 300,
+  },
+  {
+    field: "endDate",
+    headerName: "Ngày kết thúc",
+    width: 300,
   },
 ];
 export const CourseAttendanceCols = [
