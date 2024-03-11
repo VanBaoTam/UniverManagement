@@ -23,8 +23,8 @@ export class UserController {
     async updateProfile(req, res) {
         return await userServiceInstance.updateProfile(req, res);
     }
-    async readCourse(req, res) {
-        return await userServiceInstance.readCourse(req, res);
+    async changePassword(req, res) {
+        return await userServiceInstance.changePassword(req, res);
     }
 }
 
