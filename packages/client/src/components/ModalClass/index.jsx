@@ -19,7 +19,6 @@ const ModalClass = () => {
   };
   return (
     <React.Fragment>
-      {" "}
       <form className="my-3">
         <Grid
           container
@@ -83,7 +82,6 @@ const ModalClass = () => {
           </Grid>
 
           <Grid container sx={{ mt: 2 }}>
-            {" "}
             <Grid xs={6} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Ca I</InputLabel>
@@ -116,7 +114,6 @@ const ModalClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 2 }}>
-            {" "}
             <Grid xs={6} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Ca II</InputLabel>
@@ -149,7 +146,6 @@ const ModalClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 2 }}>
-            {" "}
             <Grid xs={6} sx={{ pr: 1 }}>
               Ngày mở lớp:
               <TextField
@@ -185,7 +181,7 @@ const ModalClass = () => {
               </Button>
             </Grid>
           </Grid>
-        </Grid>{" "}
+        </Grid>
       </form>
     </React.Fragment>
   );

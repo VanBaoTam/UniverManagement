@@ -68,7 +68,6 @@ const AttendanceFaceInstructor = () => {
             </Grid>
             <Grid container>
               <Grid xs={3}>
-                {" "}
                 <TextField
                   id="outlined-basic"
                   label="Mã sinh viên"
@@ -92,7 +91,7 @@ const AttendanceFaceInstructor = () => {
                   <LuScanFace />
                 </Button>
               </Grid>
-            </Grid>{" "}
+            </Grid>
             <TableAttendanceFace />
           </Grid>
         </Container>

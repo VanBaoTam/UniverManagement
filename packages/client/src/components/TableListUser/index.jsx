@@ -31,7 +31,7 @@ export default function TableListUser() {
                 background: "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%)",
               }}
             >
-              Vô hiệu{" "}
+              Vô hiệu
             </Button>
           </TableCell>
         </TableBody>

@@ -23,7 +23,7 @@ export default function TableSubjectAttendance() {
         <TableBody>
           <TableCell>a</TableCell>
           <TableCell>b</TableCell> <TableCell>c</TableCell>
-          <TableCell>s</TableCell>{" "}
+          <TableCell>s</TableCell>
           <TableCell>
             <Checkbox />
           </TableCell>
@@ -34,15 +34,12 @@ export default function TableSubjectAttendance() {
             <Checkbox />
           </TableCell>
           <TableCell>
-            {" "}
             <Checkbox />
           </TableCell>
           <TableCell>
-            {" "}
             <Checkbox />
           </TableCell>
           <TableCell>
-            {" "}
             <Checkbox />
           </TableCell>
         </TableBody>

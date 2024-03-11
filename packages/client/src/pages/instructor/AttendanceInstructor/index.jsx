@@ -19,7 +19,7 @@ const AttendanceInstructor = () => {
               </Grid>
               <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
                 <TableAttendanceInstructor />
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Box>
         </Grid>

@@ -45,7 +45,7 @@ const ListUserAdmin = () => {
                 </form>
 
                 <TableListUser />
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Box>
         </Grid>

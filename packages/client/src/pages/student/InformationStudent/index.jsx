@@ -37,7 +37,6 @@ const InformationStudent = () => {
                 </Grid>
                 <form className="my-1">
                   <Grid sx={{ mt: 4, mb: 2 }}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Địa chỉ"
@@ -48,7 +47,6 @@ const InformationStudent = () => {
                     />
                   </Grid>
                   <Grid sx={{ mb: 2 }}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Số điện thoại"
@@ -59,7 +57,6 @@ const InformationStudent = () => {
                     />
                   </Grid>
                   <Grid sx={{ mb: 2 }}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Email"
@@ -82,7 +79,7 @@ const InformationStudent = () => {
                     </Link>
                   </Grid>
                 </form>
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Box>
         </Grid>

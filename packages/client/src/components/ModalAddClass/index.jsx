@@ -22,7 +22,6 @@ const ModalAddClass = () => {
   const handleClose = () => setOpen(true);
   return (
     <React.Fragment>
-      {" "}
       <form className="my-3">
         <Grid
           container
@@ -86,7 +85,6 @@ const ModalAddClass = () => {
           </Grid>
 
           <Grid container sx={{ mt: 2 }}>
-            {" "}
             <Grid xs={6} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Ca I</InputLabel>
@@ -119,7 +117,6 @@ const ModalAddClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 2 }}>
-            {" "}
             <Grid xs={6} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Ca II</InputLabel>
@@ -152,7 +149,6 @@ const ModalAddClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 2 }}>
-            {" "}
             <Grid xs={6} sx={{ pr: 1 }}>
               Ngày mở lớp:
               <TextField
@@ -186,9 +182,9 @@ const ModalAddClass = () => {
               >
                 Thêm lớp
               </Button>
-            </Grid>{" "}
+            </Grid>
           </Grid>
-        </Grid>{" "}
+        </Grid>
       </form>
     </React.Fragment>
   );

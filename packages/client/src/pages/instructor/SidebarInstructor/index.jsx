@@ -32,7 +32,7 @@ const SidebarInstructor = () => {
                   />
                 }
               >
-                {categorykitchen.name}{" "}
+                {categorykitchen.name}
               </MenuItem>
             ))}
           </Menu>

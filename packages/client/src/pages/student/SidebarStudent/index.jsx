@@ -32,7 +32,7 @@ const SidebarStudent = () => {
                   />
                 }
               >
-                {categorykitchen.name}{" "}
+                {categorykitchen.name}
               </MenuItem>
             ))}
           </Menu>

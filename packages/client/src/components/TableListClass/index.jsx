@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -25,7 +25,7 @@ const style = {
 };
 
 export default function TableListClass() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
@@ -42,8 +42,10 @@ export default function TableListClass() {
 
           <TableBody>
             <TableCell>a</TableCell>
-            <TableCell>b</TableCell> <TableCell>c</TableCell>
-            <TableCell>d</TableCell> <TableCell>e</TableCell>
+            <TableCell>b</TableCell>
+            <TableCell>c</TableCell>
+            <TableCell>d</TableCell>
+            <TableCell>e</TableCell>
             <TableCell>e</TableCell>
             <TableCell>
               <Button
@@ -54,7 +56,7 @@ export default function TableListClass() {
                   mr: 1,
                 }}
               >
-                Xoá{" "}
+                Xoá
               </Button>
 
               <Button
@@ -65,7 +67,7 @@ export default function TableListClass() {
                 }}
                 onClick={handleOpen}
               >
-                Sửa{" "}
+                Sửa
               </Button>
             </TableCell>
           </TableBody>

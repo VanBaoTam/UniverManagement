@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR } from "../../../constants/color";
@@ -37,7 +37,6 @@ const InformationInstructor = () => {
                 </Grid>
                 <form>
                   <Grid sx={{ mt: 4, mb: 2 }}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Địa chỉ"
@@ -48,7 +47,6 @@ const InformationInstructor = () => {
                     />
                   </Grid>
                   <Grid sx={{ mb: 2 }}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Số điện thoại"
@@ -59,7 +57,6 @@ const InformationInstructor = () => {
                     />
                   </Grid>
                   <Grid sx={{ mb: 2 }}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Email"
@@ -82,7 +79,7 @@ const InformationInstructor = () => {
                     </Link>
                   </Grid>
                 </form>
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Box>
         </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Grid, Modal } from "@mui/material";
 import SidebarAdmin from "../SidebarAdmin";
 import { BLUE_COLOR } from "../../../constants/color";
@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 const ListClassAdmin = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
@@ -50,7 +50,7 @@ const ListClassAdmin = () => {
                   ></Grid>
                 </Grid>
                 <TableListClass />
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Box>
         </Grid>

@@ -58,18 +58,6 @@ const TABLE_ATTENDANCE_FACES = [
   { id: 5, column: "Lớp" },
   { id: 6, column: "Điểm danh" },
 ];
-const TABLELIST_ATTENDANCES = [
-  { id: 1, column: "STT" },
-  { id: 2, column: "Mã SV" },
-  { id: 3, column: "Họ tên SV" },
-  { id: 4, column: "Lớp" },
-  { id: 5, column: "Buổi 1" },
-  { id: 6, column: "Buổi 2" },
-  { id: 7, column: "Buổi 3" },
-  { id: 8, column: "Buổi 4" },
-  { id: 9, column: "Buổi 5" },
-  { id: 10, column: "Buổi 6" },
-];
 export {
   BASE_URL,
   SIDEBAR_INSTRUCTORS,
@@ -80,5 +68,4 @@ export {
   TABLESUBJECT_ATTENDANCES,
   TABLE_ATTENDANCE_INSTRUCTORS,
   TABLE_ATTENDANCE_FACES,
-  TABLELIST_ATTENDANCES,
 };

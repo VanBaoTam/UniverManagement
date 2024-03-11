@@ -32,7 +32,7 @@ const SidebarAdmin = () => {
                   />
                 }
               >
-                {categorykitchen.name}{" "}
+                {categorykitchen.name}
               </MenuItem>
             ))}
           </Menu>

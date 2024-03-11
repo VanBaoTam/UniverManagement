@@ -49,7 +49,6 @@ const ChangePasswordStudent = () => {
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid xs={5}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Nhập mật mới"
@@ -62,7 +61,6 @@ const ChangePasswordStudent = () => {
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid xs={5}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Nhập lại mật khẩu mới"
@@ -80,7 +78,6 @@ const ChangePasswordStudent = () => {
                   sx={{ mt: 3, mb: 5 }}
                 >
                   <Grid xs={5}>
-                    {" "}
                     <Button
                       type="submit"
                       variant="contained"

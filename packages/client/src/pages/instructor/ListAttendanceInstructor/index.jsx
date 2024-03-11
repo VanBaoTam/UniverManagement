@@ -35,7 +35,7 @@ const ListAttendanceInstructor = () => {
               <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
                 <Grid container>
                   <Grid xs={2}>
-                    Môn học:{" "}
+                    Môn học:
                     <FormControl
                       size="small"
                       fullWidth
@@ -80,7 +80,7 @@ const ListAttendanceInstructor = () => {
                   </form>
                   <TableListAttendance />
                 </Grid>
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Box>
         </Grid>
