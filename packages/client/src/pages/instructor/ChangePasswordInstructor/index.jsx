@@ -16,7 +16,7 @@ const ChangePasswordInstructor = () => {
         <Container>
           <Grid container direction="column" sx={{ pb: 5 }}>
             <Grid sx={{ mt: 2 }}>
-              <Link to="/InformationInstructor">
+              <Link to="/instructor/information">
                 <Button variant="text" sx={{ fontSize: "2rem" }}>
                   <IoArrowBackSharp />
                 </Button>

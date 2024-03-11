@@ -25,47 +25,55 @@ function App() {
         <MainLayout>
           <Routes>
             <Route path="/" index element={<Home />} />
-            <Route path="/ListUserAdmin" index element={<ListUserAdmin />} />
-            <Route path="/ListClassAdmin" index element={<ListClassAdmin />} />
+            <Route
+              path="/admin/list-user"
+              index
+              element={<ListUserAdmin />}
+            />
+            <Route
+              path="/admin/list-class"
+              index
+              element={<ListClassAdmin />}
+            />
 
             <Route
-              path="/AttendanceInstructor"
+              path="/instructor/attendance"
               index
               element={<AttendanceInstructor />}
             />
             <Route
-              path="/InformationInstructor"
+              path="/instructor/information"
               index
               element={<InformationInstructor />}
             />
             <Route
-              path="/ChangePasswordInstructor"
+              path="/instructor/change-password"
               index
               element={<ChangePasswordInstructor />}
             />
             <Route
-              path="/AttendanceFaceInstructor"
+              path="/instructor/attendance-face"
               index
               element={<AttendanceFaceInstructor />}
             />
             <Route
-              path="/ListAttendanceInstructor"
+              path="/instructor/list-attendance"
               index
               element={<ListAttendanceInstructor />}
             />
 
             <Route
-              path="/SubjectAttendanceStudent"
+              path="/student/subject-attendance"
               index
               element={<SubjectAttendanceStudent />}
             />
             <Route
-              path="/InformationStudent"
+              path="/student/information"
               index
               element={<InformationStudent />}
             />
             <Route
-              path="/ChangePasswordStudent"
+              path="/student/change-password"
               index
               element={<ChangePasswordStudent />}
             />
