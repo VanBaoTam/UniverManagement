@@ -1,6 +1,6 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link, NavLink } from "react-router-dom";
-import { SIDEBARADMINS } from "../../../constants/common";
+import { SIDEBAR_ADMINS } from "../../../constants/common";
 const SidebarAdmin = () => {
   return (
     <>
@@ -11,7 +11,7 @@ const SidebarAdmin = () => {
               background: "",
             }}
           >
-            {SIDEBARADMINS.map((categorykitchen) => (
+            {SIDEBAR_ADMINS.map((categorykitchen) => (
               <MenuItem
                 key={categorykitchen.id}
                 component={

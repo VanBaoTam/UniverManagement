@@ -1,6 +1,6 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link, NavLink } from "react-router-dom";
-import { SIDEBARSTUDENTS } from "../../../constants/common";
+import { SIDEBAR_STUDENTS } from "../../../constants/common";
 
 const SidebarStudent = () => {
   return (
@@ -12,7 +12,7 @@ const SidebarStudent = () => {
               background: "",
             }}
           >
-            {SIDEBARSTUDENTS.map((categorykitchen) => (
+            {SIDEBAR_STUDENTS.map((categorykitchen) => (
               <MenuItem
                 key={categorykitchen.id}
                 component={

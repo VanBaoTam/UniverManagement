@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TABLELISTCLASSS, TABLELISTUSERS } from "../../constants/common";
+import { TABLELIST_CLASSS, TABLELIST_USERS } from "../../constants/common";
 import { Button } from "@mui/material";
 import { YELLOW_COLOR } from "../../constants/color";
 import Box from "@mui/material/Box";
@@ -20,22 +20,22 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 700,
   bgcolor: "background.paper",
-  borderRadius:"10px",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
 
 export default function TableListClass() {
-      const [open, setOpen] = React.useState(false);
-      const handleOpen = () => setOpen(true);
-      const handleClose = () => setOpen(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <>
       <TableContainer component={Paper} sx={{}}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              {TABLELISTCLASSS.map((cot) => (
+              {TABLELIST_CLASSS.map((cot) => (
                 <TableCell key={cot.id}>{cot.column}</TableCell>
               ))}
             </TableRow>
@@ -77,10 +77,9 @@ export default function TableListClass() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        
       >
         <Box sx={style}>
-         <ModalClass/>
+          <ModalClass />
         </Box>
       </Modal>
     </>

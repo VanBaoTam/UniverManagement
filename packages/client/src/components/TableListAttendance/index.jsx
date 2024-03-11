@@ -6,16 +6,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TABLELISTATTENDANCES, TABLESUBJECTATTENDANCES } from "../../constants/common";
+import {
+  TABLELIST_ATTENDANCES,
+  TABLESUBJECT_ATTENDANCES,
+} from "../../constants/common";
 import { Button, Checkbox } from "@mui/material";
 
 export default function TableListAttendance() {
   return (
-    <TableContainer component={Paper} sx={{mt:3}}>
+    <TableContainer component={Paper} sx={{ mt: 3 }}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            {TABLELISTATTENDANCES.map((cot) => (
+            {TABLELIST_ATTENDANCES.map((cot) => (
               <TableCell key={cot.id}>{cot.column}</TableCell>
             ))}
           </TableRow>

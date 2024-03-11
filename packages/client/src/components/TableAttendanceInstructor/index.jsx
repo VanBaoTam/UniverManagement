@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TABLEATTENDANCEINSTRUCTORS } from "../../constants/common";
+import { TABLE_ATTENDANCE_INSTRUCTORS } from "../../constants/common";
 import { Button, Checkbox } from "@mui/material";
 import { BLUE_COLOR } from "../../constants/color";
 import { Link } from "react-router-dom";
@@ -17,7 +17,7 @@ export default function TableAttendanceInstructor() {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            {TABLEATTENDANCEINSTRUCTORS.map((cot) => (
+            {TABLE_ATTENDANCE_INSTRUCTORS.map((cot) => (
               <TableCell key={cot.id}>{cot.column}</TableCell>
             ))}
           </TableRow>

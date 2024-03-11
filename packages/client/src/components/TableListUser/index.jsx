@@ -6,10 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { TABLELISTUSERS } from "../../constants/common";
+import { TABLELIST_USERS } from "../../constants/common";
 import { Button } from "@mui/material";
-
-
 
 export default function TableListUser() {
   return (
@@ -17,7 +15,7 @@ export default function TableListUser() {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            {TABLELISTUSERS.map((cot) => (
+            {TABLELIST_USERS.map((cot) => (
               <TableCell key={cot.id}>{cot.column}</TableCell>
             ))}
           </TableRow>
@@ -25,10 +23,8 @@ export default function TableListUser() {
 
         <TableBody>
           <TableCell>a</TableCell>
-           <TableCell>b</TableCell>{" "}
-          <TableCell>c</TableCell>
-          <TableCell>d</TableCell>{" "}
-          <TableCell>e</TableCell>
+          <TableCell>b</TableCell> <TableCell>c</TableCell>
+          <TableCell>d</TableCell> <TableCell>e</TableCell>
           <TableCell>
             <Button
               variant="contained"
