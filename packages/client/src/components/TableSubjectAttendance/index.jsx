@@ -1,4 +1,3 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TABLESUBJECT_ATTENDANCES } from "../../constants/common";
-import { Button, Checkbox } from "@mui/material";
+import { Checkbox } from "@mui/material";
 
 export default function TableSubjectAttendance() {
   return (

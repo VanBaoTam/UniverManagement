@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Box, Button, Container, Grid, Modal, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -17,11 +17,11 @@ const style = {
   p: 4,
 };
 const AttendanceFaceInstructor = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
-    <React.forwardRef>
+    <React.Fragment>
       <Box
         sx={{
           backgroundColor: "#f5f5f5",
@@ -118,7 +118,7 @@ const AttendanceFaceInstructor = () => {
           </Box>
         </Modal>
       </Box>
-    </React.forwardRef>
+    </React.Fragment>
   );
 };
 export default AttendanceFaceInstructor;

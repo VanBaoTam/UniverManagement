@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -7,7 +7,6 @@ import { BLUE_COLOR } from "../../../constants/color";
 const ChangePasswordStudent = () => {
   return (
     <React.Fragment>
-      {" "}
       <Box
         sx={{
           backgroundColor: "#f5f5f5",
@@ -38,7 +37,6 @@ const ChangePasswordStudent = () => {
               <Grid container direction="column">
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid xs={5}>
-                    {" "}
                     <TextField
                       id="outlined-basic"
                       label="Nhập mật khẩu cũ"

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import SidebarInstructor from "../SidebarInstructor";
 import TableAttendanceInstructor from "../../../components/TableAttendanceInstructor";

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -7,7 +7,6 @@ import { BLUE_COLOR } from "../../../constants/color";
 const ChangePasswordInstructor = () => {
   return (
     <React.Fragment>
-      {" "}
       <Box
         sx={{
           backgroundColor: "#f5f5f5",

@@ -1,8 +1,7 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  Container,
   FormControl,
   Grid,
   MenuItem,
@@ -13,7 +12,7 @@ import SidebarInstructor from "../SidebarInstructor";
 import { GREY_COLOR } from "../../../constants/color";
 import TableListAttendance from "../../../components/TableListAttendance";
 const ListAttendanceInstructor = () => {
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);

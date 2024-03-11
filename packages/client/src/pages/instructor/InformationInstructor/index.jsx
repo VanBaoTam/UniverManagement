@@ -1,21 +1,10 @@
-import * as React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import TableSubjectAttendance from "../../../components/TableSubjectAttendance";
+import React from "react";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR } from "../../../constants/color";
 import SidebarInstructor from "../SidebarInstructor";
 const InformationInstructor = () => {
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);

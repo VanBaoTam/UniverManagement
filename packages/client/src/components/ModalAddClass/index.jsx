@@ -8,16 +8,16 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import * as React from "react";
+import React, { useState } from "react";
 import { BLUE_COLOR } from "../../constants/color";
 
 const ModalAddClass = () => {
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(false);
   const handleClose = () => setOpen(true);
   return (
