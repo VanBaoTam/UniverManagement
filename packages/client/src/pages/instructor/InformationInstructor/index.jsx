@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR } from "../../../constants/color";
 import SidebarInstructor from "../SidebarInstructor";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import UserContext from "../../../context/user";
 import { useDataProvider } from "../../../services";
 import { displayToast } from "../../../utils";
 
 const InformationInstructor = () => {
-  const navigation = useNavigate();
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
   const {
@@ -19,7 +17,6 @@ const InformationInstructor = () => {
     formState: { errors },
     setValue,
     watch,
-    reset,
   } = useForm();
   const { address, phoneNumber, email } = watch();
 
@@ -65,11 +62,10 @@ const InformationInstructor = () => {
       if (resp.status === 200) {
         displayToast("Cập nhật thành công!", "success");
         console.log(resp);
-        reset();
       }
     } catch (error) {
       console.log(error);
-      reset();
+
       displayToast(error.response.data.message, "error");
     }
   };
