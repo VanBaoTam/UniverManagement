@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5999/api/v1";
+const BASE_URL = "http://localhost:5999/v1/api";
 const SIDEBAR_INSTRUCTORS = [
   { id: 1, name: "Điểm danh", link: "/instructor/attendance" },
   { id: 2, name: "Danh sách điểm danh", link: "/instructor/list-attendance" },
@@ -19,3 +19,6 @@ export {
   SIDEBAR_STUDENTS,
   
 };
+
+export { BASE_URL, SIDEBAR_INSTRUCTORS, SIDEBAR_ADMINS, SIDEBAR_STUDENTS };
+

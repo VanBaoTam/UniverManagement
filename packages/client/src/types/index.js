@@ -182,6 +182,7 @@ export const CourseAttendanceCols = [
     headerName: "Ngày kết thúc",
     width: 200,
   },
+  ...times,
 ];
 export const userCols = [
   {

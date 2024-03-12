@@ -15,10 +15,12 @@ import InformationInstructor from "./pages/instructor/InformationInstructor";
 import ChangePasswordInstructor from "./pages/instructor/ChangePasswordInstructor";
 import AttendanceFaceInstructor from "./pages/instructor/AttendanceFaceInstructor";
 import ListAttendanceInstructor from "./pages/instructor/ListAttendanceInstructor";
+import { UserContextProvider } from "./context/user";
 function App() {
   return (
     <React.Fragment>
       <BrowserRouter>
+
         <CssBaseline />
         <ScrollToTop />
         <Toast />
@@ -75,6 +77,7 @@ function App() {
             />
           </Routes>
         </MainLayout>
+
       </BrowserRouter>
     </React.Fragment>
   );
