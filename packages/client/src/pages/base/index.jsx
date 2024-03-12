@@ -13,10 +13,10 @@ const Base = () => {
             }}
           >
             <Grid container>
-              <Grid xs={2}>
+              <Grid item xs={2}>
                 <SidebarAdmin />
               </Grid>
-              <Grid xs={9.5} sx={{ py: 3, pl: 5 }}></Grid>
+              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}></Grid>
             </Grid>
           </Box>
         </Grid>

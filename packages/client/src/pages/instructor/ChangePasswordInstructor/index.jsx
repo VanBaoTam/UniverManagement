@@ -36,7 +36,7 @@ const ChangePasswordInstructor = () => {
             <form className="my-1">
               <Grid container direction="column">
                 <Grid container justifyContent="center" alignItems="center">
-                  <Grid xs={5}>
+                  <Grid item xs={5}>
                     <TextField
                       id="outlined-basic"
                       label="Nhập mật khẩu cũ"
@@ -48,7 +48,7 @@ const ChangePasswordInstructor = () => {
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
-                  <Grid xs={5}>
+                  <Grid item xs={5}>
                     <TextField
                       id="outlined-basic"
                       label="Nhập mật mới"
@@ -60,7 +60,7 @@ const ChangePasswordInstructor = () => {
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
-                  <Grid xs={5}>
+                  <Grid item xs={5}>
                     <TextField
                       id="outlined-basic"
                       label="Nhập lại mật khẩu mới"
@@ -77,7 +77,7 @@ const ChangePasswordInstructor = () => {
                   alignItems="center"
                   sx={{ mt: 3, mb: 5 }}
                 >
-                  <Grid xs={5}>
+                  <Grid item xs={5}>
                     <Button
                       type="submit"
                       variant="contained"

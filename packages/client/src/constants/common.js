@@ -12,13 +12,5 @@ const SIDEBAR_STUDENTS = [
   { id: 1, name: "Môn học điểm danh", link: "/student/subject-attendance" },
   { id: 2, name: "Cài đặt tài khoản", link: "/student/information" },
 ];
-export {
-  BASE_URL,
-  SIDEBAR_INSTRUCTORS,
-  SIDEBAR_ADMINS,
-  SIDEBAR_STUDENTS,
-  
-};
 
 export { BASE_URL, SIDEBAR_INSTRUCTORS, SIDEBAR_ADMINS, SIDEBAR_STUDENTS };
-

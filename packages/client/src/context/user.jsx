@@ -5,7 +5,9 @@ const UserContext = createContext();
 function UserContextProvider(props) {
   const storedUser = useMemo(() => {
     const storedUser = sessionStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : { accountId: "", role: "" };
+    return storedUser
+      ? JSON.parse(storedUser)
+      : { token: "", type: "", role: "" };
   }, []);
 
   const [user, setUser] = useState(storedUser);
@@ -19,7 +21,10 @@ function UserContextProvider(props) {
     console.log(userInfo);
   };
 
-  const userValue = useMemo(() => ({ user, setUserContext }), [user]);
+  const userValue = useMemo(
+    () => ({ user, setUserContext }),
+    [user, setUserContext]
+  );
 
   return (
     <UserContext.Provider value={userValue}>

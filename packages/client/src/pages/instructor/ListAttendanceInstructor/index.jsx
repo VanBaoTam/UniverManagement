@@ -29,12 +29,12 @@ const ListAttendanceInstructor = () => {
             }}
           >
             <Grid container>
-              <Grid xs={2}>
+              <Grid item xs={2}>
                 <SidebarInstructor />
               </Grid>
-              <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
+              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}>
                 <Grid container>
-                  <Grid xs={2}>
+                  <Grid item xs={2}>
                     Môn học:
                     <FormControl
                       size="small"
@@ -55,7 +55,7 @@ const ListAttendanceInstructor = () => {
                   </Grid>
                   <form className="mt-4 ps-2">
                     <Grid container xs={12}>
-                      <Grid xs={8}>
+                      <Grid item xs={8}>
                         <TextField
                           id="outlined-basic"
                           label="Mã sinh viên"
@@ -66,7 +66,7 @@ const ListAttendanceInstructor = () => {
                           required
                         />
                       </Grid>
-                      <Grid xs={4} sx={{ pl: 1 }}>
+                      <Grid item xs={4} sx={{ pl: 1 }}>
                         <Button
                           variant="contained"
                           fullWidth

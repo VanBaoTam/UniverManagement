@@ -30,7 +30,7 @@ const ModalClass = () => {
             THÔNG TIN LỚP HỌC
           </Grid>
           <Grid container sx={{ mt: 4 }}>
-            <Grid xs={12} sx={{ pr: 1 }}>
+            <Grid item xs={12} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">
                   Giảng viên
@@ -47,7 +47,7 @@ const ModalClass = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid xs={6} sx={{ pr: 1, mt: 2 }}>
+            <Grid item xs={6} sx={{ pr: 1, mt: 2 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Môn học</InputLabel>
                 <Select
@@ -62,7 +62,7 @@ const ModalClass = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid xs={6} sx={{ pl: 1, mt: 2 }}>
+            <Grid item xs={6} sx={{ pl: 1, mt: 2 }}>
               <TextField
                 required
                 type="number"
@@ -82,7 +82,7 @@ const ModalClass = () => {
           </Grid>
 
           <Grid container sx={{ mt: 2 }}>
-            <Grid xs={6} sx={{ pr: 1 }}>
+            <Grid item xs={6} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Ca I</InputLabel>
                 <Select
@@ -97,7 +97,7 @@ const ModalClass = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid xs={6} sx={{ pl: 1 }}>
+            <Grid item xs={6} sx={{ pl: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Thứ I</InputLabel>
                 <Select
@@ -114,7 +114,7 @@ const ModalClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 2 }}>
-            <Grid xs={6} sx={{ pr: 1 }}>
+            <Grid item xs={6} sx={{ pr: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Ca II</InputLabel>
                 <Select
@@ -129,7 +129,7 @@ const ModalClass = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid xs={6} sx={{ pl: 1 }}>
+            <Grid item xs={6} sx={{ pl: 1 }}>
               <FormControl fullWidth required>
                 <InputLabel id="demo-simple-select-label">Thứ II</InputLabel>
                 <Select
@@ -146,7 +146,7 @@ const ModalClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 2 }}>
-            <Grid xs={6} sx={{ pr: 1 }}>
+            <Grid item xs={6} sx={{ pr: 1 }}>
               Ngày mở lớp:
               <TextField
                 type="date"
@@ -157,7 +157,7 @@ const ModalClass = () => {
                 required
               />
             </Grid>
-            <Grid xs={6} sx={{ pl: 1 }}>
+            <Grid item xs={6} sx={{ pl: 1 }}>
               Ngày kết thúc:
               <TextField
                 type="date"
@@ -170,7 +170,7 @@ const ModalClass = () => {
             </Grid>
           </Grid>
           <Grid container sx={{ mt: 4 }}>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Button
                 variant="contained"
                 fullWidth

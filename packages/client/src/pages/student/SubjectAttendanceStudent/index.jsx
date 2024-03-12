@@ -20,11 +20,11 @@ const SubjectAttendanceStudent = () => {
             }}
           >
             <Grid container>
-              <Grid xs={2}>
+              <Grid item xs={2}>
                 <SidebarStudent />
               </Grid>
-              <Grid xs={9.5} sx={{ py: 3, pl: 5 }}>
-                <Grid xs={3} sx={{ mb: 3 }}>
+              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}>
+                <Grid item xs={3} sx={{ mb: 3 }}>
                   Môn học:
                   <FormControl
                     size="small"

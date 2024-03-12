@@ -32,14 +32,14 @@ const AttendanceFaceInstructor = () => {
         <Container>
           <Grid container direction="column" sx={{ pb: 5 }}>
             <Grid container>
-              <Grid xs={6} sx={{ mt: 2 }}>
+              <Grid item xs={6} sx={{ mt: 2 }}>
                 <Link to="/AttendanceInstructor">
                   <Button variant="text" sx={{ fontSize: "2rem" }}>
                     <IoArrowBackSharp />
                   </Button>
                 </Link>
               </Grid>
-              <Grid xs={6} container>
+              <Grid item xs={6} container>
                 <Grid
                   xs={9}
                   sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}
@@ -47,7 +47,7 @@ const AttendanceFaceInstructor = () => {
                   Ngày bắt đầu: <br />
                   19/05/2024
                 </Grid>
-                <Grid xs={3}>
+                <Grid item xs={3}>
                   Ngày kết thúc:
                   <br />
                   19/05/2024
@@ -67,7 +67,7 @@ const AttendanceFaceInstructor = () => {
               ĐIỂM DANH MÔN:
             </Grid>
             <Grid container>
-              <Grid xs={3}>
+              <Grid item xs={3}>
                 <TextField
                   id="outlined-basic"
                   label="Mã sinh viên"
@@ -77,7 +77,11 @@ const AttendanceFaceInstructor = () => {
                   sx={{ background: "white" }}
                 />
               </Grid>
-              <Grid xs={9} sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Grid
+                item
+                xs={9}
+                sx={{ display: "flex", justifyContent: "flex-end" }}
+              >
                 <Button
                   variant="contained"
                   sx={{

@@ -21,10 +21,16 @@ const InformationInstructor = () => {
             }}
           >
             <Grid container>
-              <Grid xs={2}>
+              <Grid item xs={2}>
                 <SidebarInstructor />
               </Grid>
-              <Grid xs={9.5} sx={{ py: 3, pl: 5 }} container direction="column">
+              <Grid
+                item
+                xs={9.5}
+                sx={{ py: 3, pl: 5 }}
+                container
+                direction="column"
+              >
                 <Grid
                   sx={{
                     display: "flex",

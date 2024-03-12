@@ -64,8 +64,10 @@ export class UserService {
       const token = jwt.sign(data, process.env.SECRET_KEY, {
         expiresIn: expiresIn,
       });
+      console.log(dataResult.rows[0].role);
       return res.status(200).json({
         message: "Login Successful",
+        role: dataResult.rows[0].role,
         token: { value: token, type: "Bearer" },
         expiresIn: expiresIn,
       });

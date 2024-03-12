@@ -7,7 +7,6 @@ import { useDataProvider } from "../../services";
 import { displayToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/user";
-
 const Home = () => {
   const provider = useDataProvider();
   const navigate = useNavigate();
@@ -27,12 +26,20 @@ const Home = () => {
           password: data.password,
         },
       });
+      console.log(import.meta.env.VITE_SECRET_KEY);
       if (resp.status === 200) {
         displayToast("Đăng nhập thành công!", "success");
         setUserContext(
-          { token: resp.data.token.value, type: resp.data.token.type } || {}
+          {
+            token: resp.data.token.value,
+            type: resp.data.token.type,
+            role: resp.data.role,
+          } || {}
         );
-        navigate("/SubjectAttendanceStudent");
+
+        if (resp.data.role === 1) navigate("/admin/list-class");
+        else if (resp.data.role === 2) navigate("/student/subject-attendance");
+        else navigate("/instructor/attendance");
       }
     } catch (error) {
       console.log(error);
