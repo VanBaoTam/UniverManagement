@@ -54,7 +54,7 @@ const ListAttendanceInstructor = () => {
                     </FormControl>
                   </Grid>
                   <form className="mt-4 ps-2">
-                    <Grid container xs={12}>
+                    <Grid container>
                       <Grid item xs={8}>
                         <TextField
                           id="outlined-basic"

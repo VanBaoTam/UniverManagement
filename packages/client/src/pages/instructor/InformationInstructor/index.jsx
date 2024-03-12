@@ -8,12 +8,8 @@ import { useForm } from "react-hook-form";
 import UserContext from "../../../context/user";
 import { useDataProvider } from "../../../services";
 import { displayToast } from "../../../utils";
+
 const InformationInstructor = () => {
-  const [formData, setFormData] = useState({
-    address: "",
-    phoneNumber: "",
-    email: "",
-  });
   const navigation = useNavigate();
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
@@ -21,62 +17,67 @@ const InformationInstructor = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
+    watch,
+    reset,
   } = useForm();
+  const { address, phoneNumber, email } = watch();
+
   const handleChange = (event, type) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [type]: event.target.value,
-    }));
+    console.log(event.target.value, type);
+    setValue(type, event.target.value);
   };
 
   const getProfile = async () => {
     try {
       const resp = await provider.get({
         path: `user/get-profile`,
-        Headers: user.type + " " + user.token,
-      });
-      if (resp.status === 200) {
-        console.log(resp);
-        //  displayToast("Đăng nhập thành công!", "success");
-      }
-    } catch (error) {
-      console.log(error);
-      displayToast(error.response.data.message, "error");
-    }
-  };
-  const onSubmit = async (data) => {
-    try {
-      const resp = await provider.post({
-        path: "user/login",
-        body: {
-          email: data.email,
-          password: data.password,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
         },
       });
-      console.log(import.meta.env.VITE_SECRET_KEY);
-      if (resp.status === 200) {
-        displayToast("Đăng nhập thành công!", "success");
-        setUserContext(
-          {
-            token: resp.data.token.value,
-            type: resp.data.token.type,
-            role: resp.data.role,
-          } || {}
-        );
-
-        if (resp.data.role === 1) navigation("/admin/list-class");
-        else if (resp.data.role === 2)
-          navigation("/student/subject-attendance");
-        else navigation("/instructor/attendance");
+      if (resp.status === 200 && resp.data) {
+        Object.keys(resp.data).forEach((key) => {
+          setValue(key, resp.data[key]);
+        });
+        displayToast("Truy xuất thông tin giảng viên thành công!", "success");
       }
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };
+
+  const onSubmit = async (data) => {
+    try {
+      const resp = await provider.put({
+        path: "user/update-profile",
+        body: {
+          data,
+          accountId: user.accountId,
+        },
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
+      if (resp.status === 200) {
+        displayToast("Cập nhật thành công!", "success");
+        console.log(resp);
+        reset();
+      }
+    } catch (error) {
+      console.log(error);
+      reset();
+      displayToast(error.response.data.message, "error");
+    }
+  };
+
   useEffect(() => {
     getProfile();
   }, []);
+
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -115,10 +116,11 @@ const InformationInstructor = () => {
                       label="Địa chỉ"
                       variant="outlined"
                       fullWidth
+                      onChange={(event) => handleChange(event, "address")}
                       {...register("address", {
                         required: "Address cần được điền!",
                         minLength: {
-                          value: 6,
+                          value: 2,
                           message: "Address không hợp lệ!",
                         },
                         maxLength: {
@@ -127,27 +129,33 @@ const InformationInstructor = () => {
                         },
                       })}
                       sx={{ background: "white" }}
+                      value={address || ""}
                       required
                     />
+                    {errors.address && (
+                      <p style={{ color: "red" }}>{errors.address.message}</p>
+                    )}
                   </Grid>
                   <Grid sx={{ mb: 2 }}>
                     <TextField
                       id="outlined-basic"
                       label="Số điện thoại"
                       variant="outlined"
+                      onChange={(event) => handleChange(event, "phoneNumber")}
                       {...register("phoneNumber", {
                         required: "Phone number cần được điền!",
                         minLength: {
-                          value: 6,
+                          value: 10,
                           message: "Phone number không hợp lệ!",
                         },
                         maxLength: {
-                          value: 50,
+                          value: 10,
                           message: "Phone number không hợp lệ!",
                         },
                       })}
                       fullWidth
                       sx={{ background: "white" }}
+                      value={phoneNumber || ""}
                       required
                     />
                     {errors.phoneNumber && (
@@ -162,6 +170,7 @@ const InformationInstructor = () => {
                       label="Email"
                       variant="outlined"
                       fullWidth
+                      onChange={(event) => handleChange(event, "email")}
                       {...register("email", {
                         required: "Email cần được điền!",
                         minLength: {
@@ -174,6 +183,7 @@ const InformationInstructor = () => {
                         },
                       })}
                       sx={{ background: "white" }}
+                      value={email || ""}
                       required
                     />
                     {errors.email && (
@@ -188,11 +198,11 @@ const InformationInstructor = () => {
                     >
                       Lưu thay đổi
                     </Button>
-                    <Link to="/instructor/change-password">
-                      <Button variant="text">Thay đổi mật khẩu</Button>
-                    </Link>
                   </Grid>
                 </form>
+                <Link to="/instructor/change-password">
+                  <Button variant="text">Thay đổi mật khẩu</Button>
+                </Link>
               </Grid>
             </Grid>
           </Box>
@@ -201,4 +211,5 @@ const InformationInstructor = () => {
     </React.Fragment>
   );
 };
+
 export default InformationInstructor;

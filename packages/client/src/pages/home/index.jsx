@@ -26,7 +26,6 @@ const Home = () => {
           password: data.password,
         },
       });
-      console.log(import.meta.env.VITE_SECRET_KEY);
       if (resp.status === 200) {
         displayToast("Đăng nhập thành công!", "success");
         setUserContext(

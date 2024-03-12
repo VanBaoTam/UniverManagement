@@ -18,7 +18,6 @@ function UserContextProvider(props) {
 
   const setUserContext = (userInfo) => {
     setUser(userInfo);
-    console.log(userInfo);
   };
 
   const userValue = useMemo(

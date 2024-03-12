@@ -99,7 +99,6 @@ export class UserService {
       if (!dataResult.rows[0])
         return res.status(404).json({ message: "Profile not found!" });
       res.status(200).json({
-        name: dataResult.rows[0].name,
         address: dataResult.rows[0].address,
         phoneNumber: dataResult.rows[0].phone_number,
         email: dataResult.rows[0].email,
@@ -115,10 +114,8 @@ export class UserService {
   async updateProfile(req, res) {
     try {
       const account_id = req.body.accountId;
-
       if (!CredentialsValidation("id", account_id))
         return res.status(400).json({ message: "Invalid Account Id" });
-
       const dataQuery =
         "select profiles.profile_id, phone_number,address,email from accounts join profiles on accounts.profile_id=profiles.profile_id where account_id = $1";
       const dataValues = [account_id];
@@ -126,10 +123,10 @@ export class UserService {
       if (!dataResult.rows[0])
         return res.status(404).json({ message: "Profile not found!" });
       const profile = {
-        profile_id: dataResult.rows[0].profile_id,
-        email: req.body.email ?? dataResult.rows[0].email,
-        phoneNumber: req.body.phone_number ?? dataResult.rows[0].phone_number,
-        address: req.body.address ?? dataResult.rows[0].address,
+        profileId: dataResult.rows[0].profile_id,
+        email: req.body.data.email ?? "",
+        phoneNumber: req.body.data.phoneNumber ?? "",
+        address: req.body.data.address ?? "",
       };
       if (
         !CredentialsValidation("email", profile.email) ||
@@ -144,7 +141,7 @@ export class UserService {
         profile.email,
         profile.phoneNumber,
         profile.address,
-        profile.profile_id,
+        profile.profileId,
       ];
       await datasource.query(updateQuery, updateValues);
       return res.status(200).json("Profile updated successfully");
