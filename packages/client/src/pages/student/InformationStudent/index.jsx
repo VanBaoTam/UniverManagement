@@ -74,7 +74,7 @@ const InformationStudent = () => {
                     >
                       Lưu thay đổi
                     </Button>
-                    <Link to="/ChangePasswordStudent">
+                    <Link to="/student/change-password">
                       <Button variant="text">Thay đổi mật khẩu</Button>
                     </Link>
                   </Grid>
