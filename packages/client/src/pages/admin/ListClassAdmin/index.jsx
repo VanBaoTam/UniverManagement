@@ -45,6 +45,7 @@ const ListClassAdmin = () => {
                     </Button>
                   </Grid>
                   <Grid
+                    item
                     xs={6}
                     sx={{ display: "flex", justifyContent: "flex-end" }}
                   >

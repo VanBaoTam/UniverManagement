@@ -7,7 +7,7 @@ function UserContextProvider(props) {
     const storedUser = sessionStorage.getItem("user");
     return storedUser
       ? JSON.parse(storedUser)
-      : { token: "", type: "", role: "" };
+      : { token: "", type: "", role: "", accountId: "" };
   }, []);
 
   const [user, setUser] = useState(storedUser);

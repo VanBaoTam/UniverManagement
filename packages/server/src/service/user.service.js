@@ -68,6 +68,7 @@ export class UserService {
       return res.status(200).json({
         message: "Login Successful",
         role: dataResult.rows[0].role,
+        accountId: dataResult.rows[0].accountid,
         token: { value: token, type: "Bearer" },
         expiresIn: expiresIn,
       });
@@ -81,13 +82,19 @@ export class UserService {
 
   async getProfile(req, res) {
     try {
-      const account_id = req.params.accountId;
+      const accessKey = req.headers["authorization"] ?? "";
+      if (!accessKey) return res.status(400).json("Invalid accessKey");
 
-      if (!CredentialsValidation("id", account_id))
+      const decodedToken = jwt.verify(
+        accessKey.split(" ")[1],
+        process.env.SECRET_KEY
+      );
+      const accountId = decodedToken.accountId;
+      if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account ID" });
       const dataQuery =
         "select name,phone_number,address,email from accounts join profiles on accounts.profile_id=profiles.profile_id where account_id = $1";
-      const dataValues = [account_id];
+      const dataValues = [accountId];
       const dataResult = await datasource.query(dataQuery, dataValues);
       if (!dataResult.rows[0])
         return res.status(404).json({ message: "Profile not found!" });

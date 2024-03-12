@@ -23,7 +23,7 @@ export default function TableListClass() {
         <DataGrid
           rows={classRow}
           columns={classCols}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[10, 100]}
           checkboxSelection
         />
       </div>

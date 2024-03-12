@@ -11,7 +11,7 @@ export default function TableAttendanceInstructor() {
         <DataGrid
           rows={attendanceCourseRow}
           columns={attendanceCourseCol}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[10, 100]}
         />
       </div>
     </Paper>

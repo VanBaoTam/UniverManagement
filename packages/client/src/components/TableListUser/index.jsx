@@ -48,7 +48,7 @@ export default function TableListClass() {
               renderCell: renderButtonCell,
             },
           ]}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[10, 100]}
         />
       </div>
     </Paper>

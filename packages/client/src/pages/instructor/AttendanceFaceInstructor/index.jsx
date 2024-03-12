@@ -41,6 +41,7 @@ const AttendanceFaceInstructor = () => {
               </Grid>
               <Grid item xs={6} container>
                 <Grid
+                  item
                   xs={9}
                   sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}
                 >

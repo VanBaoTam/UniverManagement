@@ -26,7 +26,7 @@ export default function TableAttendanceFace() {
               },
             },
           }}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[10,100]}
           checkboxSelection
           onRowSelectionModelChange={handleSelectionModel}
         />
