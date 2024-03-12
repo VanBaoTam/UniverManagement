@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toast from "./components/toast";
+import Home from "./pages/home";
+import MainLayout from "./components/layout";
+import { UserContextProvider } from "./context/user";
+import AdminRoutes from "./routes/admin-routes";
+import StudentRoutes from "./routes/student-routes";
+import InstructorRoutes from "./routes/instructor-routes";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <React.Fragment>
+      <BrowserRouter>
+        <UserContextProvider>
+          <CssBaseline />
+          <ScrollToTop />
+          <Toast />
+          <MainLayout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/admin/*" element={<AdminRoutes />} />
+              <Route path="/instructor/*" element={<InstructorRoutes />} />
+              <Route path="/student/*" element={<StudentRoutes />} />
+            </Routes>
+          </MainLayout>
+        </UserContextProvider>
+      </BrowserRouter>
+    </React.Fragment>
+  );
 }
 
-export default App
+export default App;

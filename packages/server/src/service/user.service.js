@@ -27,11 +27,12 @@ export class UserService {
         if (!isValidUserCredential)
             return res.status(400).json({ message: "Invalid User Credential" });
         try {
+            console.log(username, password);
             const authQuery =
                 "select password from accounts where username = $1";
             const authValues = [username];
             const authResult = await datasource.query(authQuery, authValues);
-
+            console.log(authResult.rows[0]);
             if (!authResult.rows.length) {
                 return res.status(404).json({
                     message: "User not found!",
@@ -46,7 +47,7 @@ export class UserService {
             }
 
             const dataQuery =
-                "SELECT account_id, role_id,status FROM accounts WHERE username = $1";
+                "SELECT account_id as accountId, role_id as role ,status FROM accounts WHERE username = $1";
 
             const dataValues = [username];
             const dataResult = await datasource.query(dataQuery, dataValues);
