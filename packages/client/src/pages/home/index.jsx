@@ -1,15 +1,17 @@
+import React, { useContext } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import backgroundimgae from "../../../public/images/stu.jpg";
 import { RiLoginBoxFill } from "react-icons/ri";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useDataProvider } from "../../services";
 import { displayToast } from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/user";
 
 const Home = () => {
   const provider = useDataProvider();
   const navigate = useNavigate();
+  const { setUserContext } = useContext(UserContext) ?? {};
   const {
     handleSubmit,
     register,
@@ -18,7 +20,6 @@ const Home = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
       const resp = await provider.post({
         path: "user/login",
         body: {
@@ -28,7 +29,9 @@ const Home = () => {
       });
       if (resp.status === 200) {
         displayToast("Đăng nhập thành công!", "success");
-        console.log(resp);
+        setUserContext(
+          { token: resp.data.token.value, type: resp.data.token.type } || {}
+        );
         navigate("/SubjectAttendanceStudent");
       }
     } catch (error) {

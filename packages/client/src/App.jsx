@@ -15,62 +15,69 @@ import InformationInstructor from "./pages/instructor/InformationInstructor";
 import ChangePasswordInstructor from "./pages/instructor/ChangePasswordInstructor";
 import AttendanceFaceInstructor from "./pages/instructor/AttendanceFaceInstructor";
 import ListAttendanceInstructor from "./pages/instructor/ListAttendanceInstructor";
+import { UserContextProvider } from "./context/user";
 function App() {
   return (
     <React.Fragment>
       <BrowserRouter>
-        <CssBaseline />
-        <ScrollToTop />
-        <Toast />
-        <MainLayout>
-          <Routes>
-            <Route path="/" index element={<Home />} />
-            <Route path="/ListUserAdmin" index element={<ListUserAdmin />} />
-            <Route path="/ListClassAdmin" index element={<ListClassAdmin />} />
+        <UserContextProvider>
+          <CssBaseline />
+          <ScrollToTop />
+          <Toast />
+          <MainLayout>
+            <Routes>
+              <Route path="/" index element={<Home />} />
+              <Route path="/ListUserAdmin" index element={<ListUserAdmin />} />
+              <Route
+                path="/ListClassAdmin"
+                index
+                element={<ListClassAdmin />}
+              />
 
-            <Route
-              path="/AttendanceInstructor"
-              index
-              element={<AttendanceInstructor />}
-            />
-            <Route
-              path="/InformationInstructor"
-              index
-              element={<InformationInstructor />}
-            />
-            <Route
-              path="/ChangePasswordInstructor"
-              index
-              element={<ChangePasswordInstructor />}
-            />
-            <Route
-              path="/AttendanceFaceInstructor"
-              index
-              element={<AttendanceFaceInstructor />}
-            />
-            <Route
-              path="/ListAttendanceInstructor"
-              index
-              element={<ListAttendanceInstructor />}
-            />
+              <Route
+                path="/AttendanceInstructor"
+                index
+                element={<AttendanceInstructor />}
+              />
+              <Route
+                path="/InformationInstructor"
+                index
+                element={<InformationInstructor />}
+              />
+              <Route
+                path="/ChangePasswordInstructor"
+                index
+                element={<ChangePasswordInstructor />}
+              />
+              <Route
+                path="/AttendanceFaceInstructor"
+                index
+                element={<AttendanceFaceInstructor />}
+              />
+              <Route
+                path="/ListAttendanceInstructor"
+                index
+                element={<ListAttendanceInstructor />}
+              />
 
-            <Route
-              path="/SubjectAttendanceStudent"
-              index
-              element={<SubjectAttendanceStudent />}
-            />
-            <Route
-              path="/InformationStudent"
-              index
-              element={<InformationStudent />}
-            />
-            <Route
-              path="/ChangePasswordStudent"
-              index
-              element={<ChangePasswordStudent />}
-            />
-          </Routes>
-        </MainLayout>
+              <Route
+                path="/SubjectAttendanceStudent"
+                index
+                element={<SubjectAttendanceStudent />}
+              />
+              <Route
+                path="/InformationStudent"
+                index
+                element={<InformationStudent />}
+              />
+              <Route
+                path="/ChangePasswordStudent"
+                index
+                element={<ChangePasswordStudent />}
+              />
+            </Routes>
+          </MainLayout>
+        </UserContextProvider>
       </BrowserRouter>
     </React.Fragment>
   );
