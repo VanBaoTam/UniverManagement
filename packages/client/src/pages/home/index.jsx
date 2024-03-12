@@ -32,7 +32,7 @@ const Home = () => {
         navigate("/SubjectAttendanceStudent");
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };

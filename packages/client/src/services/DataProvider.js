@@ -1,17 +1,5 @@
 import axios from "axios";
 
-axios.interceptors.request.use((request) => {
-  request.validateStatus = (status) => {
-    return status < 500;
-  };
-
-  const defaultHeader = get(request, "headers['Content-Type']");
-  if (!defaultHeader) {
-    set(request, "headers['Content-Type']", "application/json; charset=utf-8");
-  }
-  return request;
-});
-
 // ----------------------------------------------------------------------------------
 export class DataProviderService {
   static instance = null;
