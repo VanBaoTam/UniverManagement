@@ -160,7 +160,6 @@ export class AdminService {
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }
-
     async getUsers(req, res) {
         const accessKey = req.headers["authorization"] ?? "";
         if (!accessKey) return res.status(400).json("Invalid accessKey");
