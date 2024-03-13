@@ -242,7 +242,6 @@ export const attendanceCourseCol = [
     field: "start_date",
     headerName: "Ngày mở lớp",
     valueFormatter: (data) => {
-      console.log(data.value);
       return dayjs(data.value).format("DD/MM/YYYY");
     },
     width: 200,
@@ -251,7 +250,6 @@ export const attendanceCourseCol = [
     field: "end_date",
     headerName: "Ngày kết thúc",
     valueFormatter: (data) => {
-      console.log(data.value);
       return dayjs(data.value).format("DD/MM/YYYY");
     },
     width: 200,

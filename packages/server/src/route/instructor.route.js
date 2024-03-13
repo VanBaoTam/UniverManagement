@@ -5,20 +5,20 @@ import { authenToken } from "../middlewares/authen.js";
 // -----------------------------------------------
 const instructorRouter = Router();
 instructorRouter.get(
-    "/get-courses",
-    authenToken,
-    instructorInstance.getCourses
+  "/get-courses",
+  authenToken,
+  instructorInstance.getCourses
 );
 instructorRouter.get(
-    "/get-attendances-by-course",
-    authenToken,
-    instructorInstance.getattendancesbycourse
+  "/get-attendances-by-course",
+  authenToken,
+  instructorInstance.GetAttendancesByCourse
 );
 
 instructorRouter.post(
-    "/attendance",
-    authenToken,
-    instructorInstance.attendance
+  "/attendance",
+  authenToken,
+  instructorInstance.attendance
 );
 // -----------------------------------------------
 export { instructorRouter };

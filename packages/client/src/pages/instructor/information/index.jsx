@@ -60,7 +60,6 @@ const InformationInstructor = () => {
       });
       if (resp.status === 200) {
         displayToast("Cập nhật thành công!", "success");
-        console.log(resp);
       }
     } catch (error) {
       console.log(error);

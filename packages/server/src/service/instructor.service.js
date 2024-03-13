@@ -44,7 +44,7 @@ export class InstructorService {
       .status(200)
       .json({ message: "ok", listCourse: courseResult.rows });
   }
-  async getattendancesbycourse(req, res) {
+  async GetAttendancesByCourse(req, res) {
     const accessKey = req.headers["authorization"] ?? "";
     if (!accessKey) return res.status(400).json("Invalid accessKey");
 
@@ -56,19 +56,13 @@ export class InstructorService {
     if (!CredentialsValidation("id", accountId))
       return res.status(400).json({ message: "Invalid Account ID" });
     const urlString = req.url;
-
-    // Tách query string từ URL
     const queryString = urlString.split("?")[1];
-
-    // Phân tích query string thành các cặp key-value
     const paramsArray = queryString.split("&");
     const params = {};
     paramsArray.forEach((param) => {
       const [key, value] = param.split("=");
       params[key] = decodeURIComponent(value);
     });
-
-    // Sử dụng tham số để truy vấn cơ sở dữ liệu
     const dayValue = params.days;
     const shiftValue = params.shifts;
     const courseIdValue = params.courseId;
