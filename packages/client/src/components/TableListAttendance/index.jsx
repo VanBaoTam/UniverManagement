@@ -15,7 +15,7 @@ export default function TableListAttendance() {
   }, []);
 
   return (
-    <Paper sx={{ mt: 3, overflowX: "auto" }}>
+    <Paper sx={{ mt: 3 }}>
       <div style={{ minWidth: 960 }}>
         <DataGrid
           rows={listAttendanceRow}

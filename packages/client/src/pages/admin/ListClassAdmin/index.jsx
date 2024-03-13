@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Modal } from "@mui/material";
-import SidebarAdmin from "../SidebarAdmin";
 import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
 import TableListClass from "../../../components/TableListClass";
 import ModalAddClass from "../../../components/ModalAddClass";
@@ -30,10 +29,8 @@ const ListClassAdmin = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={2}>
-                <SidebarAdmin />
-              </Grid>
-              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}>
+              
+              <Grid item xs={10.5} sx={{ py: 3, pl: 5,ml:4 }}>
                 <Grid container sx={{ mb: 3 }}>
                   <Grid item xs={6}>
                     <Button

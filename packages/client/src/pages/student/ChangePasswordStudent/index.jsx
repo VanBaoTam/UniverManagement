@@ -29,6 +29,7 @@ const ChangePasswordStudent = () => {
                 fontSize: "2rem",
                 fontWeight: "bold",
                 my: 4,
+                fontFamily:'time'
               }}
             >
               THAY ĐỔI MẬT KHẨU

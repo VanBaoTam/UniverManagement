@@ -8,7 +8,6 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import SidebarInstructor from "../SidebarInstructor";
 import { GREY_COLOR } from "../../../constants/color";
 import TableListAttendance from "../../../components/TableListAttendance";
 const ListAttendanceInstructor = () => {
@@ -29,10 +28,7 @@ const ListAttendanceInstructor = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={2}>
-                <SidebarInstructor />
-              </Grid>
-              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}>
+              <Grid item xs={9.5} sx={{ py: 3, ml: 4 }}>
                 <Grid container>
                   <Grid item xs={2}>
                     Môn học:

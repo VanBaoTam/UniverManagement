@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
-import { BLUE_COLOR } from "../../../constants/color";
-import SidebarInstructor from "../SidebarInstructor";
+import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
 import { useForm } from "react-hook-form";
 import UserContext from "../../../context/user";
 import { useDataProvider } from "../../../services";
@@ -85,22 +84,18 @@ const InformationInstructor = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={2}>
-                <SidebarInstructor />
-              </Grid>
               <Grid
                 item
                 xs={9.5}
-                sx={{ py: 3, pl: 5 }}
+                sx={{ py: 3, pl: 5, ml: 4 }}
                 container
                 direction="column"
               >
                 <Grid
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
                     fontSize: "2rem",
                     fontWeight: "bold",
+                    fontFamily: "time",
                   }}
                 >
                   THÔNG TIN CÁ NHÂN
@@ -197,7 +192,12 @@ const InformationInstructor = () => {
                   </Grid>
                 </form>
                 <Link to="/instructor/change-password">
-                  <Button variant="text">Thay đổi mật khẩu</Button>
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 3, background: RED_COLOR, py: 1 }}
+                  >
+                    Thay đổi mật khẩu
+                  </Button>
                 </Link>
               </Grid>
             </Grid>

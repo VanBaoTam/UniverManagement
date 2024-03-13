@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, FormControl, Grid, MenuItem, Select } from "@mui/material";
-import SidebarStudent from "../SidebarStudent";
+
 import TableSubjectAttendance from "../../../components/TableSubjectAttendance";
 const SubjectAttendanceStudent = () => {
   const [age, setAge] = useState("");
@@ -20,10 +20,7 @@ const SubjectAttendanceStudent = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={2}>
-                <SidebarStudent />
-              </Grid>
-              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}>
+              <Grid item xs={9} sx={{ py: 3, ml: 4 }}>
                 <Grid item xs={3} sx={{ mb: 3 }}>
                   Môn học:
                   <FormControl

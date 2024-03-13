@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
-import SidebarAdmin from "../SidebarAdmin";
 import { GREY_COLOR } from "../../../constants/color";
 import TableListUser from "../../../components/TableListUser";
 const ListUserAdmin = () => {
@@ -15,10 +14,7 @@ const ListUserAdmin = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={2}>
-                <SidebarAdmin />
-              </Grid>
-              <Grid item xs={9.5} sx={{ py: 3, pl: 5 }}>
+              <Grid item xs={12} sx={{ py: 3, pl: 5, ml: 4 }}>
                 <TableListUser />
               </Grid>
             </Grid>
