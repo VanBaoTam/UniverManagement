@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import { GREY_COLOR } from "../../../constants/color";
-import TableListAttendance from "../../../components/TableListAttendance";
+import TableListAttendance from "../../../components/TbListAttendance";
 const ListAttendanceInstructor = () => {
   const [age, setAge] = useState("");
 

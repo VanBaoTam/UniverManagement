@@ -27,7 +27,6 @@ const Home = () => {
         },
       });
       if (resp.status === 200) {
-        displayToast("Đăng nhập thành công!", "success");
         setUserContext(
           {
             token: resp.data.token.value ?? "",
@@ -36,11 +35,15 @@ const Home = () => {
             accountId: resp.data.accountId ?? "",
           } || {}
         );
-
-        if (resp.data.role === 1) navigation("/admin/list-class");
-        else if (resp.data.role === 2)
-          navigation("/student/subject-attendance");
-        else navigation("/instructor/attendance");
+        if (!resp.data.role) {
+          displayToast("Có lỗi đã xảy ra!", "error");
+        } else {
+          displayToast("Đăng nhập thành công!", "success");
+          if (resp.data.role === 1) navigation("/admin/list-class");
+          else if (resp.data.role === 2)
+            navigation("/student/subject-attendance");
+          else navigation("/instructor/attendance");
+        }
       }
     } catch (error) {
       console.log(error);

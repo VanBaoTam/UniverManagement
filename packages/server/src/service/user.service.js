@@ -54,7 +54,7 @@ export class UserService {
       if (dataResult.rows[0].status != "active")
         return res.status(403).json("Account Deactivated");
       const data = {
-        accountId: dataResult.rows[0].account_id,
+        accountId: dataResult.rows[0].accountid,
       };
       let expiresIn;
       if (dataResult.rows[0].role === 1) expiresIn = "30m";
@@ -63,9 +63,10 @@ export class UserService {
       const token = jwt.sign(data, process.env.SECRET_KEY, {
         expiresIn: expiresIn,
       });
+      console.log(data);
       return res.status(200).json({
         message: "Login Successful",
-        role: dataResult.rows[0].role_id,
+        role: dataResult.rows[0].role,
         accountId: dataResult.rows[0].accountid,
         token: { value: token, type: "Bearer" },
         expiresIn: expiresIn,
@@ -88,6 +89,7 @@ export class UserService {
         process.env.SECRET_KEY
       );
       const accountId = decodedToken.accountId;
+      console.log(decodedToken);
       if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account ID" });
       const dataQuery =

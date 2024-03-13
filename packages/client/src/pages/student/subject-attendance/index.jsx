@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, FormControl, Grid, MenuItem, Select } from "@mui/material";
 
-import TableSubjectAttendance from "../../../components/TableSubjectAttendance";
+import TableSubjectAttendance from "../../../components/TbSubjectAttendance";
 const SubjectAttendanceStudent = () => {
   const [age, setAge] = useState("");
 
