@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR } from "@constants/color";
 
 const ChangePasswordInstructor = () => {
   return (
@@ -29,7 +29,7 @@ const ChangePasswordInstructor = () => {
                 fontSize: "2rem",
                 fontWeight: "bold",
                 my: 4,
-                fontFamily:'time'
+                fontFamily: "time",
               }}
             >
               THAY ĐỔI MẬT KHẨU

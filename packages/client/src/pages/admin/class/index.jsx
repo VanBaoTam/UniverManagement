@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Modal } from "@mui/material";
-import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
-import ModalAddClass from "../../../components/ModalAddClass";
-import React, { useState } from "react";
+import { BLUE_COLOR, RED_COLOR } from "@constants/color";
+import ModalAddClass from "@components/ModalAddClass";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { classCols } from "../../types";
-import { classRow } from "../../constants";
+import { classCols } from "@types";
+import { classRow } from "@constants";
 
 const style = {
   position: "absolute",

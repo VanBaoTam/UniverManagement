@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
-import { GREY_COLOR } from "../../../constants/color";
-import TableListUser from "../../../components/TbListUser";
+import { GREY_COLOR } from "@constants/color";
+import TableListUser from "@components/TbListUser";
 const ListUserAdmin = () => {
   return (
     <React.Fragment>

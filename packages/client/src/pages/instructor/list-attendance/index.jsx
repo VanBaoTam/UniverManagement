@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,12 +7,12 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { GREY_COLOR } from "../../../constants/color";
+import { GREY_COLOR } from "@constants/color";
 import React, { useCallback, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { listAttendancesCols } from "../../types";
-import { listAttendanceRow } from "../../constants";
+import { listAttendancesCols } from "@types";
+import { listAttendanceRow } from "@constants";
 
 const ListAttendanceInstructor = () => {
   const [age, setAge] = useState("");

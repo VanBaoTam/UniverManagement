@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import { Box, FormControl, Grid, MenuItem, Select } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { CourseAttendanceCols } from "../../types";
-import { CourseAttendanceRow } from "../../constants";
+import { CourseAttendanceCols } from "@types";
+import { CourseAttendanceRow } from "@constants";
 
 const SubjectAttendanceStudent = () => {
   const [age, setAge] = useState("");

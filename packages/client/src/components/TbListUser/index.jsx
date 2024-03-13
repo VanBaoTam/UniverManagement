@@ -1,10 +1,10 @@
 import React from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { userCols } from "../../types";
-import { userRow } from "../../constants";
+import { userCols } from "@types";
+import { userRow } from "@constants";
 import { Button } from "@mui/material";
-import { RED_COLOR } from "../../constants/color";
+import { RED_COLOR } from "@constants/color";
 
 const style = {
   position: "absolute",

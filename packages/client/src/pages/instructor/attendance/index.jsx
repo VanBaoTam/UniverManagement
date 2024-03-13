@@ -1,10 +1,9 @@
-import React from "react";
 import { Box, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { attendanceCourseCol } from "../../types";
-import { attendanceCourseRow } from "../../constants";
+import { attendanceCourseCol } from "@types";
+import { attendanceCourseRow } from "@constants";
 const Attendance = () => {
   return (
     <React.Fragment>

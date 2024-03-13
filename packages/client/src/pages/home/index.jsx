@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
-import backgroundimgae from "../../../public/images/stu.jpg";
+import backgroundimgae from "/images/stu.jpg";
 import { RiLoginBoxFill } from "react-icons/ri";
 import { useForm } from "react-hook-form";
-import { useDataProvider } from "../../services";
-import { displayToast } from "../../utils/toast";
+import { useDataProvider } from "@services";
+import { displayToast } from "@utils/toast";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../../context/user";
+import UserContext from "@contexts/user";
 const Home = () => {
   const provider = useDataProvider();
   const navigation = useNavigate();

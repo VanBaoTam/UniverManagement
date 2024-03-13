@@ -1,15 +1,13 @@
-import React, { useState } from "react";
 import { Box, Button, Container, Grid, Modal, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR } from "@constants/color";
 import { LuScanFace } from "react-icons/lu";
-import TableAttendanceFace from "../../../components/TableAttendanceFace";
 import React, { useCallback, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { attendanceFacesCols } from "../../types";
-import { attendanceFaceRow } from "../../constants";
+import { attendanceFacesCols } from "@types";
+import { attendanceFaceRow } from "@constants";
 const style = {
   position: "absolute",
   top: "50%",
