@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 //COLS
 const times = [
   {
@@ -214,33 +215,45 @@ export const userCols = [
 
 export const attendanceCourseCol = [
   {
-    field: "class",
-    headerName: "Mã lớp",
+    field: "id",
+    headerName: "STT",
     width: 80,
   },
   {
-    field: "courseName",
+    field: "course_title",
     headerName: "Môn học",
-    width: 150,
+    width: 300,
   },
   {
     field: "shift",
     headerName: "Ca",
-    width: 300,
+    width: 100,
   },
   {
-    field: "day",
+    field: "days",
     headerName: "Thứ",
-    width: 200,
+    valueFormatter: (data) => {
+      return `Thứ ${data.value}`;
+    },
+
+    width: 100,
   },
   {
-    field: "startDate",
+    field: "start_date",
     headerName: "Ngày mở lớp",
+    valueFormatter: (data) => {
+      console.log(data.value);
+      return dayjs(data.value).format("DD/MM/YYYY");
+    },
     width: 200,
   },
   {
-    field: "endDate",
+    field: "end_date",
     headerName: "Ngày kết thúc",
+    valueFormatter: (data) => {
+      console.log(data.value);
+      return dayjs(data.value).format("DD/MM/YYYY");
+    },
     width: 200,
   },
 ];

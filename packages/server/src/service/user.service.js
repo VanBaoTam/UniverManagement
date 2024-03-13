@@ -114,6 +114,8 @@ export class UserService {
 
   async updateProfile(req, res) {
     try {
+      const accessKey = req.headers["authorization"] ?? "";
+      if (!accessKey) return res.status(400).json("Invalid accessKey");
       const decodedToken = jwt.verify(
         accessKey.split(" ")[1],
         process.env.SECRET_KEY

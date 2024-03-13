@@ -4,7 +4,6 @@ import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { CourseAttendanceCols } from "@types";
 import { CourseAttendanceRow } from "@constants";
-
 const SubjectAttendanceStudent = () => {
   const [age, setAge] = useState("");
 
