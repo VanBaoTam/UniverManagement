@@ -73,6 +73,7 @@ export class InstructorService {
     const courseResult = await datasource.query(courseQuery, courseValue);
     if (!courseResult.rows[0])
       return res.status(404).json({ message: "Course not found!" });
+    console.log(courseResult.rows[0]);
     const sheetId = courseResult.rows[0].url.split("/d/")[1];
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
@@ -90,6 +91,7 @@ export class InstructorService {
       student.name = ob["Tên sinh viên"];
       student.studentId = ob["Mã số sinh viên"];
       student.listTimes = [];
+      student.class = ob["Lớp"];
       student.times = courseResult.rows[0].times;
       for (var key in ob) {
         if (key.startsWith("Buổi")) {

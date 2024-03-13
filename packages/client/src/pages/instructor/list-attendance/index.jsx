@@ -12,16 +12,73 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { listAttendancesCols } from "@types";
-import { listAttendanceRow } from "@constants";
-
+import UserContext from "@contexts/user";
+import { useDataProvider } from "@services/DataProvider";
+import { displayToast } from "@utils";
 const ListAttendanceInstructor = () => {
   const [age, setAge] = useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const { user } = useContext(UserContext) ?? {};
+  const [students, setStudents] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const provider = useDataProvider();
   const [ids, setIds] = useState([]);
-
+  const handleChange = (event) => {
+    setSelectedCourse(event.target.value);
+  };
+  const GetCourses = async () => {
+    try {
+      const resp = await provider.get({
+        path: `instructor/get-courses`,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
+      if (resp.status === 200 && resp.data) {
+        const coursesWithId = resp.data.listCourse.map((course, index) => {
+          return { ...course, id: index + 1 };
+        });
+        setCourses(coursesWithId || []);
+        setSelectedCourse(coursesWithId[0]);
+      }
+    } catch (error) {
+      console.log(error);
+      displayToast(error.response.data.message, "error");
+    }
+  };
+  const GetCourseById = async () => {
+    try {
+      const resp = await provider.get({
+        path: `instructor/get-attendances-by-course?days=${selectedCourse.days}&shifts=${selectedCourse.shift}&courseId=${selectedCourse.course_id}`,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
+      if (resp.status === 200 && resp.data) {
+        const studentsWithId = resp.data.listStudent.map((course, index) => {
+          const times_ = {};
+          course.listTimes.forEach((time, timeIndex) => {
+            times_[`times_${timeIndex + 1}`] = time;
+          });
+          return { ...course, id: index + 1, ...times_ };
+        });
+        console.log(studentsWithId);
+        setStudents(studentsWithId || []);
+        displayToast("Truy xuất môn học thành công!", "success");
+      }
+    } catch (error) {
+      console.log(error);
+      displayToast(error.response.data.message, "error");
+    }
+  };
+  useEffect(() => {
+    GetCourses();
+  }, []);
+  useEffect(() => {
+    if (selectedCourse) GetCourseById();
+  }, [selectedCourse]);
   const handleSelectionModel = useCallback((ids) => {
     if (!ids.length) {
       return;
@@ -39,9 +96,9 @@ const ListAttendanceInstructor = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={9.5} sx={{ py: 3, ml: 4 }}>
+              <Grid item xs={9.5} sx={{ py: 3, ml: 7 }}>
                 <Grid container>
-                  <Grid item xs={2}>
+                  <Grid item xs={6}>
                     Môn học:
                     <FormControl
                       size="small"
@@ -51,44 +108,24 @@ const ListAttendanceInstructor = () => {
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={age}
+                        value={selectedCourse}
                         onChange={handleChange}
                       >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {courses
+                          ? courses.map((element) => (
+                              <MenuItem key={element.id} value={element}>
+                                {element.course_title}, thứ {element.days} - ca{" "}
+                                {element.shift}
+                              </MenuItem>
+                            ))
+                          : null}
                       </Select>
                     </FormControl>
                   </Grid>
-                  <form className="mt-4 ps-2">
-                    <Grid container>
-                      <Grid item xs={8}>
-                        <TextField
-                          id="outlined-basic"
-                          label="Mã sinh viên"
-                          variant="outlined"
-                          fullWidth
-                          size="small"
-                          sx={{ background: "white" }}
-                          required
-                        />
-                      </Grid>
-                      <Grid item xs={4} sx={{ pl: 1 }}>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          type="submit"
-                          sx={{ background: GREY_COLOR }}
-                        >
-                          Tìm kiếm
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </form>
                   <Paper sx={{ mt: 3 }}>
-                    <div style={{ minWidth: 960 }}>
+                    <div>
                       <DataGrid
-                        rows={listAttendanceRow}
+                        rows={students}
                         columns={listAttendancesCols}
                         initialState={{
                           pagination: {
@@ -98,7 +135,6 @@ const ListAttendanceInstructor = () => {
                           },
                         }}
                         pageSizeOptions={[10, 100]}
-                        checkboxSelection
                         onRowSelectionModelChange={handleSelectionModel}
                       />
                     </div>
