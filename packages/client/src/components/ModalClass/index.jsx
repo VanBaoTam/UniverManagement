@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import { BLUE_COLOR } from "../../constants/color";
+import { BLUE_COLOR } from "@constants/color";
 
 const ModalClass = () => {
   const [age, setAge] = useState("");

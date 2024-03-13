@@ -14,14 +14,14 @@ export class InstructorController {
 
     //-----------------------------------------------
 
-    async getAvailableOrders(req, res) {
-        return await instructorServiceInstance.getAvailableOrders(req, res);
+    async getCourses(req, res) {
+        return await instructorServiceInstance.getCourses(req, res);
     }
-    async changeOpenTime(req, res) {
-        return await instructorServiceInstance.changeOpenTime(req, res);
+    async getattendancesbycourse(req, res) {
+        return await instructorServiceInstance.getattendancesbycourse(req, res);
     }
-    async createDiscount(req, res) {
-        return await instructorServiceInstance.createDiscount(req, res);
+    async attendance(req, res) {
+        return await instructorServiceInstance.attendance(req, res);
     }
 }
 

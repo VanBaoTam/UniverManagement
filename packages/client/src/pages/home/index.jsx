@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
-import backgroundimgae from "../../../public/images/stu.jpg";
+import backgroundimgae from "/images/stu.jpg";
 import { RiLoginBoxFill } from "react-icons/ri";
 import { useForm } from "react-hook-form";
-import { useDataProvider } from "../../services";
-import { displayToast } from "../../utils/toast";
+import { useDataProvider } from "@services";
+import { displayToast } from "@utils/toast";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../../context/user";
+import UserContext from "@contexts/user";
 const Home = () => {
   const provider = useDataProvider();
-  const navigate = useNavigate();
+  const navigation = useNavigate();
   const { setUserContext } = useContext(UserContext) ?? {};
   const {
     handleSubmit,
@@ -26,20 +26,24 @@ const Home = () => {
           password: data.password,
         },
       });
-      console.log(import.meta.env.VITE_SECRET_KEY);
       if (resp.status === 200) {
-        displayToast("Đăng nhập thành công!", "success");
         setUserContext(
           {
-            token: resp.data.token.value,
-            type: resp.data.token.type,
-            role: resp.data.role,
+            token: resp.data.token.value ?? "",
+            type: resp.data.token.type ?? "",
+            role: resp.data.role ?? "",
+            accountId: resp.data.accountId ?? "",
           } || {}
         );
-
-        if (resp.data.role === 1) navigate("/admin/list-class");
-        else if (resp.data.role === 2) navigate("/student/subject-attendance");
-        else navigate("/instructor/attendance");
+        if (!resp.data.role) {
+          displayToast("Có lỗi đã xảy ra!", "error");
+        } else {
+          displayToast("Đăng nhập thành công!", "success");
+          if (resp.data.role === 1) navigation("/admin/list-class");
+          else if (resp.data.role === 2)
+            navigation("/student/subject-attendance");
+          else navigation("/instructor/attendance");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -65,7 +69,7 @@ const Home = () => {
           alignItems="center"
           sx={{ pt: 5 }}
         >
-          <Grid md={5} xs={10} sx={{ pt: 5 }}>
+          <Grid item md={5} xs={10} sx={{ pt: 5 }}>
             <Box
               sx={{
                 background: "white",
@@ -86,10 +90,10 @@ const Home = () => {
                 <form className="my-4" onSubmit={handleSubmit(onSubmit)}>
                   <Grid>
                     <TextField
-                      id="outlined-basic"
+                      id="outlined-basic-username"
                       label="Email/Tên Đăng Nhập"
                       {...register("username", {
-                        required: "Username is required",
+                        required: "Username cần được điền!",
                         minLength: {
                           value: 4,
                           message: "Username/Email không hợp lệ!",
@@ -108,10 +112,10 @@ const Home = () => {
                   </Grid>
                   <Grid>
                     <TextField
-                      id="outlined-basic"
+                      id="outlined-basic-password"
                       label="Mật khẩu"
                       {...register("password", {
-                        required: "Password is required",
+                        required: "Password cần được điền!",
                         minLength: {
                           value: 6,
                           message: "Password không hợp lệ!",
