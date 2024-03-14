@@ -11,9 +11,10 @@ import { displayToast } from "@utils";
 import dayjs from "dayjs";
 import UserContext from "@contexts/user";
 import { useDataProvider } from "@services";
+import AttendanceWebcam from "../../../components/webcam";
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "45%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 700,
@@ -175,18 +176,20 @@ const AttendanceFaceInstructor = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Grid container direction="column">
-              <Grid
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontSize: "2rem",
-                  fontWeight: "bold",
-                }}
-              >
-                Điểm Danh Khuôn Mặt
-              </Grid>
-            </Grid>
+            <Box
+              sx={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+              }}
+            >
+              {course ? (
+                <AttendanceWebcam
+                  days={course.days}
+                  shifts={course.shift}
+                  courseId={course.course_id}
+                />
+              ) : null}
+            </Box>
           </Box>
         </Modal>
       </Box>

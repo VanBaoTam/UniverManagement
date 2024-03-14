@@ -119,6 +119,7 @@ export class InstructorService {
     if (!CredentialsValidation("id", accountId))
       return res.status(400).json({ message: "Invalid Account ID" });
 
+    console.log(courseId, studentIds, shifts, days);
     const courseQuery =
       "select times, url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3";
     const courseValue = [courseId, days, shifts];
@@ -168,7 +169,7 @@ export class InstructorService {
         return true;
       })
     );
-
+    return res.status(200).json({ message: "Access" });
     //console.log(check);
   }
   // chưa xong ---------------------------------------------------------------------------
