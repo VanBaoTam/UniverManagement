@@ -40,20 +40,19 @@ const AttendanceFaceInstructor = () => {
   const GetCourseById = async () => {
     try {
       const resp = await provider.get({
-        path: `instructor/get-attendances-by-course?days=${course.days}&shifts=${course.shift}&courseId=${course.course_id}`,
+        path: `instructor/get-attendance-status?days=${course.days}&shifts=${course.shift}&courseId=${course.course_id}`,
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-type": "application/json",
         },
       });
+      console.log(resp);
       if (resp.status === 200 && resp.data) {
-        const studentsWithId = resp.data.listStudent.map((course, index) => {
-          const times_ = {};
-          course.listTimes.forEach((time, timeIndex) => {
-            times_[`times_${timeIndex + 1}`] = time;
-          });
-          return { ...course, id: index + 1, ...times_ };
-        });
+        const studentsWithId = resp.data.attendanceStatus.map(
+          (course, index) => {
+            return { ...course, id: index + 1 };
+          }
+        );
         setStudents(studentsWithId || []);
       }
     } catch (error) {
@@ -65,7 +64,6 @@ const AttendanceFaceInstructor = () => {
     const json = sessionStorage.getItem("COURSE");
     const data = JSON.parse(json);
     setCourse(data);
-    console.log(data);
   }, []);
   useEffect(() => {
     if (course) GetCourseById();
