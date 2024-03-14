@@ -1,6 +1,8 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   MenuItem,
@@ -26,8 +28,11 @@ const ListAttendanceInstructor = () => {
   const handleChange = (event) => {
     setSelectedCourse(event.target.value);
   };
+  const [loading, setLoading] = useState(false);
+
   const GetCourses = async () => {
     try {
+      setLoading(true);
       const resp = await provider.get({
         path: `instructor/get-courses`,
         headers: {
@@ -45,6 +50,10 @@ const ListAttendanceInstructor = () => {
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
+    } finally {
+     setTimeout(() => {
+       setLoading(false);
+     }, 500); 
     }
   };
   const GetCourseById = async () => {
@@ -86,6 +95,9 @@ const ListAttendanceInstructor = () => {
   }, []);
   return (
     <React.Fragment>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Grid container direction="column">
         <Grid>
           <Box

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Box, Button, Grid, TextField } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import { Backdrop, Box, Button, CircularProgress, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import { useForm } from "react-hook-form";
@@ -23,9 +23,11 @@ const InformationInstructor = () => {
     console.log(event.target.value, type);
     setValue(type, event.target.value);
   };
+  const [loading, setLoading] = useState(false);
 
   const getProfile = async () => {
     try {
+      setLoading(true);
       const resp = await provider.get({
         path: `user/get-profile`,
         headers: {
@@ -42,6 +44,10 @@ const InformationInstructor = () => {
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500); 
     }
   };
 
@@ -74,6 +80,9 @@ const InformationInstructor = () => {
 
   return (
     <React.Fragment>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Grid container direction="column">
         <Grid>
           <Box
