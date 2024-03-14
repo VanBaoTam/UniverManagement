@@ -19,7 +19,12 @@ function App() {
           <ScrollToTop />
           <Toast />
           <MainLayout>
-           <Apps/>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/admin/*" element={<AdminRoutes />} />
+              <Route path="/instructor/*" element={<InstructorRoutes />} />
+              <Route path="/student/*" element={<StudentRoutes />} />
+            </Routes>
           </MainLayout>
         </UserContextProvider>
       </BrowserRouter>

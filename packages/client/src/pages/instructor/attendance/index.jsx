@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Grid } from "@mui/material";
 import React, { useEffect, useContext, useState, useCallback } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
@@ -13,8 +13,11 @@ const Attendance = () => {
   const [course, setCourse] = useState();
   const provider = useDataProvider();
   const [courses, setCourses] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const GetCourses = async () => {
     try {
+      setLoading(true);
       const resp = await provider.get({
         path: `instructor/get-courses`,
         headers: {
@@ -32,6 +35,8 @@ const Attendance = () => {
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
+    } finally {
+      setLoading(false); 
     }
   };
   useEffect(() => {
@@ -59,6 +64,10 @@ const Attendance = () => {
   );
   return (
     <React.Fragment>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <Grid container direction="column">
         <Grid>
           <Box
