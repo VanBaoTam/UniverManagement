@@ -1,13 +1,16 @@
 import { Box, Grid } from "@mui/material";
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useCallback } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { attendanceCourseCol } from "@types";
 import UserContext from "@contexts/user";
 import { displayToast } from "@utils";
+import { useNavigate } from "react-router-dom";
 import { useDataProvider } from "@services";
 const Attendance = () => {
   const { user } = useContext(UserContext) ?? {};
+  const navigation = useNavigate();
+  const [course, setCourse] = useState();
   const provider = useDataProvider();
   const [courses, setCourses] = useState([]);
   const GetCourses = async () => {
@@ -34,6 +37,20 @@ const Attendance = () => {
   useEffect(() => {
     GetCourses();
   }, []);
+  useEffect(() => {
+    if (course) {
+      console.log("HERE");
+      const json = JSON.stringify(course);
+      sessionStorage.setItem("COURSE", json);
+      navigation("/instructor/attendance-face");
+    }
+  }, [course]);
+  const handleSelectionModel = useCallback((ids) => {
+    if (!ids.length) {
+      return;
+    }
+    setCourse(courses[ids[0] - 1]);
+  }, []);
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -52,6 +69,7 @@ const Attendance = () => {
                       rows={courses}
                       columns={attendanceCourseCol}
                       pageSizeOptions={[10, 100]}
+                      onRowSelectionModelChange={handleSelectionModel}
                     />
                   </div>
                 </Paper>

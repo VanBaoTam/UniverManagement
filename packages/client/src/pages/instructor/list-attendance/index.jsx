@@ -64,7 +64,6 @@ const ListAttendanceInstructor = () => {
           });
           return { ...course, id: index + 1, ...times_ };
         });
-        console.log(studentsWithId);
         setStudents(studentsWithId || []);
         displayToast("Truy xuất môn học thành công!", "success");
       }
