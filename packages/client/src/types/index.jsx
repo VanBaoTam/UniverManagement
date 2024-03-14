@@ -52,10 +52,10 @@ export const attendanceFacesCols = [
   {
     field: "studentId",
     headerName: "Mã sinh viên",
-    width: 150,
+    width: 120,
   },
   {
-    field: "studentName",
+    field: "name",
     headerName: "Họ tên sinh viên",
     width: 200,
   },
