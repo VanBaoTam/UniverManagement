@@ -1,14 +1,23 @@
-import React, { useState } from "react";
 import { Box, FormControl, Grid, MenuItem, Select } from "@mui/material";
-
-import TableSubjectAttendance from "../../../components/TableSubjectAttendance";
+import React, { useCallback, useState } from "react";
+import Paper from "@mui/material/Paper";
+import { DataGrid } from "@mui/x-data-grid";
+import { CourseAttendanceCols } from "@types";
+import { CourseAttendanceRow } from "@constants";
 const SubjectAttendanceStudent = () => {
   const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  const [ids, setIds] = useState([]);
 
+  const handleSelectionModel = useCallback((ids) => {
+    if (!ids.length) {
+      return;
+    }
+    setIds(ids);
+  }, []);
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -40,7 +49,24 @@ const SubjectAttendanceStudent = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <TableSubjectAttendance />
+                <Paper sx={{ mt: 3, overflowX: "auto" }}>
+                  <div style={{ minWidth: 960 }}>
+                    <DataGrid
+                      rows={CourseAttendanceRow}
+                      columns={CourseAttendanceCols}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                          },
+                        },
+                      }}
+                      pageSizeOptions={[10, 100]}
+                      checkboxSelection
+                      onRowSelectionModelChange={handleSelectionModel}
+                    />
+                  </div>
+                </Paper>
               </Grid>
             </Grid>
           </Box>

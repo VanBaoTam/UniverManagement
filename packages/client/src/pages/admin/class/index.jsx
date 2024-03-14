@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Box, Button, Grid, Modal } from "@mui/material";
-import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
-import TableListClass from "../../../components/TableListClass";
-import ModalAddClass from "../../../components/ModalAddClass";
+import { BLUE_COLOR, RED_COLOR } from "@constants/color";
+import ModalAddClass from "@components/ModalAddClass";
+import Paper from "@mui/material/Paper";
+import { DataGrid } from "@mui/x-data-grid";
+import { classCols } from "@types";
+import { classRow } from "@constants";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -29,8 +33,7 @@ const ListClassAdmin = () => {
             }}
           >
             <Grid container>
-              
-              <Grid item xs={10.5} sx={{ py: 3, pl: 5,ml:4 }}>
+              <Grid item xs={10.5} sx={{ py: 3, pl: 5, ml: 4 }}>
                 <Grid container sx={{ mb: 3 }}>
                   <Grid item xs={6}>
                     <Button
@@ -51,7 +54,16 @@ const ListClassAdmin = () => {
                     </Button>
                   </Grid>
                 </Grid>
-                <TableListClass />
+                <Paper sx={{ mt: 3, overflowX: "auto" }}>
+                  <div style={{ minWidth: 960 }}>
+                    <DataGrid
+                      rows={classRow}
+                      columns={classCols}
+                      pageSizeOptions={[10, 100]}
+                      checkboxSelection
+                    />
+                  </div>
+                </Paper>
               </Grid>
             </Grid>
           </Box>

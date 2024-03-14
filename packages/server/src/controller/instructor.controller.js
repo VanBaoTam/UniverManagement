@@ -2,27 +2,27 @@ import { instructorServiceInstance } from "../service/index.js";
 
 //------------------------------------------------
 export class InstructorController {
-    static instance;
+  static instance;
 
-    //------------------------------------------------
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new InstructorController();
-        }
-        return this.instance;
+  //------------------------------------------------
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new InstructorController();
     }
+    return this.instance;
+  }
 
-    //-----------------------------------------------
+  //-----------------------------------------------
 
-    async getAvailableOrders(req, res) {
-        return await instructorServiceInstance.getAvailableOrders(req, res);
-    }
-    async changeOpenTime(req, res) {
-        return await instructorServiceInstance.changeOpenTime(req, res);
-    }
-    async createDiscount(req, res) {
-        return await instructorServiceInstance.createDiscount(req, res);
-    }
+  async getCourses(req, res) {
+    return await instructorServiceInstance.getCourses(req, res);
+  }
+  async GetAttendancesByCourse(req, res) {
+    return await instructorServiceInstance.GetAttendancesByCourse(req, res);
+  }
+  async attendance(req, res) {
+    return await instructorServiceInstance.attendance(req, res);
+  }
 }
 
 //------------------------------------------------

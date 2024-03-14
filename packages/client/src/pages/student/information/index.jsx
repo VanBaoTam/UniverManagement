@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
-import { BLUE_COLOR, RED_COLOR } from "../../../constants/color";
+import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import { useForm } from "react-hook-form";
-import UserContext from "../../../context/user";
-import { useDataProvider } from "../../../services";
-import { displayToast } from "../../../utils";
+import UserContext from "@contexts/user";
+import { useDataProvider } from "@services";
+import { displayToast } from "@utils";
 
 const InformationInstructor = () => {
   const provider = useDataProvider();

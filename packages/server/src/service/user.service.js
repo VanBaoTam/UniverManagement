@@ -50,12 +50,11 @@ export class UserService {
       const dataResult = await datasource.query(dataQuery, dataValues);
       if (!dataResult.rows[0])
         return res.status(404).json({ message: "User not found!" });
-      console.log(dataResult.rows[0]);
+
       if (dataResult.rows[0].status != "active")
         return res.status(403).json("Account Deactivated");
       const data = {
         accountId: dataResult.rows[0].accountid,
-        role: dataResult.rows[0].role,
       };
       let expiresIn;
       if (dataResult.rows[0].role === 1) expiresIn = "30m";
@@ -64,7 +63,7 @@ export class UserService {
       const token = jwt.sign(data, process.env.SECRET_KEY, {
         expiresIn: expiresIn,
       });
-      console.log(dataResult.rows[0].role);
+      console.log(data);
       return res.status(200).json({
         message: "Login Successful",
         role: dataResult.rows[0].role,
@@ -90,6 +89,7 @@ export class UserService {
         process.env.SECRET_KEY
       );
       const accountId = decodedToken.accountId;
+      console.log(decodedToken);
       if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account ID" });
       const dataQuery =
@@ -99,6 +99,7 @@ export class UserService {
       if (!dataResult.rows[0])
         return res.status(404).json({ message: "Profile not found!" });
       res.status(200).json({
+        name: dataResult.rows[0].name,
         address: dataResult.rows[0].address,
         phoneNumber: dataResult.rows[0].phone_number,
         email: dataResult.rows[0].email,
@@ -113,12 +114,18 @@ export class UserService {
 
   async updateProfile(req, res) {
     try {
-      const account_id = req.body.accountId;
-      if (!CredentialsValidation("id", account_id))
+      const accessKey = req.headers["authorization"] ?? "";
+      if (!accessKey) return res.status(400).json("Invalid accessKey");
+      const decodedToken = jwt.verify(
+        accessKey.split(" ")[1],
+        process.env.SECRET_KEY
+      );
+      const accountId = decodedToken.accountId;
+      if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account Id" });
       const dataQuery =
         "select profiles.profile_id, phone_number,address,email from accounts join profiles on accounts.profile_id=profiles.profile_id where account_id = $1";
-      const dataValues = [account_id];
+      const dataValues = [accountId];
       const dataResult = await datasource.query(dataQuery, dataValues);
       if (!dataResult.rows[0])
         return res.status(404).json({ message: "Profile not found!" });
@@ -154,8 +161,12 @@ export class UserService {
   }
   async changePassword(req, res) {
     try {
-      const { account_id, password, retypePassword } = req.body ?? {};
-
+      const { password, retypePassword } = req.body ?? {};
+      const decodedToken = jwt.verify(
+        accessKey.split(" ")[1],
+        process.env.SECRET_KEY
+      );
+      const accountId = decodedToken.accountId;
       if (
         (!password && !CredentialsValidation("password", password)) ||
         (!retypePassword && !CredentialsValidation("password", retypePassword))
@@ -166,13 +177,13 @@ export class UserService {
       if (password != retypePassword)
         return res.status(400).json({ message: "Password mismatch" });
       const authQuery = "select account_id from accounts where account_id = $1";
-      const authValues = [account_id];
+      const authValues = [accountId];
       const authResult = await datasource.query(authQuery, authValues);
       if (!authResult.rows[0])
         return res.status(404).json({ message: "Account not found" });
       const updateQuery =
         "update accounts set password = $1 where account_id = $2";
-      const updateValues = [password, account_id];
+      const updateValues = [password, accountId];
       await datasource.query(updateQuery, updateValues);
       return res.status(200).json({ message: "Password changed successfully" });
     } catch (error) {

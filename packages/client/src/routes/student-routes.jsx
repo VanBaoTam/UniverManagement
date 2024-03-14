@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import SubjectAttendanceStudent from "../pages/student/SubjectAttendanceStudent";
-import InformationStudent from "../pages/student/InformationStudent";
-import ChangePasswordStudent from "../pages/student/ChangePasswordStudent";
+import SubjectAttendanceStudent from "@pages/student/subject-attendance";
+import InformationStudent from "@pages/student/information";
+import ChangePasswordStudent from "@pages/student/change-password";
 function StudentRoutes() {
   return (
     <Routes>

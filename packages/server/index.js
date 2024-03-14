@@ -13,7 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // -----------------------------------------------
 routes(app);
-
+app.get("/", (_, res) => {
+    res.send("Hello Univer Management Server!");
+});
 // -----------------------------------------------
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

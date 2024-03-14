@@ -1,10 +1,13 @@
-import React, { useState } from "react";
 import { Box, Button, Container, Grid, Modal, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { BLUE_COLOR } from "../../../constants/color";
+import { BLUE_COLOR } from "@constants/color";
 import { LuScanFace } from "react-icons/lu";
-import TableAttendanceFace from "../../../components/TableAttendanceFace";
+import React, { useCallback, useState } from "react";
+import Paper from "@mui/material/Paper";
+import { DataGrid } from "@mui/x-data-grid";
+import { attendanceFacesCols } from "@types";
+import { attendanceFaceRow } from "@constants";
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,6 +23,14 @@ const AttendanceFaceInstructor = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [ids, setIds] = useState([]);
+
+  const handleSelectionModel = useCallback((ids) => {
+    if (!ids.length) {
+      return;
+    }
+    setIds(ids);
+  }, []);
   return (
     <React.Fragment>
       <Box
@@ -97,7 +108,24 @@ const AttendanceFaceInstructor = () => {
                 </Button>
               </Grid>
             </Grid>
-            <TableAttendanceFace />
+            <Paper sx={{ mt: 3, overflowX: "auto" }}>
+              <div style={{ minWidth: 960 }}>
+                <DataGrid
+                  rows={attendanceFaceRow}
+                  columns={attendanceFacesCols}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 10,
+                      },
+                    },
+                  }}
+                  pageSizeOptions={[10, 100]}
+                  checkboxSelection
+                  onRowSelectionModelChange={handleSelectionModel}
+                />
+              </div>
+            </Paper>
           </Grid>
         </Container>
         <Modal
