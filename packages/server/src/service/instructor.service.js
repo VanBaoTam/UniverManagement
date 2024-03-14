@@ -176,6 +176,7 @@ export class InstructorService {
 
         //console.log(check);
     }
+    // chưa xong ---------------------------------------------------------------------------
     async GetAttendanceStatus(req, res) {
         const accessKey = req.headers["authorization"] ?? "";
         //---------------------------------------------------------

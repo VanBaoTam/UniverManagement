@@ -68,8 +68,8 @@ export class UserService {
             console.log(data);
             return res.status(200).json({
                 message: "Login Successful",
-                role: dataResult.rows[0].role,
-                accountId: dataResult.rows[0].accountid,
+                role: dataResult.rows[0].role_id,
+                accountId: dataResult.rows[0].account_id,
                 token: { value: token, type: "Bearer" },
                 expiresIn: expiresIn,
             });
@@ -189,9 +189,10 @@ export class UserService {
             );
             const accountId = decodedToken.accountId;
             if (
-                (!password && !CredentialsValidation("password", password)) ||
-                (!retypePassword &&
-                    !CredentialsValidation("password", retypePassword))
+                !password ||
+                !CredentialsValidation("password", password) ||
+                !retypePassword ||
+                !CredentialsValidation("password", retypePassword)
             )
                 return res
                     .status(400)
