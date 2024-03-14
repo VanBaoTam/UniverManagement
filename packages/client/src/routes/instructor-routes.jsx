@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AttendanceFaceInstructor from "@pages/instructor/face-attendance";
 import Attendance from "@pages/instructor/attendance";
 import InformationInstructor from "@pages/instructor/information";
@@ -48,6 +48,7 @@ function InstructorRoutes() {
           </InstructorRestrict>
         }
       />
+      <Route path="*" element={<Navigate to="/instructor/attendance" />} />
     </Routes>
   );
 }

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ListUserAdmin from "@pages/admin/user";
 import ListClassAdmin from "@pages/admin/class";
 import AdminRestrict from "./admin-restrict";
@@ -22,6 +22,7 @@ function AdminRoutes() {
           </AdminRestrict>
         }
       />
+      <Route path="*" element={<Navigate to="/admin/list-class" />} />
     </Routes>
   );
 }
