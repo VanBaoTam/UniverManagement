@@ -1,10 +1,64 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR } from "@constants/color";
+import { useDataProvider } from "@services";
+import UserContext from "@contexts/user";
+import { displayToast } from "@utils/toast";
+import { useNavigate } from "react-router-dom";
+
 
 const ChangePasswordStudent = () => {
+  const provider = useDataProvider();
+  const { user } = useContext(UserContext) ?? {};
+  const navigation = useNavigate();
+
+  const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "password") {
+      setPassword(value);
+    } else if (name === "retypePassword") {
+      setRetypePassword(value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(password);
+    console.log(retypePassword);
+    try {
+      const response = await provider.put({
+        path: `user/change-password`,
+        body: {
+          password,
+          retypePassword,
+        },
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
+      navigation("/student/information");
+          displayToast("Đổi mật khẩu thành công", "success");
+
+      setSuccessMessage(response.data.message);
+      
+    } catch (error) {
+      
+      if (error.response) {
+               displayToast("Password không trùng nhau ! Vui lòng nhập lại", "error");
+
+        setErrorMessage(error.response.data.message);
+        
+      } else {
+        setErrorMessage("Something went wrong. Please try again later.");
+      }
+    }
+  };
   return (
     <React.Fragment>
       <Box
@@ -15,7 +69,7 @@ const ChangePasswordStudent = () => {
       >
         <Container>
           <Grid container direction="column" sx={{ pb: 5 }}>
-            <Grid sx={{ mt: 2,ml:4 }}>
+            <Grid sx={{ mt: 2, ml: 4 }}>
               <Link to="/student/information">
                 <Button variant="text" sx={{ fontSize: "2rem" }}>
                   <IoArrowBackSharp />
@@ -34,20 +88,8 @@ const ChangePasswordStudent = () => {
             >
               THAY ĐỔI MẬT KHẨU
             </Grid>
-            <form className="my-1">
+            <form className="my-1" onSubmit={handleSubmit}>
               <Grid container direction="column">
-                <Grid container justifyContent="center" alignItems="center">
-                  <Grid item xs={5}>
-                    <TextField
-                      id="outlined-basic"
-                      label="Nhập mật khẩu cũ"
-                      variant="outlined"
-                      fullWidth
-                      sx={{ background: "white", mb: 2 }}
-                      required
-                    />
-                  </Grid>
-                </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
@@ -57,6 +99,10 @@ const ChangePasswordStudent = () => {
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
                       required
+                      name="password"
+                      type="password"
+                      value={password}
+                      onChange={handleChange}
                     />
                   </Grid>
                 </Grid>
@@ -69,6 +115,10 @@ const ChangePasswordStudent = () => {
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
                       required
+                      type="password"
+                      name="retypePassword"
+                      value={retypePassword}
+                      onChange={handleChange}
                     />
                   </Grid>
                 </Grid>
@@ -91,6 +141,7 @@ const ChangePasswordStudent = () => {
                 </Grid>
               </Grid>
             </form>
+            
           </Grid>
         </Container>
       </Box>

@@ -29,7 +29,7 @@ const SubjectAttendanceStudent = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={9} sx={{ py: 3, ml: 4 }}>
+              <Grid item xs={10} sx={{ py: 3, ml: 4,pl:4 }}>
                 <Grid item xs={3} sx={{ mb: 3 }}>
                   Môn học:
                   <FormControl

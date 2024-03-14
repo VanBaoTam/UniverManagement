@@ -162,6 +162,8 @@ export class UserService {
   async changePassword(req, res) {
     try {
       const { password, retypePassword } = req.body ?? {};
+      const accessKey = req.headers["authorization"] ?? "";
+      if (!accessKey) return res.status(400).json("Invalid accessKey");
       const decodedToken = jwt.verify(
         accessKey.split(" ")[1],
         process.env.SECRET_KEY
