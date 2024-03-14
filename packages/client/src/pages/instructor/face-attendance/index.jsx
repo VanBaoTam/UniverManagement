@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { attendanceFacesCols } from "@types";
+import { GiConfirmed } from "react-icons/gi";
 import { displayToast } from "@utils";
 import dayjs from "dayjs";
 import UserContext from "@contexts/user";
@@ -25,6 +26,7 @@ const style = {
 };
 const AttendanceFaceInstructor = () => {
   const [open, setOpen] = useState(false);
+  const [studentIds, setStudentIds] = useState([]);
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
   const handleOpen = () => setOpen(true);
@@ -47,7 +49,6 @@ const AttendanceFaceInstructor = () => {
           "Content-type": "application/json",
         },
       });
-      console.log(resp);
       if (resp.status === 200 && resp.data) {
         const studentsWithId = resp.data.attendanceStatus.map(
           (course, index) => {
@@ -55,6 +56,29 @@ const AttendanceFaceInstructor = () => {
           }
         );
         setStudents(studentsWithId || []);
+      }
+    } catch (error) {
+      console.log(error);
+      displayToast(error.response.data.message, "error");
+    }
+  };
+  const Attendance = async () => {
+    try {
+      const resp = await provider.post({
+        path: `instructor/attendance`,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+        body: {
+          courseId: course.course_id,
+          shifts: course.shift,
+          days: course.days,
+          studentIds,
+        },
+      });
+      if (resp.status === 200) {
+        displayToast("Success", "success");
       }
     } catch (error) {
       console.log(error);
@@ -146,6 +170,19 @@ const AttendanceFaceInstructor = () => {
                   >
                     <LuScanFace />
                   </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      fontSize: "2rem",
+                      px: 3,
+                      py: 1,
+                      ml: 1,
+                      background: BLUE_COLOR,
+                    }}
+                    onClick={Attendance}
+                  >
+                    <GiConfirmed />
+                  </Button>
                 </Grid>
               </Grid>
               <Paper sx={{ mt: 3, overflowX: "auto" }}>
@@ -184,6 +221,8 @@ const AttendanceFaceInstructor = () => {
             >
               {course ? (
                 <AttendanceWebcam
+                  studentIds={studentIds}
+                  setStudentIds={setStudentIds}
                   days={course.days}
                   shifts={course.shift}
                   courseId={course.course_id}
