@@ -20,9 +20,14 @@ function UserContextProvider(props) {
     setUser(userInfo);
   };
 
+  const logout = () => {
+    setUser({ token: "", type: "", role: "", accountId: "" });
+    sessionStorage.removeItem("user");
+  };
+
   const userValue = useMemo(
-    () => ({ user, setUserContext }),
-    [user, setUserContext]
+    () => ({ user, setUserContext, logout }),
+    [user, setUserContext, logout]
   );
 
   return (
