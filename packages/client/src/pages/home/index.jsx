@@ -39,7 +39,7 @@ const Home = () => {
           displayToast("Có lỗi đã xảy ra!", "error");
         } else {
           displayToast("Đăng nhập thành công!", "success");
-          if (resp.data.role === 1) navigation("/admin/list-class");
+          if (resp.data.role === 1) navigation("/admin/list-courses");
           else if (resp.data.role === 2)
             navigation("/student/subject-attendance");
           else navigation("/instructor/attendance");
@@ -84,7 +84,13 @@ const Home = () => {
                 direction="column"
                 sx={{ py: 5 }}
               >
-                <Grid sx={{ fontSize: "2rem", fontWeight: "bold",fontFamily:'time' }}>
+                <Grid
+                  sx={{
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                    fontFamily: "time",
+                  }}
+                >
                   ĐĂNG NHẬP
                 </Grid>
                 <form className="my-4" onSubmit={handleSubmit(onSubmit)}>
