@@ -23,6 +23,9 @@ export class InstructorController {
     async attendance(req, res) {
         return await instructorServiceInstance.attendance(req, res);
     }
+    async GetAttendanceStatus(req, res) {
+        return await instructorServiceInstance.GetAttendanceStatus(req, res);
+    }
 }
 
 //------------------------------------------------

@@ -27,12 +27,10 @@ export class UserService {
         if (!isValidUserCredential)
             return res.status(400).json({ message: "Invalid User Credential" });
         try {
-            console.log(username, password);
             const authQuery =
                 "select password from accounts where username = $1";
             const authValues = [username];
             const authResult = await datasource.query(authQuery, authValues);
-            console.log(authResult.rows[0]);
             if (!authResult.rows.length) {
                 return res.status(404).json({
                     message: "User not found!",
@@ -47,7 +45,7 @@ export class UserService {
             }
 
             const dataQuery =
-                "SELECT account_id as accountId, role_id as role ,status FROM accounts WHERE username = $1";
+                "SELECT account_id, role_id as role ,status FROM accounts WHERE username = $1";
 
             const dataValues = [username];
             const dataResult = await datasource.query(dataQuery, dataValues);
@@ -59,6 +57,7 @@ export class UserService {
             const data = {
                 accountId: dataResult.rows[0].account_id,
             };
+
             let expiresIn;
             if (dataResult.rows[0].role === 1) expiresIn = "30m";
             else expiresIn = "1d";
@@ -114,6 +113,8 @@ export class UserService {
 
     async updateProfile(req, res) {
         try {
+            const accessKey = req.headers["authorization"] ?? "";
+            if (!accessKey) return res.status(400).json("Invalid accessKey");
             const decodedToken = jwt.verify(
                 accessKey.split(" ")[1],
                 process.env.SECRET_KEY
@@ -131,10 +132,9 @@ export class UserService {
                 return res.status(404).json({ message: "Profile not found!" });
             const profile = {
                 profile_id: dataResult.rows[0].profile_id,
-                email: req.body.email ?? dataResult.rows[0].email,
-                phoneNumber:
-                    req.body.phone_number ?? dataResult.rows[0].phone_number,
-                address: req.body.address ?? dataResult.rows[0].address,
+                email: req.body.email ?? "",
+                phoneNumber: req.body.phone_number ?? "",
+                address: req.body.address ?? "",
             };
             if (
                 !CredentialsValidation("email", profile.email) ||
@@ -143,14 +143,29 @@ export class UserService {
                 return res
                     .status(400)
                     .json({ message: "Invalid email or phone number" });
-            const updateQuery =
-                "update profiles set email = $1,phone_number = $2, address = $3 where profile_id = $4";
-            const updateValues = [
-                profile.email,
-                profile.phoneNumber,
-                profile.address,
-                profile.profile_id,
-            ];
+            let updateQuery = "UPDATE profiles SET";
+            let updateValues = [];
+            let updateIndex = 1;
+            if (profile.email) {
+                updateQuery += ` email = $${updateIndex},`;
+                updateValues.push(profile.email);
+                updateIndex++;
+            }
+            if (profile.phoneNumber) {
+                updateQuery += ` phone_number = $${updateIndex},`;
+                updateValues.push(profile.phoneNumber);
+                updateIndex++;
+            }
+            if (profile.address) {
+                updateQuery += ` address = $${updateIndex},`;
+                updateValues.push(profile.address);
+                updateIndex++;
+            }
+            if (updateIndex === 1)
+                return res.status(305).json({ message: " Not Modified" });
+            updateQuery = updateQuery.replace(/,\s*$/, "");
+            updateQuery += " WHERE profile_id = $" + updateIndex;
+            updateValues.push(profile.profile_id);
             await datasource.query(updateQuery, updateValues);
             return res.status(200).json("Profile updated successfully");
         } catch (error) {
@@ -162,6 +177,8 @@ export class UserService {
     }
     async changePassword(req, res) {
         try {
+            const accessKey = req.headers["authorization"] ?? "";
+            if (!accessKey) return res.status(400).json("Invalid accessKey");
             const { password, retypePassword } = req.body ?? {};
             const decodedToken = jwt.verify(
                 accessKey.split(" ")[1],

@@ -38,7 +38,7 @@ export class InstructorService {
         if (!teacherResult.rows[0])
             return res.status(404).json({ message: "Teacher not found!" });
         const courseQuery =
-            "select courses.course_id,course_title,start_date,end_date,shift,days from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id  where instructor_id = $1";
+            "select courses.course_id,course_title,start_date,end_date,shift,days,url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id  where instructor_id = $1";
         const courseValue = [teacherResult.rows[0].instructor_id];
         const courseResult = await datasource.query(courseQuery, courseValue);
         if (!courseResult.rows[0])
@@ -60,10 +60,8 @@ export class InstructorService {
             return res.status(400).json({ message: "Invalid Account ID" });
         const urlString = req.url;
 
-        // Tách query string từ URL
         const queryString = urlString.split("?")[1];
 
-        // Phân tích query string thành các cặp key-value
         const paramsArray = queryString.split("&");
         const params = {};
         paramsArray.forEach((param) => {
@@ -71,11 +69,11 @@ export class InstructorService {
             params[key] = decodeURIComponent(value);
         });
 
-        // Sử dụng tham số để truy vấn cơ sở dữ liệu
         const dayValue = params.days;
         const shiftValue = params.shifts;
         const courseIdValue = params.courseId;
-        // console.log(typeof dayValue, typeof shiftValue, courseIdValue);
+        if (dayValue < 2 || dayValue > 7 || shiftValue < 1 || shiftValue > 4)
+            return res.status(400).json({ message: "Invalid day or shift" });
         const courseQuery =
             "select times, url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3";
         const courseValue = [courseIdValue, dayValue, shiftValue];
@@ -85,9 +83,8 @@ export class InstructorService {
         const sheetId = courseResult.rows[0].url.split("/d/")[1];
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId,
-            range: `Thứ ${dayValue} - Ca ${shiftValue}`, // ví dụ 'Sheet1!A1:B2'
+            range: `Thứ ${dayValue} - Ca ${shiftValue}`,
         });
-        //console.log(data.data.values);
         const header = response.data.values[1];
 
         const objects = response.data.values
@@ -120,9 +117,10 @@ export class InstructorService {
             process.env.SECRET_KEY
         );
         const accountId = decodedToken.accountId;
+        const { courseId, studentIds, shifts, days } = req.body;
         if (!CredentialsValidation("id", accountId))
             return res.status(400).json({ message: "Invalid Account ID" });
-        const { courseId, studentIds, shifts, days } = req.body;
+
         const courseQuery =
             "select times, url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3";
         const courseValue = [courseId, days, shifts];
@@ -132,7 +130,7 @@ export class InstructorService {
         const sheetId = courseResult.rows[0].url.split("/d/")[1];
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId,
-            range: `Thứ ${days} - Ca ${shifts}`, // ví dụ 'Sheet1!A1:B2'
+            range: `Thứ ${days} - Ca ${shifts}`,
         });
         const checkAttendance = response.data.values[0];
         var request = {
@@ -175,7 +173,52 @@ export class InstructorService {
             })
         );
 
-        console.log(check);
+        //console.log(check);
+    }
+    async GetAttendanceStatus(req, res) {
+        const accessKey = req.headers["authorization"] ?? "";
+        //---------------------------------------------------------
+        const urlString = req.url;
+
+        const queryString = urlString.split("?")[1];
+        if (!queryString)
+            return res.status(400).json({ message: "Invalid Params" });
+        const paramsArray = queryString.split("&");
+        const params = {};
+        paramsArray.forEach((param) => {
+            const [key, value] = param.split("=");
+            params[key] = decodeURIComponent(value);
+        });
+        //--------------------------------------------------------
+        const dayValue = params.days;
+        const shiftValue = params.shifts;
+        const courseIdValue = params.courseId;
+        if (!accessKey) return res.status(400).json("Invalid accessKey");
+
+        const decodedToken = jwt.verify(
+            accessKey.split(" ")[1],
+            process.env.SECRET_KEY
+        );
+        const accountId = decodedToken.accountId;
+        if (!CredentialsValidation("id", accountId))
+            return res.status(400).json({ message: "Invalid Account ID" });
+        if (dayValue < 2 || dayValue > 7 || shiftValue < 1 || shiftValue > 4)
+            return res.status(400).json({ message: "Invalid day or shift" });
+        const courseQuery =
+            "select times, url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3";
+        const courseValue = [courseIdValue, dayValue, shiftValue];
+        // console.log(courseValue);
+        const courseResult = await datasource.query(courseQuery, courseValue);
+        // console.log(courseResult.rows);
+        if (!courseResult.rows[0])
+            return res.status(404).json({ message: "Course not found!" });
+        const sheetId = courseResult.rows[0].url.split("/d/")[1];
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: sheetId,
+            range: `Thứ ${days} - Ca ${shifts}`,
+        });
+        const checkAttendance = response.data.values[0];
+        console.log(checkAttendance.length);
     }
 }
 

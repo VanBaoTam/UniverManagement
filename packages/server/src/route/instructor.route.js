@@ -20,5 +20,10 @@ instructorRouter.post(
     authenToken,
     instructorInstance.attendance
 );
+instructorRouter.get(
+    "/get-attendance-status",
+    authenToken,
+    instructorInstance.GetAttendanceStatus
+);
 // -----------------------------------------------
 export { instructorRouter };
