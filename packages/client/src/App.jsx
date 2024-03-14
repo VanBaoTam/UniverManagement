@@ -9,6 +9,7 @@ import { UserContextProvider } from "@contexts/user";
 import AdminRoutes from "@routes/admin-routes";
 import StudentRoutes from "@routes/student-routes";
 import InstructorRoutes from "@routes/instructor-routes";
+import Apps from "./components/App";
 function App() {
   return (
     <React.Fragment>
@@ -18,12 +19,7 @@ function App() {
           <ScrollToTop />
           <Toast />
           <MainLayout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/admin/*" element={<AdminRoutes />} />
-              <Route path="/instructor/*" element={<InstructorRoutes />} />
-              <Route path="/student/*" element={<StudentRoutes />} />
-            </Routes>
+           <Apps/>
           </MainLayout>
         </UserContextProvider>
       </BrowserRouter>

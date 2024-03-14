@@ -21,3 +21,9 @@ export const PERMISSIONS = {
   TEACHER: 3,
  
 };
+export const ROUTES = {
+  HOME: "/",
+  ADMIN: 1,
+  TEACHER: 3,
+};
+
