@@ -17,7 +17,7 @@ export class InstructorService {
 
     // -----------------------------------------------
 
-    async getCourses(req, res) {
+    async GetCourses(req, res) {
         const accessKey = req.headers["authorization"] ?? "";
         if (!accessKey) return res.status(400).json("Invalid accessKey");
 
@@ -47,7 +47,7 @@ export class InstructorService {
             .status(200)
             .json({ message: "ok", listcourse: courseResult.rows });
     }
-    async getattendancesbycourse(req, res) {
+    async GetAttendancesByCourse(req, res) {
         const accessKey = req.headers["authorization"] ?? "";
         if (!accessKey) return res.status(400).json("Invalid accessKey");
 
@@ -108,7 +108,7 @@ export class InstructorService {
         });
         return res.status(200).json({ listStudent });
     }
-    async attendance(req, res) {
+    async Attendance(req, res) {
         const accessKey = req.headers["authorization"] ?? "";
         if (!accessKey) return res.status(400).json("Invalid accessKey");
 
@@ -204,9 +204,24 @@ export class InstructorService {
             return res.status(400).json({ message: "Invalid Account ID" });
         if (dayValue < 2 || dayValue > 7 || shiftValue < 1 || shiftValue > 4)
             return res.status(400).json({ message: "Invalid day or shift" });
+        const teacherQuery =
+            "select instructor_id from instructors join users on users.user_id = instructors.user_id where account_id = $1";
+        const teacherValues = [accountId];
+        const teacherResult = await datasource.query(
+            teacherQuery,
+            teacherValues
+        );
+        if (!teacherResult.rows[0])
+            return res.status(404).json({ message: "Teacher not found!" });
         const courseQuery =
-            "select times, url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3";
-        const courseValue = [courseIdValue, dayValue, shiftValue];
+            "select * from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3 and instructor_id = $4";
+        const courseValue = [
+            courseIdValue,
+            dayValue,
+            shiftValue,
+            teacherResult.rows[0].instructor_id,
+        ];
+        // console.log(courseValue);
         // console.log(courseValue);
         const courseResult = await datasource.query(courseQuery, courseValue);
         // console.log(courseResult.rows);
@@ -215,10 +230,25 @@ export class InstructorService {
         const sheetId = courseResult.rows[0].url.split("/d/")[1];
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId,
-            range: `Thứ ${days} - Ca ${shifts}`,
+            range: `Thứ ${dayValue} - Ca ${shiftValue}`,
         });
-        const checkAttendance = response.data.values[0];
-        console.log(checkAttendance.length);
+        const checkAttendance = response.data.values[0].length - 3;
+
+        const header = response.data.values[1];
+
+        const listStudent = response.data.values
+            .slice(2)
+            .map((row) => rowToObject(row, header));
+        const attendanceStatus = listStudent.map((item) => {
+            var buoi = `Buổi ${checkAttendance}`;
+            return {
+                studentId: item["Mã số sinh viên"],
+                studentName: item["Tên sinh viên"],
+                studentClass: item["Lớp"],
+                isAttendance: item[buoi] == "x",
+            };
+        });
+        console.log(attendanceStatus);
     }
 }
 

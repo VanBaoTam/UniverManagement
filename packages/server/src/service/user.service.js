@@ -15,7 +15,7 @@ export class UserService {
     }
 
     // -----------------------------------------------
-    async login(req, res) {
+    async Login(req, res) {
         const { username, password } = req.body ?? {};
         if (!username || !password)
             return res
@@ -68,6 +68,7 @@ export class UserService {
             return res.status(200).json({
                 message: "Login Successful",
                 role: dataResult.rows[0].role_id,
+                accountId: dataResult.rows[0].account_id,
                 token: { value: token, type: "Bearer" },
                 expiresIn: expiresIn,
             });
@@ -79,7 +80,7 @@ export class UserService {
         }
     }
 
-    async getProfile(req, res) {
+    async GetProfile(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
             if (!accessKey) return res.status(400).json("Invalid accessKey");
@@ -111,7 +112,7 @@ export class UserService {
         }
     }
 
-    async updateProfile(req, res) {
+    async UpdateProfile(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
             if (!accessKey) return res.status(400).json("Invalid accessKey");
@@ -175,7 +176,7 @@ export class UserService {
             });
         }
     }
-    async changePassword(req, res) {
+    async ChangePassword(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
             if (!accessKey) return res.status(400).json("Invalid accessKey");

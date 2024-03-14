@@ -7,18 +7,18 @@ const instructorRouter = Router();
 instructorRouter.get(
     "/get-courses",
     authenToken,
-    instructorInstance.getCourses
+    instructorInstance.GetCourses
 );
 instructorRouter.get(
     "/get-attendances-by-course",
     authenToken,
-    instructorInstance.getattendancesbycourse
+    instructorInstance.GetAttendancesByCourse
 );
 
 instructorRouter.post(
     "/attendance",
     authenToken,
-    instructorInstance.attendance
+    instructorInstance.Attendance
 );
 instructorRouter.get(
     "/get-attendance-status",

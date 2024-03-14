@@ -13,11 +13,11 @@ export class AdminController {
     }
 
     //-----------------------------------------------
-    async createCourse(req, res) {
-        return await adminServiceInstance.createCourse(req, res);
+    async CreateCourse(req, res) {
+        return await adminServiceInstance.CreateCourse(req, res);
     }
-    async getUsers(req, res) {
-        return await adminServiceInstance.getUsers(req, res);
+    async GetUsers(req, res) {
+        return await adminServiceInstance.GetUsers(req, res);
     }
 }
 

@@ -4,9 +4,9 @@ import { authenToken } from "../middlewares/authen.js";
 
 // -----------------------------------------------
 const userRouter = Router();
-userRouter.post("/login", userInstance.login);
-userRouter.get("/get-profile/:accountId", authenToken, userInstance.getProfile);
-userRouter.put("/update-profile", authenToken, userInstance.updateProfile);
-userRouter.put("/change-password", authenToken, userInstance.changePassword);
+userRouter.post("/login", userInstance.Login);
+userRouter.get("/get-profile/:accountId", authenToken, userInstance.GetProfile);
+userRouter.put("/update-profile", authenToken, userInstance.UpdateProfile);
+userRouter.put("/change-password", authenToken, userInstance.ChangePassword);
 // -----------------------------------------------
 export { userRouter };

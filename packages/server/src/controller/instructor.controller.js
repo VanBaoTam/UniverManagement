@@ -14,14 +14,14 @@ export class InstructorController {
 
     //-----------------------------------------------
 
-    async getCourses(req, res) {
-        return await instructorServiceInstance.getCourses(req, res);
+    async GetCourses(req, res) {
+        return await instructorServiceInstance.GetCourses(req, res);
     }
-    async getattendancesbycourse(req, res) {
-        return await instructorServiceInstance.getattendancesbycourse(req, res);
+    async GetAttendancesByCourse(req, res) {
+        return await instructorServiceInstance.GetAttendancesByCourse(req, res);
     }
-    async attendance(req, res) {
-        return await instructorServiceInstance.attendance(req, res);
+    async Attendance(req, res) {
+        return await instructorServiceInstance.Attendance(req, res);
     }
     async GetAttendanceStatus(req, res) {
         return await instructorServiceInstance.GetAttendanceStatus(req, res);

@@ -13,18 +13,18 @@ export class UserController {
     }
 
     //-----------------------------------------------
-    async login(req, res) {
-        return await userServiceInstance.login(req, res);
+    async Login(req, res) {
+        return await userServiceInstance.Login(req, res);
     }
 
-    async getProfile(req, res) {
-        return await userServiceInstance.getProfile(req, res);
+    async GetProfile(req, res) {
+        return await userServiceInstance.GetProfile(req, res);
     }
-    async updateProfile(req, res) {
-        return await userServiceInstance.updateProfile(req, res);
+    async UpdateProfile(req, res) {
+        return await userServiceInstance.UpdateProfile(req, res);
     }
-    async changePassword(req, res) {
-        return await userServiceInstance.changePassword(req, res);
+    async ChangePassword(req, res) {
+        return await userServiceInstance.ChangePassword(req, res);
     }
 }
 

@@ -12,7 +12,7 @@ export class AdminService {
         return this.instance;
     }
 
-    async createCourse(req, res) {
+    async CreateCourse(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
             if (!accessKey)
@@ -191,7 +191,7 @@ export class AdminService {
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }
-    async getUsers(req, res) {
+    async GetUsers(req, res) {
         const accessKey = req.headers["authorization"] ?? "";
         if (!accessKey) return res.status(400).json("Invalid accessKey");
 
