@@ -1,7 +1,7 @@
 import { sheets, drive } from "../utils/authSheet.js";
 import { CredentialsValidation } from "../constants/common.js";
 import { datasource } from "../datasource/index.js";
-
+import jwt from "jsonwebtoken";
 export class AdminService {
     static instance;
 
@@ -15,26 +15,38 @@ export class AdminService {
     async createCourse(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
-            if (!accessKey) return res.status(400).json("Invalid accessKey");
+            if (!accessKey)
+                return res.status(400).json({ message: "Invalid accessKey" });
 
             const decodedToken = jwt.verify(
                 accessKey.split(" ")[1],
                 process.env.SECRET_KEY
             );
             const accountId = decodedToken.accountId;
+
             if (!CredentialsValidation("id", accountId))
                 return res.status(400).json({ message: "Invalid Account ID" });
             const { teacherId, courseId, schedule, startDate, endDate, times } =
                 req.body ?? {};
+
+            for (const item of schedule) {
+                if (
+                    item.day < 2 ||
+                    item.day > 7 ||
+                    item.shift < 1 ||
+                    item.shift > 4
+                ) {
+                    return res
+                        .status(400)
+                        .json({ message: "Invalid day or shift" });
+                }
+            }
 
             const courseQuery =
                 "select course_title from courses where course_id = $1";
             const courseResult = await datasource.query(courseQuery, [
                 courseId,
             ]);
-
-            if (!courseResult.rows[0])
-                return res.status(404).json({ message: "Course not found!" });
 
             const teacherQuery =
                 "select instructor_id,name,email from profiles join accounts on profiles.profile_id = accounts.profile_id join users on accounts.account_id = users.account_id join instructors on instructors.user_id = users.user_id where instructor_id = $1";
@@ -44,6 +56,26 @@ export class AdminService {
 
             if (!teacherResult.rows[0])
                 return res.status(404).json({ message: "Teacher not found" });
+            for (const item of schedule) {
+                const courseMappingQuery =
+                    "select * from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3 and instructor_id = $4";
+                const courseMappingValue = [
+                    courseId,
+                    item.day,
+                    item.shift,
+                    teacherId,
+                ];
+                const courseMappingResult = await datasource.query(
+                    courseMappingQuery,
+                    courseMappingValue
+                );
+                if (courseMappingResult.rows[0])
+                    return res.status(400).json({
+                        message: "Course already exists!",
+                        course: courseMappingResult.rows[0],
+                    });
+            }
+
             var resource;
             const defaultData = [
                 ["", "", "Đã học"],
@@ -112,7 +144,6 @@ export class AdminService {
                 fields: "sheets.properties.title",
             });
 
-            // Duyệt qua từng sheet và cập nhật dữ liệu
             const updatePromises = data.sheets.map(async (sheet) => {
                 const updateRequest = {
                     spreadsheetId: spreadsheetId,
