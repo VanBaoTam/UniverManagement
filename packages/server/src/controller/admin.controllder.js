@@ -19,6 +19,9 @@ export class AdminController {
     async getUsers(req, res) {
         return await adminServiceInstance.getUsers(req, res);
     }
+    async changeStatusAccount(req, res) {
+        return await adminServiceInstance.changeStatusAccount(req, res);
+    }
 }
 
 //------------------------------------------------

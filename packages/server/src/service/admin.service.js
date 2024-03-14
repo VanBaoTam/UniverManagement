@@ -192,33 +192,74 @@ export class AdminService {
         }
     }
     async getUsers(req, res) {
-        const accessKey = req.headers["authorization"] ?? "";
-        if (!accessKey) return res.status(400).json("Invalid accessKey");
+        try {
+            const accessKey = req.headers["authorization"] ?? "";
+            if (!accessKey) return res.status(400).json("Invalid accessKey");
 
-        const decodedToken = jwt.verify(
-            accessKey.split(" ")[1],
-            process.env.SECRET_KEY
-        );
-        const accountId = decodedToken.accountId;
-        if (!CredentialsValidation("id", accountId))
-            return res.status(400).json({ message: "Invalid Account id" });
-        const dataQuery =
-            "select account_id,role_id,name,email,phone_number from accounts join profiles on accounts.profile_id = profiles.profile_id";
-        const dataValues = await datasource.query(dataQuery);
-        if (!dataValues.rows[0])
-            return res.status(404).json({ message: "Profile not found" });
-        const userList = dataValues.rows.map((user) => {
-            return {
-                accountId: user.accountId,
-                role: user.role_id,
-                name: user.name,
-                email: user.email,
-                phoneNumber: user.phone_number,
-            };
-        });
-        return res
-            .status(200)
-            .json({ message: "Get list successfully", userList });
+            const decodedToken = jwt.verify(
+                accessKey.split(" ")[1],
+                process.env.SECRET_KEY
+            );
+            const accountId = decodedToken.accountId;
+            if (!CredentialsValidation("id", accountId))
+                return res.status(400).json({ message: "Invalid Account id" });
+            const dataQuery =
+                "select account_id,role_id,name,email,phone_number,status from accounts join profiles on accounts.profile_id = profiles.profile_id";
+            const dataValues = await datasource.query(dataQuery);
+            if (!dataValues.rows[0])
+                return res.status(404).json({ message: "Profile not found" });
+            const userList = dataValues.rows.map((user) => {
+                return {
+                    accountId: user.accountId,
+                    role: user.role_id,
+                    name: user.name,
+                    email: user.email,
+                    phoneNumber: user.phone_number,
+                    status: user.status,
+                };
+            });
+            return res
+                .status(200)
+                .json({ message: "Get list successfully", userList });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
+    async changeStatusAccount(req, res) {
+        try {
+            const accessKey = req.headers["authorization"] ?? "";
+            if (!accessKey) return res.status(400).json("Invalid accessKey");
+
+            const decodedToken = jwt.verify(
+                accessKey.split(" ")[1],
+                process.env.SECRET_KEY
+            );
+            const accountId = decodedToken.accountId;
+            if (!CredentialsValidation("id", accountId))
+                return res.status(400).json({ message: "Invalid Account id" });
+            const account = req.params.account;
+            const status = req.params.status;
+            const accountQuery =
+                "select account_id,status from accounts where account_id = $1";
+            const accountResult = await datasource.query(accountQuery, [
+                account,
+            ]);
+            if (!accountResult.rows[0])
+                return res.status(404).json({ message: "Account not found!" });
+            if (accountResult.rows[0].status == status)
+                return res.status(305).json({ message: " Not Modified" });
+            const updateQuery =
+                "update accounts set status = $1 where account_id = $2";
+            const updateValues = [status, account];
+            await datasource.query(updateQuery, updateValues);
+            return res
+                .status(200)
+                .json({ message: " updated status successfully" });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
     }
 }
 

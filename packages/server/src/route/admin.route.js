@@ -5,6 +5,11 @@ import { authenToken } from "../middlewares/authen.js";
 // -----------------------------------------------
 const adminRouter = Router();
 adminRouter.post("/create-course", adminInstance.createCourse);
-adminRouter.get("/get-user/:accountId", authenToken, adminInstance.getUsers);
+adminRouter.get("/get-user", authenToken, adminInstance.getUsers);
+adminRouter.get(
+    "/change-status-account/:account/:status",
+    authenToken,
+    adminInstance.changeStatusAccount
+);
 // -----------------------------------------------
 export { adminRouter };
