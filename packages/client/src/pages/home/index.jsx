@@ -84,7 +84,7 @@ const Home = () => {
                 direction="column"
                 sx={{ py: 5 }}
               >
-                <Grid sx={{ fontSize: "2rem", fontWeight: "bold" }}>
+                <Grid sx={{ fontSize: "2rem", fontWeight: "bold",fontFamily:'time' }}>
                   ĐĂNG NHẬP
                 </Grid>
                 <form className="my-4" onSubmit={handleSubmit(onSubmit)}>

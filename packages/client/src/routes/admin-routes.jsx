@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ListUserAdmin from "@pages/admin/user";
 import ListClassAdmin from "@pages/admin/class";
 function AdminRoutes() {
@@ -6,6 +6,7 @@ function AdminRoutes() {
     <Routes>
       <Route path="/list-user" element={<ListUserAdmin />} />
       <Route path="/list-class" element={<ListClassAdmin />} />
+      <Route path="*" element={<Navigate to="/admin/list-class" />} />
     </Routes>
   );
 }
