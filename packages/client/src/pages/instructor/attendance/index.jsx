@@ -36,7 +36,9 @@ const Attendance = () => {
       console.log(error);
       displayToast(error.response.data.message, "error");
     } finally {
-      setLoading(false); 
+     setTimeout(() => {
+       setLoading(false);
+     }, 500); 
     }
   };
   useEffect(() => {
@@ -44,7 +46,6 @@ const Attendance = () => {
   }, []);
   useEffect(() => {
     if (course) {
-      console.log("HERE");
       const json = JSON.stringify(course);
       if (sessionStorage.getItem("COURSE")) sessionStorage.removeItem("COURSE");
       sessionStorage.setItem("COURSE", json);
@@ -53,7 +54,6 @@ const Attendance = () => {
   }, [course]);
   const handleSelectionModel = useCallback(
     (ids) => {
-      console.log("HERE IDS", ids);
       if (!ids.length) {
         return;
       }

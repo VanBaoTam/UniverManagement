@@ -10,20 +10,17 @@ import Webcam from "react-webcam";
 const { VITE_ATTENDANCE_SERVICE, VITE_AUTHENTICATION_SERVICE } = import.meta
   .env;
 import UserContext from "@contexts/user";
-import { displayToast } from "@utils";
-import { Box } from "@mui/material";
+import { displayToastTop } from "@utils";
+import { Box, Button } from "@mui/material";
+import { BLUE_COLOR } from "@constants/color";
 function AttendanceWebcam(chilrens) {
-  const { courseId, shifts, days } = chilrens ?? {};
-  const [image, setImage] = useState(undefined);
+  const { studentIds, setStudentIds, courseId, shifts, days } = chilrens ?? {};
   const { user } = useContext(UserContext) ?? {};
   const [uploadMessage, setUploadMessage] = useState("Please upload an image!");
   const [imgSrc, setImgSrc] = useState(null);
   const webcamRef = useRef(null);
-  const [studentIds, setStudentIds] = useState([]);
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (image) => {
     const visitorImageName = uuidv4();
-    console.log("image", image);
     try {
       const response = await fetch(
         VITE_ATTENDANCE_SERVICE + `/${visitorImageName}.jpeg`,
@@ -50,7 +47,7 @@ function AttendanceWebcam(chilrens) {
             return `${student.mssv} - ${student.firstName} ${student.lastName} `;
           });
           const allMessages = messages.join("\n");
-          displayToast(allMessages, "success");
+          displayToastTop(allMessages, "success");
           retake();
         } else {
           setUploadMessage("Authentication failed");
@@ -110,7 +107,7 @@ function AttendanceWebcam(chilrens) {
                 const file = new File([blob], uuidv4() + ".jpeg", {
                   type: "image/jpeg",
                 });
-                setImage(file);
+                handleSubmit(file);
               })
               .catch((error) =>
                 console.error("Error converting image data URL to File:", error)
@@ -118,12 +115,10 @@ function AttendanceWebcam(chilrens) {
           }
         };
         img.src = imageSrc;
-        setTimeout(() => {
-          handleSubmit();
-        }, 1000);
       }
     }
   }, [webcamRef]);
+
   // const handleImageChange = (e) => {
   //   if (e.target.files && e.target.files.length > 0) {
   //     const selectedFile = e.target.files[0];
@@ -134,7 +129,7 @@ function AttendanceWebcam(chilrens) {
     setImgSrc(null);
     capture();
   };
-
+  useEffect(() => {}, []);
   useEffect(() => {
     console.log("IDS:", studentIds);
   }, [studentIds]);
@@ -168,9 +163,31 @@ function AttendanceWebcam(chilrens) {
       /> */}
       <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
         {imgSrc ? (
-          <button onClick={retake}>Retake photo</button>
+          <Button
+            variant="contained"
+            sx={{
+              fontSize: "2rem",
+              px: 3,
+              py: 1,
+              background: BLUE_COLOR,
+            }}
+            onClick={retake}
+          >
+            Retake photo
+          </Button>
         ) : (
-          <button onClick={capture}>Capture photo</button>
+          <Button
+            variant="contained"
+            sx={{
+              fontSize: "2rem",
+              px: 3,
+              py: 1,
+              background: BLUE_COLOR,
+            }}
+            onClick={capture}
+          >
+            Capture photo
+          </Button>
         )}
         {/* <button onClick={handleSubmit}>SUBMIT</button> */}
       </Box>

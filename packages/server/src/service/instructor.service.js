@@ -169,7 +169,7 @@ export class InstructorService {
         return true;
       })
     );
-    return res.status(200).json({ message: "Access" });
+    return res.status(200).json({ message: "Success" });
     //console.log(check);
   }
   // chưa xong ---------------------------------------------------------------------------

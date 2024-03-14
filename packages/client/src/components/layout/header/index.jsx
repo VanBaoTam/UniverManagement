@@ -10,18 +10,14 @@ import { useNavigate } from "react-router-dom";
 import { displayToast } from "@utils/toast";
 import { RED_COLOR } from "../../../constants/color";
 import { Button } from "@mui/material";
-import {
-  PERMISSIONS,
-  
-} from "@constants/common";
+import { PERMISSIONS } from "@constants/common";
 const Header = () => {
   const { logout } = useContext(UserContext);
   const navigation = useNavigate();
   const provider = useDataProvider();
-   
 
   const { user } = useContext(UserContext) ?? {};
-   const { role } = user ?? {};
+  const { role } = user ?? {};
   const [profileData, setProfileData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -49,7 +45,7 @@ const Header = () => {
   const handleLogout = async () => {
     await logout();
     displayToast("Đăng xuất thành công !", "success");
-    setProfileData(null); 
+    setProfileData(null);
     navigation("/");
   };
 
@@ -64,7 +60,7 @@ const Header = () => {
               className="py-2 ms-5"
             />
             {profileData && (
-              <>
+              <React.Fragment>
                 <Typography
                   variant="h5"
                   component="div"
@@ -76,19 +72,19 @@ const Header = () => {
                   }}
                 >
                   {role === PERMISSIONS.STUDENT && (
-                    <>
+                    <React.Fragment>
                       <span style={{ fontWeight: "bold" }}>Sinh Viên/</span>{" "}
-                    </>
+                    </React.Fragment>
                   )}
                   {role === PERMISSIONS.ADMIN && (
-                    <>
+                    <React.Fragment>
                       <span style={{ fontWeight: "bold" }}>Admin/</span>{" "}
-                    </>
+                    </React.Fragment>
                   )}
                   {role === PERMISSIONS.TEACHER && (
-                    <>
+                    <React.Fragment>
                       <span style={{ fontWeight: "bold" }}>Giảng viên/</span>{" "}
-                    </>
+                    </React.Fragment>
                   )}
 
                   {profileData.name}
@@ -100,7 +96,7 @@ const Header = () => {
                 >
                   Đăng xuất
                 </Button>
-              </>
+              </React.Fragment>
             )}
           </Toolbar>
         </AppBar>

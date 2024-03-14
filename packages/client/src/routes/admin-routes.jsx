@@ -15,14 +15,14 @@ function AdminRoutes() {
         }
       />
       <Route
-        path="/list-class"
+        path="/list-courses"
         element={
           <AdminRestrict>
             <ListClassAdmin />
           </AdminRestrict>
         }
       />
-      <Route path="*" element={<Navigate to="/admin/list-class" />} />
+      <Route path="*" element={<Navigate to="/admin/list-courses" />} />
     </Routes>
   );
 }

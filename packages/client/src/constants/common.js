@@ -5,7 +5,7 @@ const SIDEBAR_INSTRUCTORS = [
   { id: 3, name: "Cài đặt tài khoản", link: "/instructor/information" },
 ];
 const SIDEBAR_ADMINS = [
-  { id: 1, name: "Danh sách lớp học", link: "/admin/list-class" },
+  { id: 1, name: "Danh sách lớp học", link: "/admin/list-courses" },
   { id: 2, name: "Danh sách người dùng", link: "/admin/list-user" },
 ];
 const SIDEBAR_STUDENTS = [
@@ -19,11 +19,9 @@ export const PERMISSIONS = {
   STUDENT: 2,
   ADMIN: 1,
   TEACHER: 3,
- 
 };
 export const ROUTES = {
   HOME: "/",
   ADMIN: 1,
   TEACHER: 3,
 };
-

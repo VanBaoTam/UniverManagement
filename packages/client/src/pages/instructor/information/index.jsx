@@ -46,7 +46,9 @@ const InformationInstructor = () => {
       console.log(error);
       displayToast(error.response.data.message, "error");
     } finally {
-      setLoading(false); 
+      setTimeout(() => {
+        setLoading(false);
+      }, 500); 
     }
   };
 
