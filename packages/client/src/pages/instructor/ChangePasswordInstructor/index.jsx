@@ -15,7 +15,7 @@ const ChangePasswordInstructor = () => {
       >
         <Container>
           <Grid container direction="column" sx={{ pb: 5 }}>
-            <Grid sx={{ mt: 2 }}>
+            <Grid sx={{ mt: 2, ml: 4 }}>
               <Link to="/instructor/information">
                 <Button variant="text" sx={{ fontSize: "2rem" }}>
                   <IoArrowBackSharp />
@@ -29,7 +29,7 @@ const ChangePasswordInstructor = () => {
                 fontSize: "2rem",
                 fontWeight: "bold",
                 my: 4,
-                fontFamily:'time'
+                fontFamily: "time",
               }}
             >
               THAY ĐỔI MẬT KHẨU

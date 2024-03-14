@@ -15,7 +15,7 @@ const ChangePasswordStudent = () => {
       >
         <Container>
           <Grid container direction="column" sx={{ pb: 5 }}>
-            <Grid sx={{ mt: 2 }}>
+            <Grid sx={{ mt: 2,ml:4 }}>
               <Link to="/student/information">
                 <Button variant="text" sx={{ fontSize: "2rem" }}>
                   <IoArrowBackSharp />

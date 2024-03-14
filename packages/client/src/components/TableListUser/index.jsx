@@ -24,7 +24,7 @@ export default function TableListClass() {
     return (
       <Button
         onClick={() => handleClick(params.row)}
-        sx={{ background: RED_COLOR }}
+        sx={{ background: RED_COLOR , color:'white'}}
       >
         Vô Hiệu
       </Button>
