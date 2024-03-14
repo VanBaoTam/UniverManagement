@@ -75,6 +75,7 @@ const AttendanceFaceInstructor = () => {
           backgroundColor: "#f5f5f5",
           width: "100%",
           height: "40rem",
+          ml: 5,
         }}
       >
         <Container>
@@ -82,7 +83,7 @@ const AttendanceFaceInstructor = () => {
             <Grid container direction="column" sx={{ pb: 5, py: 1 }}>
               <Grid container>
                 <Grid item xs={6} sx={{ mt: 2 }}>
-                  <Link to="/AttendanceInstructor">
+                  <Link to="/instructor/attendance">
                     <Button variant="text" sx={{ fontSize: "2rem" }}>
                       <IoArrowBackSharp />
                     </Button>
