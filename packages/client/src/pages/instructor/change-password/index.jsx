@@ -12,49 +12,36 @@ const ChangePasswordInstructor = () => {
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
   const navigation = useNavigate();
+     const [oldPassword, setOldPassword] = useState("");
+     const [password, setPassword] = useState("");
+     const [retypePassword, setRetypePassword] = useState("");
+     const [message, setMessage] = useState("");
+     const [error, setError] = useState("");
 
-  const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
+     const handleSubmit = async (e) => {
+       e.preventDefault();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "password") {
-      setPassword(value);
-    } else if (name === "retypePassword") {
-      setRetypePassword(value);
-    }
-  };
+       try {
+         const response = await provider.put({
+           path: `user/change-password`,
+           body: {
+             oldPassword,
+             password,
+             retypePassword,
+           },
+           headers: {
+             Authorization: `Bearer ${user.token}`,
+             "Content-type": "application/json",
+           },
+         });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(password);
-    console.log(retypePassword);
-    try {
-      const response = await provider.put({
-        path: `user/change-password`,
-        body: {
-          password,
-          retypePassword,
-        },
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          "Content-type": "application/json",
-        },
-      });
-      navigation("/instructor/information");
-      displayToast("Đổi mật khẩu thành công", "success");
-
-      setSuccessMessage(response.data.message);
-    } catch (error) {
-      if (error.response) {
-        displayToast("Password không trùng nhau ! Vui lòng nhập lại", "error");
-
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage("Something went wrong. Please try again later.");
-      }
-    }
-  };
+         navigation("/instructor/information");
+             displayToast("Đổi mật khẩu thành công", "success");
+         setMessage(response.data.message);
+       } catch (error) {
+          displayToast(error.response.data.message, "success");
+       }
+     };
   return (
     <React.Fragment>
       <Box
@@ -90,15 +77,29 @@ const ChangePasswordInstructor = () => {
                   <Grid item xs={5}>
                     <TextField
                       id="outlined-basic"
+                      label="Nhập mật cũ"
+                      variant="outlined"
+                      fullWidth
+                      sx={{ background: "white", mb: 2 }}
+                      required
+                      type="password"
+                      value={oldPassword}
+                      onChange={(e) => setOldPassword(e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item xs={5}>
+                    <TextField
+                      id="outlined-basic"
                       label="Nhập mật mới"
                       variant="outlined"
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
                       required
-                      name="password"
                       type="password"
                       value={password}
-                      onChange={handleChange}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -112,9 +113,8 @@ const ChangePasswordInstructor = () => {
                       sx={{ background: "white", mb: 2 }}
                       required
                       type="password"
-                      name="retypePassword"
                       value={retypePassword}
-                      onChange={handleChange}
+                      onChange={(e) => setRetypePassword(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -137,6 +137,7 @@ const ChangePasswordInstructor = () => {
                 </Grid>
               </Grid>
             </form>
+            
           </Grid>
         </Container>
       </Box>

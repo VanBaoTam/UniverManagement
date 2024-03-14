@@ -8,32 +8,24 @@ import UserContext from "@contexts/user";
 import { displayToast } from "@utils/toast";
 import { useNavigate } from "react-router-dom";
 
-
 const ChangePasswordStudent = () => {
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
   const navigation = useNavigate();
-
+  const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "password") {
-      setPassword(value);
-    } else if (name === "retypePassword") {
-      setRetypePassword(value);
-    }
-  };
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(password);
-    console.log(retypePassword);
+
     try {
       const response = await provider.put({
         path: `user/change-password`,
         body: {
+          oldPassword,
           password,
           retypePassword,
         },
@@ -42,21 +34,12 @@ const ChangePasswordStudent = () => {
           "Content-type": "application/json",
         },
       });
+
       navigation("/student/information");
-          displayToast("Đổi mật khẩu thành công", "success");
-
-      setSuccessMessage(response.data.message);
-      
+      displayToast("Đổi mật khẩu thành công", "success");
+      setMessage(response.data.message);
     } catch (error) {
-      
-      if (error.response) {
-               displayToast("Password không trùng nhau ! Vui lòng nhập lại", "error");
-
-        setErrorMessage(error.response.data.message);
-        
-      } else {
-        setErrorMessage("Something went wrong. Please try again later.");
-      }
+      displayToast(error.response.data.message, "success");
     }
   };
   return (
@@ -94,15 +77,29 @@ const ChangePasswordStudent = () => {
                   <Grid item xs={5}>
                     <TextField
                       id="outlined-basic"
+                      label="Nhập mật cũ"
+                      variant="outlined"
+                      fullWidth
+                      sx={{ background: "white", mb: 2 }}
+                      required
+                      type="password"
+                      value={oldPassword}
+                      onChange={(e) => setOldPassword(e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item xs={5}>
+                    <TextField
+                      id="outlined-basic"
                       label="Nhập mật mới"
                       variant="outlined"
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
                       required
-                      name="password"
                       type="password"
                       value={password}
-                      onChange={handleChange}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -116,9 +113,8 @@ const ChangePasswordStudent = () => {
                       sx={{ background: "white", mb: 2 }}
                       required
                       type="password"
-                      name="retypePassword"
                       value={retypePassword}
-                      onChange={handleChange}
+                      onChange={(e) => setRetypePassword(e.target.value)}
                     />
                   </Grid>
                 </Grid>
@@ -141,7 +137,6 @@ const ChangePasswordStudent = () => {
                 </Grid>
               </Grid>
             </form>
-            
           </Grid>
         </Container>
       </Box>

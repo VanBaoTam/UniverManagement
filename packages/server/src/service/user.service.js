@@ -179,32 +179,55 @@ export class UserService {
     try {
       const accessKey = req.headers["authorization"] ?? "";
       if (!accessKey) return res.status(400).json("Invalid accessKey");
-      const { password, retypePassword } = req.body ?? {};
+
+      const { oldPassword, password, retypePassword } = req.body ?? {};
       const decodedToken = jwt.verify(
         accessKey.split(" ")[1],
         process.env.SECRET_KEY
       );
       const accountId = decodedToken.accountId;
-      if (
-        !password ||
-        !CredentialsValidation("password", password) ||
-        !retypePassword ||
-        !CredentialsValidation("password", retypePassword)
-      )
-        return res
-          .status(400)
-          .json({ message: "Invalid password or retypePassword" });
-      if (password != retypePassword)
-        return res.status(400).json({ message: "Password mismatch" });
-      const authQuery = "select account_id from accounts where account_id = $1";
+
+      if (!oldPassword || !password || !retypePassword) {
+        return res.status(400).json({
+          message:
+            "Please provide old password, new password, and retype password",
+        });
+      }
+
+      const authQuery = "SELECT password FROM accounts WHERE account_id = $1";
       const authValues = [accountId];
       const authResult = await datasource.query(authQuery, authValues);
-      if (!authResult.rows[0])
+
+      if (!authResult.rows[0]) {
         return res.status(404).json({ message: "Account not found" });
+      }
+
+      const storedPassword = authResult.rows[0].password;
+
+      if (oldPassword !== storedPassword) {
+        return res.status(400).json({ message: "Mật khẩu cũ không đúng" });
+      }
+
+      if (
+        !CredentialsValidation("password", password) ||
+        !CredentialsValidation("password", retypePassword)
+      ) {
+        return res.status(400).json({
+          message: "Invalid new password or retype password",
+        });
+      }
+
+      if (password !== retypePassword) {
+        return res.status(400).json({
+          message: "Mật khẩu mới không trùng khớp",
+        });
+      }
+
       const updateQuery =
-        "update accounts set password = $1 where account_id = $2";
+        "UPDATE accounts SET password = $1 WHERE account_id = $2";
       const updateValues = [password, accountId];
       await datasource.query(updateQuery, updateValues);
+
       return res.status(200).json({ message: "Password changed successfully" });
     } catch (error) {
       console.log(error);
