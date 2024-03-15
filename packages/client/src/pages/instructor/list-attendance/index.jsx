@@ -51,9 +51,9 @@ const ListAttendanceInstructor = () => {
       console.log(error);
       displayToast(error.response.data.message, "error");
     } finally {
-     setTimeout(() => {
-       setLoading(false);
-     }, 500); 
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
   const GetCourseById = async () => {
@@ -145,7 +145,6 @@ const ListAttendanceInstructor = () => {
                             },
                           },
                         }}
-                        pageSizeOptions={[10, 100]}
                         onRowSelectionModelChange={handleSelectionModel}
                       />
                     </div>

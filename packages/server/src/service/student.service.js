@@ -24,7 +24,7 @@ export class StudentService {
       const accountId = decodedToken.accountId;
       //-----------------------------------------------------------
       const { courseId, teacherId, shift, day } = req.params ?? {};
-
+      console.log(courseId, teacherId, shift, day);
       if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account ID" });
       if (!courseId || !teacherId || !day || !shift)
@@ -55,6 +55,7 @@ export class StudentService {
       const studentAttendance = listStudent.find(
         (item) => item["Mã số sinh viên"] == studentResult.rows[0].id
       );
+      console.log(studentAttendance);
       var student = {};
       student.name = studentAttendance["Tên sinh viên"];
       student.studentId = studentAttendance["Mã số sinh viên"];
@@ -86,7 +87,7 @@ export class StudentService {
       const accountId = decodedToken.accountId;
       if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account ID" });
-      const courseQuery = `select scm.course_id, courses.course_title, ism.days, ism.shift from accounts join users on users.account_id = accounts.account_id
+      const courseQuery = `select scm.course_id, courses.course_title, ism.days, ism.shift, ism.instructor_id from accounts join users on users.account_id = accounts.account_id
       join students on students.user_id = users.user_id 
       join studentscoursesmapping as scm on scm.student_id = students.student_id 
       join courses on courses.course_id = scm.course_id
