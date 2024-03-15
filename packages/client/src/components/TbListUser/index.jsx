@@ -1,15 +1,36 @@
 import React, { useContext, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { RED_COLOR } from "@constants/color";
 import { useDataProvider } from "@services";
 import UserContext from "@contexts/user";
+import { MAIN_COLOR } from "../../constants/color";
 
 export default function TableListClass() {
     const provider = useDataProvider();
     const { user } = useContext(UserContext) ?? {};
  const [users, setUsers] = useState([]);
+const columns = [
+  { field: "id", headerName: "Mã user", width: 90 },
+  { field: "name", headerName: "Họ tên", width: 240 },
+  { field: "email", headerName: "Email", width: 200 },
+  { field: "phoneNumber", headerName: "Số điện thoại", width: 150 },
+  { field: "status", headerName: "Trạng thái", width: 120 },
+  {
+    field: "action",
+    headerName: "Thao tác",
+    width: 160,
+    renderCell: (params) => (
+      <Button variant="contained" sx={{background: MAIN_COLOR,color:'black'}} 
+        onClick={() => handleChangeStatus(params.row.id, params.row.status)}
+      >
+        Change Status
+      </Button>
+    ),
+  },
+];
+  const [loading, setLoading] = useState(true);
 
  useEffect(() => {
    const fetchUsers = async () => {
@@ -23,22 +44,27 @@ export default function TableListClass() {
         },
       });
        setUsers(response.data.userList);
+                setLoading(false);
+
      } catch (error) {
        console.error("Error fetching users:", error);
+                setLoading(false);
+
      }
    };
 
    fetchUsers();
  }, []);
 
-    const handleChangeStatus = async (accountId, newStatus) => {
+    const handleChangeStatus = async (accountId, currentStatus) => {
       try {
+        const newStatus = currentStatus === "active" ? "in_active" : "active";
         console.log(accountId);
         console.log(newStatus);
 
         await provider.get({
-          path: `admin/change-status-account/${accountId}/${newStatus}`,
-
+          path: `admin/change-status-account/${accountId}`,
+          status: newStatus,
           headers: {
             Authorization: `Bearer ${user.token}`,
             "Content-type": "application/json",
@@ -47,7 +73,7 @@ export default function TableListClass() {
 
         setUsers((prevUsers) => {
           return prevUsers.map((user) => {
-            if (user.accountId === accountId) {
+            if (user.id === accountId) {
               return { ...user, status: newStatus };
             }
             return user;
@@ -57,59 +83,26 @@ export default function TableListClass() {
         console.error("Error changing status:", error);
       }
     };
- const columns = [
-   { field: "accountId", headerName: "Account ID", width: 150 },
-   { field: "role", headerName: "Role", width: 150 },
-   { field: "name", headerName: "Name", width: 200 },
-   { field: "email", headerName: "Email", width: 250 },
-   { field: "phoneNumber", headerName: "Phone Number", width: 200 },
-   {
-     field: "status",
-     headerName: "Status",
-     width: 150,
-     renderCell: (params) => (
-       <button
-         onClick={() =>
-           handleChangeStatus(
-             user.accountId,
-             user.status === "active" ? "active" : "active"
-           )
-         }
-       >
-         {user.status === "active" ? "Deactivate" : "Activate"}
-       </button>
-     ),
-   },
- ];
+
 
 
 
   return (
-    <Paper sx={{ mt: 3, overflowX: "auto", maxWidth: 1200 }}>
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={users}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5, 10, 20]}
-          checkboxSelection
-          disableSelectionOnClick
-        />
-      </div>
-      {/* <div style={{ Width: 960 }}>
-        <DataGrid
-          rows={userRow}
-          columns={[
-            ...userCols,
-            {
-              field: "action",
-              headerName: "Thao Tác",
-              renderCell: renderButtonCell,
-            },
-          ]}
-          pageSizeOptions={[10, 100]}
-        />
-      </div> */}
-    </Paper>
+    <React.Fragment>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Paper sx={{ mt: 3, overflowX: "auto", maxWidth: 1200 }}>
+        <div style={{ height: 550, width: "100%" }}>
+          <DataGrid
+            rows={users}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5, 10, 20]}
+            sx={{ px: 3 }}
+          />
+        </div>
+      </Paper>
+    </React.Fragment>
   );
 }

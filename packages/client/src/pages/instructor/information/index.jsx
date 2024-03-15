@@ -23,11 +23,11 @@ const InformationInstructor = () => {
     console.log(event.target.value, type);
     setValue(type, event.target.value);
   };
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(true);
 
   const getProfile = async () => {
     try {
-      setLoading(true);
+    
 
       const resp = await provider.get({
         path: `user/get-profile`,
@@ -42,14 +42,14 @@ const InformationInstructor = () => {
         });
         displayToast("Truy xuất thông tin giảng viên thành công!", "success");
       }
+               setLoading(false);
+
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 500); 
-    }
+               setLoading(false);
+
+    } 
   };
 
   const onSubmit = async (data) => {

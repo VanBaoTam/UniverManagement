@@ -13,11 +13,10 @@ const Attendance = () => {
   const [course, setCourse] = useState();
   const provider = useDataProvider();
   const [courses, setCourses] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const GetCourses = async () => {
     try {
-      setLoading(true);
       const resp = await provider.get({
         path: `instructor/get-courses`,
         headers: {
@@ -32,14 +31,14 @@ const Attendance = () => {
         setCourses(coursesWithId || []);
         displayToast("Truy xuất môn học thành công!", "success");
       }
+               setLoading(false);
+
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
-    }
+               setLoading(false);
+
+    } 
   };
   useEffect(() => {
     GetCourses();

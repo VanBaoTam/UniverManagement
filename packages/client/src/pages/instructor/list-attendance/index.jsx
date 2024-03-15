@@ -28,11 +28,10 @@ const ListAttendanceInstructor = () => {
   const handleChange = (event) => {
     setSelectedCourse(event.target.value);
   };
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const GetCourses = async () => {
     try {
-      setLoading(true);
       const resp = await provider.get({
         path: `instructor/get-courses`,
         headers: {
@@ -46,14 +45,13 @@ const ListAttendanceInstructor = () => {
         });
         setCourses(coursesWithId || []);
         setSelectedCourse(coursesWithId[0]);
-      }
+      }         setLoading(false);
+
     } catch (error) {
       console.log(error);
       displayToast(error.response.data.message, "error");
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
+               setLoading(false);
+
     }
   };
   const GetCourseById = async () => {

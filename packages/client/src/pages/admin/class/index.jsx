@@ -1,13 +1,14 @@
 import React, {useContext, useState, useEffect } from "react";
-import { Box, Button, Grid, Modal } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Grid, Modal } from "@mui/material";
 import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import ModalAddClass from "@components/ModalAddClass";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDataProvider } from "@services";
 import UserContext from "@contexts/user";
+import dayjs from "dayjs";
 
-const style = {
+const stylee = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -21,44 +22,74 @@ const style = {
 const ListClassAdmin = () => {
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
-      const [courses, setCourses] = useState([]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await provider.get({
-          path: `instructor/get-courses`,
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-type": "application/json",
-          },
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+     const fetchData = async () => {
+       try {
+         const response = await provider.get({
+           path: `admin/get-course-by-admin`,
+           headers: {
+             Authorization: `Bearer ${user.token}`,
+             "Content-type": "application/json",
+           },
+         });
+
+         console.log(response.data.listCourse);
+        const coursesWithId = response.data.listCourse.map((course, index) => {
+          return { ...course, id: index + 1 };
         });
-        setCourses(response.data.listCourse);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
 
-    fetchCourses();
-  }, []);
+         setCourses(coursesWithId);
+         setLoading(false);
+       } catch (error) {
+         console.error("Error fetching data:", error);
+         setLoading(false);
+       }
+     };
 
+     fetchData();
+   }, []);
   const columns = [
-    { field: "id", headerName: "Course ID", width: 150 },
-    { field: "courseTitle", headerName: "Course Title", width: 200 },
-    { field: "startDate", headerName: "Start Date", width: 150 },
-    { field: "endDate", headerName: "End Date", width: 150 },
-    { field: "shift", headerName: "Shift", width: 100 },
-    { field: "days", headerName: "Days", width: 100 },
+    { field: "course_id", headerName: "Mã môn học", width: 110 },
+    { field: "course_title", headerName: "Môn học", width: 270 },
+    {
+      field: "start_date",
+      headerName: "Ngày mở lớp",
+      width: 150,
+      valueFormatter: (data) => {
+        return dayjs(data.value).format("DD/MM/YYYY");
+      },
+    },
+    {
+      field: "end_date",
+      headerName: "Ngày kết thúc",
+      width: 150,
+      valueFormatter: (data) => {
+        return dayjs(data.value).format("DD/MM/YYYY");
+      },
+    },
+    { field: "shift", headerName: "Ca", width: 150 },
+    {
+      field: "days",
+      headerName: "Thứ",
+      width: 150,
+      valueFormatter: (data) => {
+        return `Thứ ${data.value}`;
+      },
+    },
   ];
-=======
->>>>>>> 519c44a4ffb4c0abc83bc3c8183636e6ed8afd64
   return (
     <React.Fragment>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Grid container direction="column">
         <Grid>
           <Box
@@ -68,7 +99,7 @@ const ListClassAdmin = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={10.5} sx={{ py: 3, pl: 5, ml: 4 }}>
+              <Grid item xs={12} sx={{ py: 3, pl: 5, ml: 4 }}>
                 <Grid container sx={{ mb: 3 }}>
                   <Grid item xs={6}>
                     <Button
@@ -79,45 +110,20 @@ const ListClassAdmin = () => {
                       Thêm lớp học
                     </Button>
                   </Grid>
-                  <Grid
-                    item
-                    xs={6}
-                    sx={{ display: "flex", justifyContent: "flex-end" }}
-                  >
-                    <Button variant="contained" sx={{ background: RED_COLOR }}>
-                      Xóa
-                    </Button>
-                  </Grid>
                 </Grid>
-<<<<<<< HEAD
-                <div style={{ height: 400, width: "100%" }}>
-                  <DataGrid
-                    rows={courses.map((course) => ({
-                      id: course.course_id,
-                      courseTitle: course.course_title,
-                      startDate: course.start_date,
-                      endDate: course.end_date,
-                      shift: course.shift,
-                      days: course.days,
-                    }))}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5, 10, 20]}
-                    checkboxSelection
-                    disableSelectionOnClick
-                  />
-                </div>
-=======
-                <Paper sx={{ mt: 3, overflowX: "auto" }}>
-                  <div style={{ minWidth: 960 }}>
+                <div style={{ height: 520, width: "100%" }}>
+                  {loading ? (
+                    <div>Loading...</div>
+                  ) : (
                     <DataGrid
-                      rows={classRow}
-                      columns={classCols}
-                      checkboxSelection
+                      rows={courses}
+                      columns={columns}
+                      pageSize={5}
+                      rowsPerPageOptions={[5, 10, 20]}
+                      sx={{ background: "white", px: 3 }}
                     />
-                  </div>
-                </Paper>
->>>>>>> 519c44a4ffb4c0abc83bc3c8183636e6ed8afd64
+                  )}
+                </div>
               </Grid>
             </Grid>
           </Box>
@@ -129,7 +135,7 @@ const ListClassAdmin = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={stylee}>
           <ModalAddClass />
         </Box>
       </Modal>
