@@ -183,7 +183,7 @@ const AttendanceFaceInstructor = () => {
                   mt: 3,
                 }}
               >
-                ĐIỂM DANH MÔN:
+                ĐIỂM DANH MÔN: {course.course_title}
               </Grid>
               <Grid container>
                 <Grid item xs={3}></Grid>

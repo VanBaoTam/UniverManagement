@@ -147,16 +147,6 @@ const ListAttendanceInstructor = () => {
                       </div>
                     </Paper>
                   </Grid>
-                  <Paper sx={{ mt: 3 }}>
-                    <div>
-                      <DataGrid
-                        rows={students}
-                        columns={listAttendancesCols}
-                        pageSize={10}
-                        onRowSelectionModelChange={handleSelectionModel}
-                      />
-                    </div>
-                  </Paper>
                 </Grid>
               </Grid>
             </Grid>
