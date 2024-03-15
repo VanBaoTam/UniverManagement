@@ -51,7 +51,7 @@ export class UserService {
         return res.status(404).json({ message: "User not found!" });
 
       if (dataResult.rows[0].status != "active")
-        return res.status(403).json("Account Deactivated");
+        return res.status(403).json({ message: "Account Deactivated" });
       const data = {
         accountId: dataResult.rows[0].account_id,
       };
