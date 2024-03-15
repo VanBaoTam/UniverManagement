@@ -31,15 +31,24 @@ const AttendanceFaceInstructor = () => {
   const { user } = useContext(UserContext) ?? {};
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [ids, setIds] = useState([]);
   const [students, setStudents] = useState([]);
+  const [ids, setIds] = useState([]);
   const [course, setCourse] = useState();
-  const handleSelectionModel = useCallback((ids) => {
-    if (!ids.length) {
-      return;
-    }
-    setIds(ids);
-  }, []);
+  const handleSelectionModel = useCallback(
+    (selectionModel) => {
+      const updatedStudents = [...students];
+      console.log(selectionModel);
+      updatedStudents.forEach((student, index) => {
+        const isSelected = selectionModel.includes(index + 1);
+        if (!student.isChecked) {
+          student.isAttendance = isSelected;
+        }
+      });
+      setStudents(updatedStudents);
+    },
+    [students]
+  );
+
   const GetCourseById = async () => {
     try {
       const resp = await provider.get({
@@ -52,7 +61,7 @@ const AttendanceFaceInstructor = () => {
       if (resp.status === 200 && resp.data) {
         const studentsWithId = resp.data.attendanceStatus.map(
           (course, index) => {
-            return { ...course, id: index + 1 };
+            return { ...course, id: index + 1, isChecked: false };
           }
         );
         setStudents(studentsWithId || []);
@@ -63,6 +72,11 @@ const AttendanceFaceInstructor = () => {
     }
   };
   const Attendance = async () => {
+    const ids = students
+      .filter((element) => {
+        if (element.isAttendance) return element.studentId;
+      })
+      .map((element) => element.studentId);
     try {
       const resp = await provider.post({
         path: `instructor/attendance`,
@@ -74,7 +88,7 @@ const AttendanceFaceInstructor = () => {
           courseId: course.course_id,
           shifts: course.shift,
           days: course.days,
-          studentIds,
+          studentIds: ids,
         },
       });
       if (resp.status === 200) {
@@ -93,6 +107,17 @@ const AttendanceFaceInstructor = () => {
   useEffect(() => {
     if (course) GetCourseById();
   }, [course]);
+  useEffect(() => {
+    if (!studentIds.length) return;
+    const updatedStudents = [...students];
+    updatedStudents.forEach((student, index) => {
+      if (studentIds.includes(student.studentId)) {
+        student.isAttendance = true;
+        student.isChecked = true;
+      }
+    });
+    setStudents(updatedStudents);
+  }, [studentIds]);
   return (
     <React.Fragment>
       <Box
@@ -143,16 +168,7 @@ const AttendanceFaceInstructor = () => {
                 ĐIỂM DANH MÔN:
               </Grid>
               <Grid container>
-                <Grid item xs={3}>
-                  <TextField
-                    id="outlined-basic"
-                    label="Mã sinh viên"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    sx={{ background: "white" }}
-                  />
-                </Grid>
+                <Grid item xs={3}></Grid>
                 <Grid
                   item
                   xs={9}

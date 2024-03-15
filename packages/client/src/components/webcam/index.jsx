@@ -1,22 +1,14 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Webcam from "react-webcam";
 const { VITE_ATTENDANCE_SERVICE, VITE_AUTHENTICATION_SERVICE } = import.meta
   .env;
-import UserContext from "@contexts/user";
 import { displayToastTop } from "@utils";
 import { Box, Button } from "@mui/material";
 import { BLUE_COLOR } from "@constants/color";
 function AttendanceWebcam(chilrens) {
-  const { studentIds, setStudentIds, courseId, shifts, days } = chilrens ?? {};
-  const { user } = useContext(UserContext) ?? {};
-  const [uploadMessage, setUploadMessage] = useState("Please upload an image!");
+  const { studentIds, setStudentIds } = chilrens ?? {};
+  // const [image, setImage] = useState();
   const [imgSrc, setImgSrc] = useState(null);
   const webcamRef = useRef(null);
   const handleSubmit = async (image) => {
@@ -34,29 +26,47 @@ function AttendanceWebcam(chilrens) {
       );
       if (response.ok) {
         const authResponse = await authen(visitorImageName);
-        console.log(authResponse);
+
         if (authResponse.Message === "success") {
-          const newStudentIds = authResponse.students.map(
-            (student) => student.mssv
-          );
-          setStudentIds((prevStudentIds) => {
-            const uniqueIds = new Set([...prevStudentIds, ...newStudentIds]);
-            return Array.from(uniqueIds);
+          const ids = authResponse.students.map((element) => element.mssv);
+          const newStudentIds = ids.filter((student) => {
+            return !studentIds.includes(student);
           });
-          const messages = authResponse.students.map((student) => {
-            return `${student.mssv} - ${student.firstName} ${student.lastName} `;
+          setStudentIds((prevData) => [...prevData, ...newStudentIds]);
+          const messages = newStudentIds.map((mssv) => {
+            const student = authResponse.students.find(
+              (student) => student.mssv === mssv
+            );
+            return `${student.mssv} - ${student.firstName} ${student.lastName}`;
           });
           const allMessages = messages.join("\n");
           displayToastTop(allMessages, "success");
           retake();
-        } else {
-          setUploadMessage("Authentication failed");
+        }
+      }
+      if (response.ok) {
+        const authResponse = await authen(visitorImageName);
+
+        if (authResponse.Message === "success") {
+          const ids = authResponse.students.map((element) => element.mssv);
+          const newStudentIds = ids.filter((student) => {
+            return !studentIds.includes(student);
+          });
+          setStudentIds((prevData) => [...prevData, ...newStudentIds]);
+          const messages = newStudentIds.map((mssv) => {
+            const student = authResponse.students.find(
+              (student) => student.mssv === mssv
+            );
+            return `${student.mssv} - ${student.firstName} ${student.lastName}`;
+          });
+          const allMessages = messages.join("\n");
+          displayToastTop(allMessages, "success");
+          retake();
         }
       } else {
         throw new Error("Error uploading image");
       }
     } catch (error) {
-      setUploadMessage("Try again");
       console.log(error);
     }
   };
@@ -129,10 +139,12 @@ function AttendanceWebcam(chilrens) {
     setImgSrc(null);
     capture();
   };
-  useEffect(() => {}, []);
-  useEffect(() => {
-    console.log("IDS:", studentIds);
-  }, [studentIds]);
+  // useEffect(() => {
+  //   handleSubmit(image);
+  // }, [image]);
+  // useEffect(() => {
+  //   // console.log("IDS:", studentIds);
+  // }, [studentIds]);
 
   return (
     <Box sx={{ display: "flex", height: "750px", flexDirection: "column" }}>

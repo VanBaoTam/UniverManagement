@@ -68,16 +68,7 @@ export const attendanceFacesCols = [
     headerName: "Điểm danh",
     width: 120,
     renderCell: (params) => {
-      const value = params.value;
-      if (value)
-        return (
-          <Checkbox
-            checked={value}
-            disabled
-            style={{ color: value ? "green" : "gray" }}
-          />
-        );
-      else return <Checkbox disabled style={{ color: "#f0eded" }} />;
+      return <Checkbox checked={params.formattedValue || false} />;
     },
   },
 ];
