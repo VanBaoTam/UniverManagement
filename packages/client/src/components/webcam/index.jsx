@@ -33,34 +33,18 @@ function AttendanceWebcam(chilrens) {
             return !studentIds.includes(student);
           });
           setStudentIds((prevData) => [...prevData, ...newStudentIds]);
-          const messages = newStudentIds.map((mssv) => {
-            const student = authResponse.students.find(
-              (student) => student.mssv === mssv
-            );
-            return `${student.mssv} - ${student.firstName} ${student.lastName}`;
-          });
-          const allMessages = messages.join("\n");
-          displayToastTop(allMessages, "success");
-          retake();
-        }
-      }
-      if (response.ok) {
-        const authResponse = await authen(visitorImageName);
-
-        if (authResponse.Message === "success") {
-          const ids = authResponse.students.map((element) => element.mssv);
-          const newStudentIds = ids.filter((student) => {
-            return !studentIds.includes(student);
-          });
-          setStudentIds((prevData) => [...prevData, ...newStudentIds]);
-          const messages = newStudentIds.map((mssv) => {
-            const student = authResponse.students.find(
-              (student) => student.mssv === mssv
-            );
-            return `${student.mssv} - ${student.firstName} ${student.lastName}`;
-          });
-          const allMessages = messages.join("\n");
-          displayToastTop(allMessages, "success");
+          if (newStudentIds.length) {
+            const messages = newStudentIds.map((mssv) => {
+              const student = authResponse.students.find(
+                (student) => student.mssv === mssv
+              );
+              return `${student.mssv} - ${student.firstName} ${student.lastName}`;
+            });
+            const allMessages = messages.join("\n");
+            displayToastTop(allMessages, "success");
+          } else {
+            displayToastTop("Bạn đã điêm danh rồi", "info");
+          }
           retake();
         }
       } else {

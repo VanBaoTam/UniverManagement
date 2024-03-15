@@ -5,12 +5,15 @@ const times = Array.from({ length: 15 }, (_, index) => ({
   field: `times_${index + 1}`,
   renderCell: (params) => {
     const value = params.value;
-    const checked = value === "x" ? true : false;
+    const checked = value === "x" || value === "o" ? true : false;
+    const color = value === "x" ? 1 : value === "o" ? 2 : 3;
     return (
       <Checkbox
         checked={checked}
         disabled
-        style={{ color: checked ? "green" : "#f0eded" }}
+        style={{
+          color: color === 1 ? "green" : color === 2 ? "red" : "#f0eded",
+        }}
       />
     );
   },
@@ -112,23 +115,23 @@ export const CourseAttendanceCols = [
     width: 80,
   },
   {
-    field: "course_title",
+    field: "courseTitle",
     headerName: "Môn học",
     width: 200,
   },
   {
-    field: "start_date",
-    headerName: "Ngày bắt đầu",
+    field: "day",
+    headerName: "Thứ",
     valueFormatter: (data) => {
-      return dayjs(data.value).format("DD/MM/YYYY");
+      return `Thứ ${data.value}`;
     },
     width: 150,
   },
   {
-    field: "end_date",
-    headerName: "Ngày kết thúc",
+    field: "shift",
+    headerName: "Ca",
     valueFormatter: (data) => {
-      return dayjs(data.value).format("DD/MM/YYYY");
+      return `Ca ${data.value}`;
     },
     width: 150,
   },
