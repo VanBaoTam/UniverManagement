@@ -122,19 +122,25 @@ export const CourseAttendanceCols = [
     width: 80,
   },
   {
-    field: "courseName",
+    field: "course_title",
     headerName: "Môn học",
+    width: 200,
+  },
+  {
+    field: "start_date",
+    headerName: "Ngày bắt đầu",
+    valueFormatter: (data) => {
+      return dayjs(data.value).format("DD/MM/YYYY");
+    },
     width: 150,
   },
   {
-    field: "startDate",
-    headerName: "Ngày bắt đầu",
-    width: 200,
-  },
-  {
-    field: "endDate",
+    field: "end_date",
     headerName: "Ngày kết thúc",
-    width: 200,
+    valueFormatter: (data) => {
+      return dayjs(data.value).format("DD/MM/YYYY");
+    },
+    width: 150,
   },
   ...times,
 ];

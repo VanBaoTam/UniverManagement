@@ -27,6 +27,7 @@ const ListClassAdmin = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+<<<<<<< HEAD
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -54,6 +55,8 @@ const ListClassAdmin = () => {
     { field: "shift", headerName: "Shift", width: 100 },
     { field: "days", headerName: "Days", width: 100 },
   ];
+=======
+>>>>>>> 519c44a4ffb4c0abc83bc3c8183636e6ed8afd64
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -86,6 +89,7 @@ const ListClassAdmin = () => {
                     </Button>
                   </Grid>
                 </Grid>
+<<<<<<< HEAD
                 <div style={{ height: 400, width: "100%" }}>
                   <DataGrid
                     rows={courses.map((course) => ({
@@ -103,6 +107,17 @@ const ListClassAdmin = () => {
                     disableSelectionOnClick
                   />
                 </div>
+=======
+                <Paper sx={{ mt: 3, overflowX: "auto" }}>
+                  <div style={{ minWidth: 960 }}>
+                    <DataGrid
+                      rows={classRow}
+                      columns={classCols}
+                      checkboxSelection
+                    />
+                  </div>
+                </Paper>
+>>>>>>> 519c44a4ffb4c0abc83bc3c8183636e6ed8afd64
               </Grid>
             </Grid>
           </Box>
