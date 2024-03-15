@@ -45,13 +45,11 @@ const ListAttendanceInstructor = () => {
         });
         setCourses(coursesWithId || []);
         setSelectedCourse(coursesWithId[0]);
-      }         setLoading(false);
-
+      }
+      setLoading(false);
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
-               setLoading(false);
-
+      setLoading(false);
     }
   };
   const GetCourseById = async () => {
@@ -75,7 +73,6 @@ const ListAttendanceInstructor = () => {
         displayToast("Truy xuất môn học thành công!", "success");
       }
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };
@@ -136,13 +133,7 @@ const ListAttendanceInstructor = () => {
                       <DataGrid
                         rows={students}
                         columns={listAttendancesCols}
-                        initialState={{
-                          pagination: {
-                            paginationModel: {
-                              pageSize: 10,
-                            },
-                          },
-                        }}
+                        pageSize={10}
                         onRowSelectionModelChange={handleSelectionModel}
                       />
                     </div>

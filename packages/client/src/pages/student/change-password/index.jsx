@@ -76,8 +76,8 @@ const ChangePasswordStudent = () => {
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
-                      id="outlined-basic"
-                      label="Nhập mật cũ"
+                      id="outlined-basic-old"
+                      label="Nhập mật khẩu cũ"
                       variant="outlined"
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
@@ -85,14 +85,15 @@ const ChangePasswordStudent = () => {
                       type="password"
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
+                      autoComplete="password"
                     />
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
-                      id="outlined-basic"
-                      label="Nhập mật mới"
+                      id="outlined-basic-new"
+                      label="Nhập mật khẩu mới"
                       variant="outlined"
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
@@ -100,13 +101,14 @@ const ChangePasswordStudent = () => {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="password"
                     />
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
-                      id="outlined-basic"
+                      id="outlined-basic-retype"
                       label="Nhập lại mật khẩu mới"
                       variant="outlined"
                       fullWidth
@@ -115,6 +117,7 @@ const ChangePasswordStudent = () => {
                       type="password"
                       value={retypePassword}
                       onChange={(e) => setRetypePassword(e.target.value)}
+                      autoComplete="password"
                     />
                   </Grid>
                 </Grid>

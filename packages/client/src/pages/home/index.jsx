@@ -46,7 +46,6 @@ const Home = () => {
         }
       }
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };
@@ -111,6 +110,7 @@ const Home = () => {
                       })}
                       variant="outlined"
                       sx={{ width: "25rem", mb: 2, boxShadow: 2 }}
+                      autoComplete="current-username"
                     />
                     {errors.username && (
                       <p style={{ color: "red" }}>{errors.username.message}</p>
@@ -134,6 +134,7 @@ const Home = () => {
                       variant="outlined"
                       sx={{ width: "25rem", mb: 3, boxShadow: 2 }}
                       type="password"
+                      autoComplete="current-password"
                     />
                     {errors.password && (
                       <p style={{ color: "red" }}>{errors.password.message}</p>

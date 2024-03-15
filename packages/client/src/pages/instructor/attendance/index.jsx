@@ -31,14 +31,11 @@ const Attendance = () => {
         setCourses(coursesWithId || []);
         displayToast("Truy xuất môn học thành công!", "success");
       }
-               setLoading(false);
-
+      setLoading(false);
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
-               setLoading(false);
-
-    } 
+      setLoading(false);
+    }
   };
   useEffect(() => {
     GetCourses();
@@ -56,7 +53,7 @@ const Attendance = () => {
       if (!ids.length) {
         return;
       }
-      console.log(courses);
+      //console.log(courses);
       setCourse(courses[ids[0] - 1]);
     },
     [courses]

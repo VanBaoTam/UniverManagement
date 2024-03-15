@@ -66,9 +66,7 @@ function AttendanceWebcam(chilrens) {
       } else {
         throw new Error("Error uploading image");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const authen = async (attendanceName) => {
@@ -143,7 +141,7 @@ function AttendanceWebcam(chilrens) {
   //   handleSubmit(image);
   // }, [image]);
   // useEffect(() => {
-  //   // console.log("IDS:", studentIds);
+  //   // //console.log("IDS:", studentIds);
   // }, [studentIds]);
 
   return (

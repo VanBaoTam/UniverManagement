@@ -48,7 +48,7 @@ const ListClassAdmin = () => {
           },
         });
 
-        console.log(response.data.listCourse);
+        //console.log(response.data.listCourse);
         const coursesWithId = response.data.listCourse.map((course, index) => {
           return { ...course, id: index + 1 };
         });

@@ -1,4 +1,12 @@
-import { Backdrop, Box, CircularProgress, FormControl, Grid, MenuItem, Select } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  FormControl,
+  Grid,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
@@ -12,7 +20,7 @@ const SubjectAttendanceStudent = () => {
   const [selectedCourse, setSelectedCourse] = useState();
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -32,15 +40,13 @@ const SubjectAttendanceStudent = () => {
         const id = index + 1;
         return { ...element, id };
       });
-      console.log(listCourseWithIds);
+      //console.log(listCourseWithIds);
       setCourses(listCourseWithIds);
-               setLoading(false);
-
+      setLoading(false);
     } catch (error) {
       console.error(error);
       displayToast(error.response.data.message, "error");
-               setLoading(false);
-
+      setLoading(false);
     }
   };
   const GetAttendance = async () => {
@@ -52,7 +58,7 @@ const SubjectAttendanceStudent = () => {
           "Content-type": "application/json",
         },
       });
-      console.log(resp);
+      //console.log(resp);
     } catch (error) {
       console.error(error);
       displayToast(error.response.data.message, "error");
@@ -95,13 +101,7 @@ const SubjectAttendanceStudent = () => {
                     <DataGrid
                       rows={courses}
                       columns={CourseAttendanceCols}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 10,
-                          },
-                        },
-                      }}
+                      pageSize={10}
                       checkboxSelection
                       onRowSelectionModelChange={handleSelectionModel}
                     />

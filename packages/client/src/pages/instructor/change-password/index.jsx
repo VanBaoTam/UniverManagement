@@ -12,36 +12,36 @@ const ChangePasswordInstructor = () => {
   const provider = useDataProvider();
   const { user } = useContext(UserContext) ?? {};
   const navigation = useNavigate();
-     const [oldPassword, setOldPassword] = useState("");
-     const [password, setPassword] = useState("");
-     const [retypePassword, setRetypePassword] = useState("");
-     const [message, setMessage] = useState("");
-     const [error, setError] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-     const handleSubmit = async (e) => {
-       e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-       try {
-         const response = await provider.put({
-           path: `user/change-password`,
-           body: {
-             oldPassword,
-             password,
-             retypePassword,
-           },
-           headers: {
-             Authorization: `Bearer ${user.token}`,
-             "Content-type": "application/json",
-           },
-         });
+    try {
+      const response = await provider.put({
+        path: `user/change-password`,
+        body: {
+          oldPassword,
+          password,
+          retypePassword,
+        },
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
 
-         navigation("/instructor/information");
-             displayToast("Đổi mật khẩu thành công", "success");
-         setMessage(response.data.message);
-       } catch (error) {
-          displayToast(error.response.data.message, "success");
-       }
-     };
+      navigation("/instructor/information");
+      displayToast("Đổi mật khẩu thành công", "success");
+      setMessage(response.data.message);
+    } catch (error) {
+      displayToast(error.response.data.message, "success");
+    }
+  };
   return (
     <React.Fragment>
       <Box
@@ -76,8 +76,8 @@ const ChangePasswordInstructor = () => {
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
-                      id="outlined-basic"
-                      label="Nhập mật cũ"
+                      id="outlined-basic-old"
+                      label="Nhập mật khẩu cũ"
                       variant="outlined"
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
@@ -85,14 +85,15 @@ const ChangePasswordInstructor = () => {
                       type="password"
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
+                      autoComplete="password"
                     />
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
-                      id="outlined-basic"
-                      label="Nhập mật mới"
+                      id="outlined-basic-new"
+                      label="Nhập mật khẩu mới"
                       variant="outlined"
                       fullWidth
                       sx={{ background: "white", mb: 2 }}
@@ -100,13 +101,14 @@ const ChangePasswordInstructor = () => {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="password"
                     />
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={5}>
                     <TextField
-                      id="outlined-basic"
+                      id="outlined-basic-retype"
                       label="Nhập lại mật khẩu mới"
                       variant="outlined"
                       fullWidth
@@ -115,6 +117,7 @@ const ChangePasswordInstructor = () => {
                       type="password"
                       value={retypePassword}
                       onChange={(e) => setRetypePassword(e.target.value)}
+                      autoComplete="password"
                     />
                   </Grid>
                 </Grid>
@@ -137,7 +140,6 @@ const ChangePasswordInstructor = () => {
                 </Grid>
               </Grid>
             </form>
-            
           </Grid>
         </Container>
       </Box>

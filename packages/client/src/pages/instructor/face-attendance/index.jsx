@@ -37,7 +37,7 @@ const AttendanceFaceInstructor = () => {
   const handleSelectionModel = useCallback(
     (selectionModel) => {
       const updatedStudents = [...students];
-      console.log(selectionModel);
+      //console.log(selectionModel);
       updatedStudents.forEach((student, index) => {
         const isSelected = selectionModel.includes(index + 1);
         if (!student.isChecked) {
@@ -67,7 +67,6 @@ const AttendanceFaceInstructor = () => {
         setStudents(studentsWithId || []);
       }
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };
@@ -92,10 +91,9 @@ const AttendanceFaceInstructor = () => {
         },
       });
       if (resp.status === 200) {
-        displayToast("Success", "success");
+        displayToast("Thành công", "success");
       }
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };
@@ -213,6 +211,7 @@ const AttendanceFaceInstructor = () => {
                         },
                       },
                     }}
+                    pageSize={10}
                     pageSizeOptions={[10, 100]}
                     checkboxSelection
                     onRowSelectionModelChange={handleSelectionModel}
