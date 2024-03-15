@@ -20,9 +20,7 @@ export class UserService {
     const { username, password } = req.body ?? {};
     if (!username || !password)
       return res.status(400).json({ message: "Invalid Username or Password" });
-    const isValidUserCredential =
-      CredentialsValidation("username", username) &&
-      CredentialsValidation("password", password);
+    const isValidUserCredential = CredentialsValidation("password", password);
     if (!isValidUserCredential)
       return res.status(400).json({ message: "Invalid User Credential" });
     try {
