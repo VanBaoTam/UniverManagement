@@ -1,23 +1,53 @@
 import { Box, FormControl, Grid, MenuItem, Select } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { CourseAttendanceCols } from "@types";
-import { CourseAttendanceRow } from "@constants";
+import { useDataProvider } from "@services";
+import UserContext from "@contexts/user";
+import { displayToast } from "@utils";
 const SubjectAttendanceStudent = () => {
   const [age, setAge] = useState("");
-
+  const [courses, setCourses] = useState([]);
+  const provider = useDataProvider();
+  const { user } = useContext(UserContext) ?? {};
   const handleChange = (event) => {
     setAge(event.target.value);
   };
   const [ids, setIds] = useState([]);
-
+  const GetCourseByStudentId = async () => {
+    try {
+      const resp = await provider.get({
+        path: `student/get-course-by-student-id`,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
+      console.log(resp);
+      const listCourseWithIds = resp.data.listcourse.map((element, index) => {
+        const id = index + 1;
+        return { ...element, id };
+      });
+      console.log(listCourseWithIds);
+      setCourses(listCourseWithIds);
+    } catch (error) {
+      console.error(error);
+      displayToast(error.response.data.message, "error");
+    }
+  };
   const handleSelectionModel = useCallback((ids) => {
     if (!ids.length) {
       return;
     }
     setIds(ids);
   }, []);
+  useEffect(() => {
+    GetCourseByStudentId();
+  }, []);
+  useEffect(() => {
+    if (courses.length) console.log(courses);
+  }, [courses]);
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -29,7 +59,7 @@ const SubjectAttendanceStudent = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={10} sx={{ py: 3, ml: 4,pl:4 }}>
+              <Grid item xs={10} sx={{ py: 3, ml: 4, pl: 4 }}>
                 <Grid item xs={3} sx={{ mb: 3 }}>
                   Môn học:
                   <FormControl
@@ -52,7 +82,7 @@ const SubjectAttendanceStudent = () => {
                 <Paper sx={{ mt: 3, overflowX: "auto" }}>
                   <div style={{ minWidth: 960 }}>
                     <DataGrid
-                      rows={CourseAttendanceRow}
+                      rows={courses}
                       columns={CourseAttendanceCols}
                       initialState={{
                         pagination: {
