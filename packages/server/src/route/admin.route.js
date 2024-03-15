@@ -7,7 +7,7 @@ const adminRouter = Router();
 adminRouter.post("/create-course", adminInstance.createCourse);
 adminRouter.get("/get-user", authenToken, adminInstance.getUsers);
 adminRouter.get(
-    "/change-status-account/:account/:status",
+    "/change-status-account/:account/",
     authenToken,
     adminInstance.changeStatusAccount
 );
