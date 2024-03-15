@@ -5,15 +5,14 @@ const times = Array.from({ length: 15 }, (_, index) => ({
   field: `times_${index + 1}`,
   renderCell: (params) => {
     const value = params.value;
-    if (value)
-      return (
-        <Checkbox
-          checked={value === "x"}
-          disabled
-          style={{ color: value === "x" ? "green" : "gray" }}
-        />
-      );
-    else return <Checkbox disabled style={{ color: "#f0eded" }} />;
+    const checked = value === "x" ? true : false;
+    return (
+      <Checkbox
+        checked={checked}
+        disabled
+        style={{ color: checked ? "green" : "#f0eded" }}
+      />
+    );
   },
   headerName: `${index + 1}`,
   width: 20,

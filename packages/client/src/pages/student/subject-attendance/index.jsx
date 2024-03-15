@@ -79,23 +79,7 @@ const SubjectAttendanceStudent = () => {
             <Grid container>
               <Grid item xs={12} sx={{ py: 3, ml: 4, pl: 4 }}>
                 <Grid item xs={3} sx={{ mb: 3 }}>
-                  Môn học:
-                  <FormControl
-                    size="small"
-                    fullWidth
-                    sx={{ background: "white" }}
-                  >
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={age}
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <h4>Thống kê điểm danh:</h4>
                 </Grid>
                 <Paper sx={{ mt: 3, overflowX: "auto" }}>
                   <div style={{ minWidth: 1000 }}>
