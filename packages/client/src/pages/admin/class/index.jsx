@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, {useContext, useState, useEffect } from "react";
 import { Box, Button, Grid, Modal } from "@mui/material";
 import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import ModalAddClass from "@components/ModalAddClass";
 import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
-import { classCols } from "@types";
-import { classRow } from "@constants";
+import { useDataProvider } from "@services";
+import UserContext from "@contexts/user";
 
 const style = {
   position: "absolute",
@@ -19,10 +19,41 @@ const style = {
   p: 4,
 };
 const ListClassAdmin = () => {
+  const provider = useDataProvider();
+  const { user } = useContext(UserContext) ?? {};
+      const [courses, setCourses] = useState([]);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await provider.get({
+          path: `instructor/get-courses`,
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-type": "application/json",
+          },
+        });
+        setCourses(response.data.listCourse);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const columns = [
+    { field: "id", headerName: "Course ID", width: 150 },
+    { field: "courseTitle", headerName: "Course Title", width: 200 },
+    { field: "startDate", headerName: "Start Date", width: 150 },
+    { field: "endDate", headerName: "End Date", width: 150 },
+    { field: "shift", headerName: "Shift", width: 100 },
+    { field: "days", headerName: "Days", width: 100 },
+  ];
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -55,16 +86,23 @@ const ListClassAdmin = () => {
                     </Button>
                   </Grid>
                 </Grid>
-                <Paper sx={{ mt: 3, overflowX: "auto" }}>
-                  <div style={{ minWidth: 960 }}>
-                    <DataGrid
-                      rows={classRow}
-                      columns={classCols}
-                      pageSizeOptions={[10, 100]}
-                      checkboxSelection
-                    />
-                  </div>
-                </Paper>
+                <div style={{ height: 400, width: "100%" }}>
+                  <DataGrid
+                    rows={courses.map((course) => ({
+                      id: course.course_id,
+                      courseTitle: course.course_title,
+                      startDate: course.start_date,
+                      endDate: course.end_date,
+                      shift: course.shift,
+                      days: course.days,
+                    }))}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5, 10, 20]}
+                    checkboxSelection
+                    disableSelectionOnClick
+                  />
+                </div>
               </Grid>
             </Grid>
           </Box>
