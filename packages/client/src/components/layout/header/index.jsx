@@ -56,7 +56,7 @@ const Header = () => {
           <Toolbar>
             <img
               src={logostu}
-              style={{ width: "11rem", height: "9rem" }}
+              style={{ width: "7rem", height: "5rem" }}
               className="py-2 ms-5"
             />
             {profileData && (
