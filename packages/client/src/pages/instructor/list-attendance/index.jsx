@@ -102,8 +102,8 @@ const ListAttendanceInstructor = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={9.5} sx={{ py: 3, ml: 7 }}>
-                <Grid container>
+              <Grid item xs={10.5} sx={{ py: 3, ml: 9 }}>
+                <Grid container direction="column">
                   <Grid item xs={6}>
                     Môn học:
                     <FormControl
@@ -127,6 +127,25 @@ const ListAttendanceInstructor = () => {
                           : null}
                       </Select>
                     </FormControl>
+                  </Grid>
+                  <Grid xs={12}>
+                    <Paper sx={{ mt: 3 }}>
+                      <div>
+                        <DataGrid
+                          rows={students}
+                          columns={listAttendancesCols}
+                          sx={{ px: 2 }}
+                          initialState={{
+                            pagination: {
+                              paginationModel: {
+                                pageSize: 10,
+                              },
+                            },
+                          }}
+                          onRowSelectionModelChange={handleSelectionModel}
+                        />
+                      </div>
+                    </Paper>
                   </Grid>
                   <Paper sx={{ mt: 3 }}>
                     <div>
