@@ -86,12 +86,12 @@ const SubjectAttendanceStudent = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={12} sx={{ py: 3, ml: 4, pl: 4 }}>
+              <Grid item xs={10.5} sx={{ py: 3, ml: 4, pl: 4 }}>
                 <Grid item xs={3} sx={{ mb: 3 }}>
                   <h4>Thống kê điểm danh:</h4>
                 </Grid>
                 <Paper sx={{ mt: 3, overflowX: "auto" }}>
-                  <div style={{ minWidth: 1000 }}>
+                  <div style={{ minWidth: 1000, height:450 }}>
                     <DataGrid
                       rows={courses}
                       columns={CourseAttendanceCols}

@@ -104,9 +104,9 @@ const ListAttendanceInstructor = () => {
               width: "100%",
             }}
           >
-            <Grid container>
-              <Grid item xs={9.5} sx={{ py: 3, ml: 7 }}>
-                <Grid container>
+            <Grid container >
+              <Grid item xs={10.5} sx={{ py: 3, ml: 9 }}>
+                <Grid container direction="column">
                   <Grid item xs={6}>
                     Môn học:
                     <FormControl
@@ -131,22 +131,25 @@ const ListAttendanceInstructor = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Paper sx={{ mt: 3 }}>
-                    <div>
-                      <DataGrid
-                        rows={students}
-                        columns={listAttendancesCols}
-                        initialState={{
-                          pagination: {
-                            paginationModel: {
-                              pageSize: 10,
+                  <Grid xs={12}>
+                    <Paper sx={{ mt: 3 }}>
+                      <div>
+                        <DataGrid
+                          rows={students}
+                          columns={listAttendancesCols}
+                          sx={{px:2}}
+                          initialState={{
+                            pagination: {
+                              paginationModel: {
+                                pageSize: 10,
+                              },
                             },
-                          },
-                        }}
-                        onRowSelectionModelChange={handleSelectionModel}
-                      />
-                    </div>
-                  </Paper>
+                          }}
+                          onRowSelectionModelChange={handleSelectionModel}
+                        />
+                      </div>
+                    </Paper>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
