@@ -1,7 +1,8 @@
-import { createCrypto } from "google-auth-library/build/src/crypto/crypto.js";
+//import { createCrypto } from "google-auth-library/build/src/crypto/crypto.js";
 import { CredentialsValidation } from "../constants/common.js";
 import { datasource } from "../datasource/index.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 //------------------------------------------------
 export class UserService {
     static instance;
@@ -38,11 +39,14 @@ export class UserService {
             }
             const storedPassword = authResult.rows[0].password;
 
-            if (password !== storedPassword) {
+            const checkpassword = await bcrypt.compare(
+                password,
+                storedPassword
+            );
+            if (!checkpassword)
                 return res
-                    .status(401)
-                    .json({ message: "Username or Password is wrong!" });
-            }
+                    .status(400)
+                    .json({ message: "Tài khoản hoặc Mật khẩu không đúng" });
 
             const dataQuery =
                 "SELECT account_id, role_id as role ,status FROM accounts WHERE username = $1";
@@ -201,19 +205,19 @@ export class UserService {
                 "SELECT password FROM accounts WHERE account_id = $1";
             const authValues = [accountId];
             const authResult = await datasource.query(authQuery, authValues);
-
             if (!authResult.rows[0]) {
                 return res.status(404).json({ message: "Account not found" });
             }
 
             const storedPassword = authResult.rows[0].password;
-
-            if (oldPassword !== storedPassword) {
+            const checkpassword = await bcrypt.compare(
+                oldPassword,
+                storedPassword
+            );
+            if (!checkpassword)
                 return res
                     .status(400)
                     .json({ message: "Mật khẩu cũ không đúng" });
-            }
-
             if (
                 !CredentialsValidation("password", password) ||
                 !CredentialsValidation("password", retypePassword)
@@ -222,21 +226,29 @@ export class UserService {
                     message: "Invalid new password or retype password",
                 });
             }
-
             if (password !== retypePassword) {
                 return res.status(400).json({
                     message: "Mật khẩu mới không trùng khớp",
                 });
             }
+            if (password.length < 8 || password.length > 50)
+                return res
+                    .status(400)
+                    .json({ message: "Mật khẩu dài từ 8-50 ký tự" });
+            bcrypt.hash(password, 10, async (err, hash) => {
+                if (err) {
+                    console.error("Lỗi khi mã hóa mật khẩu:", err);
+                    return;
+                }
 
-            const updateQuery =
-                "UPDATE accounts SET password = $1 WHERE account_id = $2";
-            const updateValues = [password, accountId];
-            await datasource.query(updateQuery, updateValues);
-
-            return res
-                .status(200)
-                .json({ message: "Password changed successfully" });
+                const updateQuery =
+                    "UPDATE accounts SET password = $1 WHERE account_id = $2";
+                const updateValues = [hash, accountId];
+                await datasource.query(updateQuery, updateValues);
+                return res
+                    .status(200)
+                    .json({ message: "Password changed successfully" });
+            });
         } catch (error) {
             console.log(error);
             return res.status(500).json({
