@@ -128,7 +128,7 @@ const ListAttendanceInstructor = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid item xs={12}>
                     <Paper sx={{ mt: 3 }}>
                       <div>
                         <DataGrid
