@@ -60,6 +60,10 @@ export class StudentService {
             const studentAttendance = listStudent.find(
                 (item) => item["Mã số sinh viên"] == studentResult.rows[0].id
             );
+            if (!studentAttendance)
+                return res
+                    .status(404)
+                    .json({ message: "Student not found in course" });
             var student = {};
             student.name = studentAttendance["Tên sinh viên"];
             student.studentId = studentAttendance["Mã số sinh viên"];

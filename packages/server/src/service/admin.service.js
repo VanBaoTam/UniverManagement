@@ -58,13 +58,8 @@ export class AdminService {
                 return res.status(404).json({ message: "Teacher not found" });
             for (const item of schedule) {
                 const courseMappingQuery =
-                    "select * from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3 and instructor_id = $4";
-                const courseMappingValue = [
-                    courseId,
-                    item.day,
-                    item.shift,
-                    teacherId,
-                ];
+                    "select * from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where  days = $1 and shift = $2 and instructor_id = $3";
+                const courseMappingValue = [item.day, item.shift, teacherId];
                 const courseMappingResult = await datasource.query(
                     courseMappingQuery,
                     courseMappingValue
