@@ -33,7 +33,7 @@ const Header = () => {
         });
         setProfileData(response.data);
       } catch (error) {
-        setError(error.response.data.message);
+        setError(error.response.data);
       }
     };
 
@@ -56,7 +56,7 @@ const Header = () => {
           <Toolbar>
             <img
               src={logostu}
-              style={{ width: "4rem", height: "4rem" }}
+              style={{ width: "11rem", height: "9rem" }}
               className="py-2 ms-5"
             />
             {profileData && (

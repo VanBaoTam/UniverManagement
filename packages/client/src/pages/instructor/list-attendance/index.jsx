@@ -45,13 +45,11 @@ const ListAttendanceInstructor = () => {
         });
         setCourses(coursesWithId || []);
         setSelectedCourse(coursesWithId[0]);
-      }         setLoading(false);
-
+      }
+      setLoading(false);
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
-               setLoading(false);
-
+      setLoading(false);
     }
   };
   const GetCourseById = async () => {
@@ -75,7 +73,6 @@ const ListAttendanceInstructor = () => {
         displayToast("Truy xuất môn học thành công!", "success");
       }
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
     }
   };
@@ -104,7 +101,7 @@ const ListAttendanceInstructor = () => {
               width: "100%",
             }}
           >
-            <Grid container >
+            <Grid container>
               <Grid item xs={10.5} sx={{ py: 3, ml: 9 }}>
                 <Grid container direction="column">
                   <Grid item xs={6}>
@@ -137,7 +134,7 @@ const ListAttendanceInstructor = () => {
                         <DataGrid
                           rows={students}
                           columns={listAttendancesCols}
-                          sx={{px:2}}
+                          sx={{ px: 2 }}
                           initialState={{
                             pagination: {
                               paginationModel: {
@@ -150,6 +147,16 @@ const ListAttendanceInstructor = () => {
                       </div>
                     </Paper>
                   </Grid>
+                  <Paper sx={{ mt: 3 }}>
+                    <div>
+                      <DataGrid
+                        rows={students}
+                        columns={listAttendancesCols}
+                        pageSize={10}
+                        onRowSelectionModelChange={handleSelectionModel}
+                      />
+                    </div>
+                  </Paper>
                 </Grid>
               </Grid>
             </Grid>

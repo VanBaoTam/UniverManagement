@@ -136,7 +136,7 @@ export class InstructorService {
 
       if (!teacherResult.rows[0])
         return res.status(404).json({ message: "Teacher not found!" });
-      //console.log(courseId, studentIds, shifts, days);
+      ////console.log(courseId, studentIds, shifts, days);
       const courseQuery =
         "select times, url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id where courses.course_id = $1 and days = $2 and shift = $3 and instructor_id = $4";
       const courseValue = [
@@ -246,10 +246,10 @@ export class InstructorService {
         shiftValue,
         teacherResult.rows[0].instructor_id,
       ];
-      // console.log(courseValue);
-      // console.log(courseValue);
+      // //console.log(courseValue);
+      // //console.log(courseValue);
       const courseResult = await datasource.query(courseQuery, courseValue);
-      // console.log(courseResult.rows);
+      // //console.log(courseResult.rows);
       if (!courseResult.rows[0])
         return res.status(404).json({ message: "Course not found!" });
       const sheetId = courseResult.rows[0].url.split("/d/")[1];

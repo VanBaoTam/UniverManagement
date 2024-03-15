@@ -43,7 +43,7 @@ const SubjectAttendanceStudent = () => {
         });
         return { ...course, id: index + 1, ...times_ };
       });
-      console.log(listCourseWithIds);
+      //console.log(listCourseWithIds);
       setCourses(listCourseWithIds || []);
       setLoading(false);
     } catch (error) {
@@ -56,7 +56,7 @@ const SubjectAttendanceStudent = () => {
       if (ids.length !== 1) {
         return;
       }
-      console.log(ids, courses[ids[0] - 1]);
+      //console.log(ids, courses[ids[0] - 1]);
       setSelectedCourse(courses[ids[0] - 1]);
     },
     [ids, courses]
@@ -87,13 +87,7 @@ const SubjectAttendanceStudent = () => {
                     <DataGrid
                       rows={courses}
                       columns={CourseAttendanceCols}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 10,
-                          },
-                        },
-                      }}
+                      pageSize={10}
                       checkboxSelection
                       onRowSelectionModelChange={handleSelectionModel}
                     />

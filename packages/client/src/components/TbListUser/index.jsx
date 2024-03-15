@@ -8,84 +8,81 @@ import UserContext from "@contexts/user";
 import { MAIN_COLOR } from "../../constants/color";
 
 export default function TableListClass() {
-    const provider = useDataProvider();
-    const { user } = useContext(UserContext) ?? {};
- const [users, setUsers] = useState([]);
-const columns = [
-  { field: "id", headerName: "Mã user", width: 90 },
-  { field: "name", headerName: "Họ tên", width: 240 },
-  { field: "email", headerName: "Email", width: 200 },
-  { field: "phoneNumber", headerName: "Số điện thoại", width: 150 },
-  { field: "status", headerName: "Trạng thái", width: 120 },
-  {
-    field: "action",
-    headerName: "Thao tác",
-    width: 160,
-    renderCell: (params) => (
-      <Button variant="contained" sx={{background: MAIN_COLOR,color:'black'}} 
-        onClick={() => handleChangeStatus(params.row.id, params.row.status)}
-      >
-        Change Status
-      </Button>
-    ),
-  },
-];
+  const provider = useDataProvider();
+  const { user } = useContext(UserContext) ?? {};
+  const [users, setUsers] = useState([]);
+  const columns = [
+    { field: "id", headerName: "Mã user", width: 90 },
+    { field: "name", headerName: "Họ tên", width: 240 },
+    { field: "email", headerName: "Email", width: 200 },
+    { field: "phoneNumber", headerName: "Số điện thoại", width: 150 },
+    { field: "status", headerName: "Trạng thái", width: 120 },
+    {
+      field: "action",
+      headerName: "Thao tác",
+      width: 160,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          sx={{ background: MAIN_COLOR, color: "black" }}
+          onClick={() => handleChangeStatus(params.row.id, params.row.status)}
+        >
+          Change Status
+        </Button>
+      ),
+    },
+  ];
   const [loading, setLoading] = useState(true);
 
- useEffect(() => {
-   const fetchUsers = async () => {
-     try {
-      const response = await provider.get({
-        path: `admin/get-user`,
-       
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          "Content-type": "application/json",
-        },
-      });
-       setUsers(response.data.userList);
-                setLoading(false);
-
-     } catch (error) {
-       console.error("Error fetching users:", error);
-                setLoading(false);
-
-     }
-   };
-
-   fetchUsers();
- }, []);
-
-    const handleChangeStatus = async (accountId, currentStatus) => {
+  useEffect(() => {
+    const fetchUsers = async () => {
       try {
-        const newStatus = currentStatus === "active" ? "in_active" : "active";
-        console.log(accountId);
-        console.log(newStatus);
+        const response = await provider.get({
+          path: `admin/get-user`,
 
-        await provider.get({
-          path: `admin/change-status-account/${accountId}`,
-          status: newStatus,
           headers: {
             Authorization: `Bearer ${user.token}`,
             "Content-type": "application/json",
           },
         });
-
-        setUsers((prevUsers) => {
-          return prevUsers.map((user) => {
-            if (user.id === accountId) {
-              return { ...user, status: newStatus };
-            }
-            return user;
-          });
-        });
+        setUsers(response.data.userList);
+        setLoading(false);
       } catch (error) {
-        console.error("Error changing status:", error);
+        console.error("Error fetching users:", error);
+        setLoading(false);
       }
     };
 
+    fetchUsers();
+  }, []);
 
+  const handleChangeStatus = async (accountId, currentStatus) => {
+    try {
+      const newStatus = currentStatus === "active" ? "in_active" : "active";
+      //console.log(accountId);
+      //console.log(newStatus);
 
+      await provider.get({
+        path: `admin/change-status-account/${accountId}`,
+        status: newStatus,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-type": "application/json",
+        },
+      });
+
+      setUsers((prevUsers) => {
+        return prevUsers.map((user) => {
+          if (user.id === accountId) {
+            return { ...user, status: newStatus };
+          }
+          return user;
+        });
+      });
+    } catch (error) {
+      console.error("Error changing status:", error);
+    }
+  };
 
   return (
     <React.Fragment>

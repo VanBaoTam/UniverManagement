@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Backdrop, Box, Button, CircularProgress, Grid, TextField } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import { useForm } from "react-hook-form";
@@ -20,15 +27,13 @@ const InformationInstructor = () => {
   const { address, phoneNumber, email } = watch();
 
   const handleChange = (event, type) => {
-    console.log(event.target.value, type);
+    //console.log(event.target.value, type);
     setValue(type, event.target.value);
   };
   const [loading, setLoading] = useState(true);
 
   const getProfile = async () => {
     try {
-    
-
       const resp = await provider.get({
         path: `user/get-profile`,
         headers: {
@@ -42,14 +47,11 @@ const InformationInstructor = () => {
         });
         displayToast("Truy xuất thông tin giảng viên thành công!", "success");
       }
-               setLoading(false);
-
+      setLoading(false);
     } catch (error) {
-      console.log(error);
       displayToast(error.response.data.message, "error");
-               setLoading(false);
-
-    } 
+      setLoading(false);
+    }
   };
 
   const onSubmit = async (data) => {
@@ -69,8 +71,6 @@ const InformationInstructor = () => {
         displayToast("Cập nhật thành công!", "success");
       }
     } catch (error) {
-      console.log(error);
-
       displayToast(error.response.data.message, "error");
     }
   };
@@ -190,7 +190,7 @@ const InformationInstructor = () => {
                       <p style={{ color: "red" }}>{errors.email.message}</p>
                     )}
                   </Grid>
-                  <Grid sx={{ mt: 5 }}>
+                  <Grid item xs={12} sx={{}}>
                     <Button
                       variant="contained"
                       sx={{ mr: 2, py: 2, background: BLUE_COLOR }}
@@ -198,16 +198,24 @@ const InformationInstructor = () => {
                     >
                       Lưu thay đổi
                     </Button>
+                    <Link
+                      to="/instructor/change-password"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Button
+                        variant="contained"
+                        sx={{
+                          mr: 1,
+                          background: RED_COLOR,
+                          py: 2,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Thay đổi mật khẩu
+                      </Button>
+                    </Link>
                   </Grid>
                 </form>
-                <Link to="/instructor/change-password">
-                  <Button
-                    variant="contained"
-                    sx={{ mt: 3, background: RED_COLOR, py: 1 }}
-                  >
-                    Thay đổi mật khẩu
-                  </Button>
-                </Link>
               </Grid>
             </Grid>
           </Box>

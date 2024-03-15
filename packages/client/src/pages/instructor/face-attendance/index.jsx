@@ -47,7 +47,7 @@ const AttendanceFaceInstructor = () => {
   const handleSelectionModel = useCallback(
     (selectionModel) => {
       const updatedStudents = [...students];
-      console.log(selectionModel);
+      //console.log(selectionModel);
       updatedStudents.forEach((student, index) => {
         const isSelected = selectionModel.includes(index + 1);
         if (!student.isChecked) {
@@ -105,7 +105,7 @@ const AttendanceFaceInstructor = () => {
         },
       });
       if (resp.status === 200) {
-        displayToast("Success", "success");
+        displayToast("Điểm danh thành công", "success");
         setLoading(false);
       }
     } catch (error) {
@@ -231,6 +231,7 @@ const AttendanceFaceInstructor = () => {
                         },
                       },
                     }}
+                    pageSize={10}
                     pageSizeOptions={[10, 100]}
                     checkboxSelection
                     onRowSelectionModelChange={handleSelectionModel}
