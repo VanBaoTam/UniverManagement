@@ -11,5 +11,10 @@ adminRouter.get(
     authenToken,
     adminInstance.changeStatusAccount
 );
+adminRouter.get(
+    "/get-course-by-admin",
+    authenToken,
+    adminInstance.getCourseByAdmin
+);
 // -----------------------------------------------
 export { adminRouter };

@@ -5,14 +5,14 @@ import { authenToken } from "../middlewares/authen.js";
 // -----------------------------------------------
 const studentRouter = Router();
 studentRouter.get(
-  "/get-attendance-by-student-id/:courseId/:teacherId/:day/:shift",
-  authenToken,
-  studentInstance.GetAttendanceByStudentId
+    "/get-attendance-by-student-id",
+    authenToken,
+    studentInstance.GetAttendanceByStudentId
 );
 studentRouter.get(
-  "/get-course-by-student-id",
-  authenToken,
-  studentInstance.GetCourseByStudentId
+    "/get-course-by-student-id",
+    authenToken,
+    studentInstance.GetCourseByStudentId
 );
 
 // -----------------------------------------------

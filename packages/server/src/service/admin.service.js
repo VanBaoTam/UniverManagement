@@ -234,16 +234,16 @@ export class AdminService {
             if (!CredentialsValidation("id", accountId))
                 return res.status(400).json({ message: "Invalid Account id" });
             const account = req.params.account;
-            const status = req.params.status;
             const accountQuery =
                 "select account_id,status from accounts where account_id = $1";
             const accountResult = await datasource.query(accountQuery, [
                 account,
             ]);
+            var status;
             if (!accountResult.rows[0])
                 return res.status(404).json({ message: "Account not found!" });
-            if (accountResult.rows[0].status == status)
-                return res.status(305).json({ message: " Not Modified" });
+            if (accountResult.rows[0].status == "active") status = "in_active";
+            else status = "active";
             const updateQuery =
                 "update accounts set status = $1 where account_id = $2";
             const updateValues = [status, account];
@@ -255,6 +255,27 @@ export class AdminService {
             console.error(error);
             return res.status(500).json({ message: "Internal Server Error" });
         }
+    }
+    async getCourseByAdmin(req, res) {
+        const accessKey = req.headers["authorization"] ?? "";
+        if (!accessKey) return res.status(400).json("Invalid accessKey");
+
+        const decodedToken = jwt.verify(
+            accessKey.split(" ")[1],
+            process.env.SECRET_KEY
+        );
+        const accountId = decodedToken.accountId;
+        if (!CredentialsValidation("id", accountId))
+            return res.status(400).json({ message: "Invalid Account id" });
+        const courseQuery =
+            "select courses.course_id,course_title,start_date,end_date,shift,days,url from instructorscoursesmapping join courses on instructorscoursesmapping.course_id = courses.course_id ";
+
+        const courseResult = await datasource.query(courseQuery);
+        if (!courseResult.rows[0])
+            return res.status(404).json({ message: "Course not found!" });
+        return res
+            .status(200)
+            .json({ message: "ok", listCourse: courseResult.rows });
     }
 }
 

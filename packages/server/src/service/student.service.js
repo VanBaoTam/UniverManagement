@@ -23,59 +23,67 @@ export class StudentService {
             );
             const accountId = decodedToken.accountId;
             //-----------------------------------------------------------
-            const { courseId, teacherId, shift, day } = req.params ?? {};
-            console.log(courseId, teacherId, shift, day);
+
             if (!CredentialsValidation("id", accountId))
                 return res.status(400).json({ message: "Invalid Account ID" });
-            if (!courseId || !teacherId || !day || !shift)
-                return res.status(400).json({ message: "Missing value" });
+
             const studentQuery =
-                "select id from students join users on students.user_id = users.user_id where account_id = $1";
+                "select student_id,id from students join users on students.user_id = users.user_id where account_id = $1";
             const studentResult = await datasource.query(studentQuery, [
                 accountId,
             ]);
             if (!studentResult.rows[0])
                 return res.status(404).json({ message: "Student not found!" });
             const courseQuery =
-                "select url from instructorscoursesmapping where instructor_id = $1 and course_id = $2 and days = $3 and shift = $4";
-            const courseValues = [teacherId, courseId, day, shift];
-            const courseResult = await datasource.query(
-                courseQuery,
-                courseValues
-            );
+                "SELECT course_title,name,s.course_id as courseId,s.days as day,s.shift as shift,i.instructor_id,url FROM public.studentscoursesmapping as s join instructorscoursesmapping as ism on s.course_id = ism.course_id join instructors as i on ism.instructor_id = i.instructor_id join users on i.user_id = users.user_id join accounts on accounts.account_id = users.account_id join profiles on profiles.profile_id = accounts.profile_id join courses on courses.course_id = ism.course_id where s.student_id = $1";
+            const courseResult = await datasource.query(courseQuery, [
+                studentResult.rows[0].student_id,
+            ]);
             if (!courseResult.rows[0])
                 return res.status(404).json({ message: "Course not found!" });
-            const sheetId = courseResult.rows[0].url.split("/d/")[1];
-            const response = await sheets.spreadsheets.values.get({
-                spreadsheetId: sheetId,
-                range: `Thứ ${day} - Ca ${shift}`,
-            });
 
-            const header = response.data.values[1];
+            //console.log(courseResult.rows);
+            const result = await Promise.all(
+                courseResult.rows.map(async (course) => {
+                    const sheetId = course.url.split("/d/")[1];
+                    const response = await sheets.spreadsheets.values.get({
+                        spreadsheetId: sheetId,
+                        range: `Thứ ${course.day} - Ca ${course.shift}`,
+                    });
 
-            const listStudent = response.data.values
-                .slice(2)
-                .map((row) => rowToObject(row, header));
-            // console.log(listStudent);
-            const studentAttendance = listStudent.find(
-                (item) => item["Mã số sinh viên"] == studentResult.rows[0].id
+                    const header = response.data.values[1];
+
+                    const listStudent = response.data.values
+                        .slice(2)
+                        .map((row) => rowToObject(row, header));
+                    //   console.log(listStudent);
+                    const studentAttendance = listStudent.find(
+                        (item) =>
+                            item["Mã số sinh viên"] == studentResult.rows[0].id
+                    );
+                    //  console.log(studentAttendance);
+                    //if (!studentAttendance) return;
+                    var student = {};
+                    student.teacherName = course.name;
+                    student.courseId = course.courseid;
+                    student.courseTitle = course.course_title;
+                    student.day = course.day;
+                    student.shift = course.shift;
+                    student.listTimes = [];
+
+                    for (var key in studentAttendance) {
+                        if (key.startsWith("Buổi")) {
+                            student.listTimes.push(studentAttendance[key]);
+                        }
+                    }
+                    console.log(student);
+                    return student;
+                })
             );
-            if (!studentAttendance)
-                return res
-                    .status(404)
-                    .json({ message: "Student not found in course" });
-            var student = {};
-            student.name = studentAttendance["Tên sinh viên"];
-            student.studentId = studentAttendance["Mã số sinh viên"];
-            student.class = studentAttendance["Lớp"];
-            student.listTimes = [];
+            console.log(result);
+            // console.log(listStudent);
 
-            for (var key in studentAttendance) {
-                if (key.startsWith("Buổi")) {
-                    student.listTimes.push(studentAttendance[key] ?? "");
-                }
-            }
-            return res.status(200).json({ student });
+            return res.status(200).json({ result });
         } catch (error) {
             console.log(error);
             return res.status(500).json({

@@ -194,7 +194,7 @@ export class InstructorService {
                 .slice(2)
                 .map((row) => row[0]);
 
-            const check = await Promise.all(
+            await Promise.all(
                 listStudentId.map(async (id, index) => {
                     var flag = false;
                     for (var i = 0; i < studentIds.length; i++) {
