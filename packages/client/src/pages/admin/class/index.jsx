@@ -22,7 +22,7 @@ const ListClassAdmin = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -60,7 +60,6 @@ const ListClassAdmin = () => {
                     <DataGrid
                       rows={classRow}
                       columns={classCols}
-                      pageSizeOptions={[10, 100]}
                       checkboxSelection
                     />
                   </div>

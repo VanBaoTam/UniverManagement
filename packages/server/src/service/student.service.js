@@ -12,7 +12,7 @@ export class StudentService {
         }
         return this.instance;
     }
-    async getActtendaneByStudent(req, res) {
+    async GetAttendanceByStudentId(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
             if (!accessKey) return res.status(400).json("Invalid accessKey");
@@ -24,7 +24,7 @@ export class StudentService {
             const accountId = decodedToken.accountId;
             //-----------------------------------------------------------
             const { courseId, teacherId, shift, day } = req.params ?? {};
-
+            console.log(courseId, teacherId, shift, day);
             if (!CredentialsValidation("id", accountId))
                 return res.status(400).json({ message: "Invalid Account ID" });
             if (!courseId || !teacherId || !day || !shift)
@@ -83,7 +83,7 @@ export class StudentService {
             });
         }
     }
-    async getCourseByStudent(req, res) {
+    async GetCourseByStudentId(req, res) {
         try {
             const accessKey = req.headers["authorization"] ?? "";
             if (!accessKey) return res.status(400).json("Invalid accessKey");
@@ -95,9 +95,17 @@ export class StudentService {
             const accountId = decodedToken.accountId;
             if (!CredentialsValidation("id", accountId))
                 return res.status(400).json({ message: "Invalid Account ID" });
-            const courseQuery =
-                "select  instructor_id,course_id,days,shift,start_date,end_date from instructorscoursesmapping";
-            const courseResult = await datasource.query(courseQuery);
+            const courseQuery = `select scm.course_id, courses.course_title, ism.days, ism.shift, ism.instructor_id from accounts join users on users.account_id = accounts.account_id
+      join students on students.user_id = users.user_id 
+      join studentscoursesmapping as scm on scm.student_id = students.student_id 
+      join courses on courses.course_id = scm.course_id
+      join instructorscoursesmapping as ism on ism.course_id = courses.course_id
+      where accounts.account_id = $1`;
+            const courseValues = [accountId];
+            const courseResult = await datasource.query(
+                courseQuery,
+                courseValues
+            );
             if (!courseResult.rows[0])
                 return res.status(404).json({ message: "Course not found!" });
             const listcourse = courseResult.rows;

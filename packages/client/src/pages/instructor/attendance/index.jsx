@@ -36,9 +36,9 @@ const Attendance = () => {
       console.log(error);
       displayToast(error.response.data.message, "error");
     } finally {
-     setTimeout(() => {
-       setLoading(false);
-     }, 500); 
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
   useEffect(() => {
@@ -84,7 +84,6 @@ const Attendance = () => {
                       <DataGrid
                         rows={courses}
                         columns={attendanceCourseCol}
-                        pageSizeOptions={[10, 100]}
                         onRowSelectionModelChange={handleSelectionModel}
                       />
                     </div>
