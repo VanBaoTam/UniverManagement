@@ -1,4 +1,13 @@
-import { Box, Button, Container, Grid, Modal, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Modal,
+  TextField,
+  CircularProgress,
+  Backdrop,
+} from "@mui/material";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { BLUE_COLOR } from "@constants/color";
@@ -34,6 +43,7 @@ const AttendanceFaceInstructor = () => {
   const [students, setStudents] = useState([]);
   const [ids, setIds] = useState([]);
   const [course, setCourse] = useState();
+  const [loading, setLoading] = useState(true);
   const handleSelectionModel = useCallback(
     (selectionModel) => {
       const updatedStudents = [...students];
@@ -65,13 +75,16 @@ const AttendanceFaceInstructor = () => {
           }
         );
         setStudents(studentsWithId || []);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       displayToast(error.response.data.message, "error");
     }
   };
   const Attendance = async () => {
+    setLoading(true);
     const ids = students
       .filter((element) => {
         if (element.isAttendance) return element.studentId;
@@ -93,9 +106,11 @@ const AttendanceFaceInstructor = () => {
       });
       if (resp.status === 200) {
         displayToast("Success", "success");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       displayToast(error.response.data.message, "error");
     }
   };
@@ -120,6 +135,9 @@ const AttendanceFaceInstructor = () => {
   }, [studentIds]);
   return (
     <React.Fragment>
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         sx={{
           backgroundColor: "#f5f5f5",
