@@ -1,5 +1,12 @@
-import React, {useContext, useState, useEffect } from "react";
-import { Backdrop, Box, Button, CircularProgress, Grid, Modal } from "@mui/material";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  Modal,
+} from "@mui/material";
 import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import ModalAddClass from "@components/ModalAddClass";
 import Paper from "@mui/material/Paper";
@@ -30,32 +37,32 @@ const ListClassAdmin = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
-     const fetchData = async () => {
-       try {
-         const response = await provider.get({
-           path: `admin/get-course-by-admin`,
-           headers: {
-             Authorization: `Bearer ${user.token}`,
-             "Content-type": "application/json",
-           },
-         });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await provider.get({
+          path: `admin/get-course-by-admin`,
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-type": "application/json",
+          },
+        });
 
-         console.log(response.data.listCourse);
+        console.log(response.data.listCourse);
         const coursesWithId = response.data.listCourse.map((course, index) => {
           return { ...course, id: index + 1 };
         });
 
-         setCourses(coursesWithId);
-         setLoading(false);
-       } catch (error) {
-         console.error("Error fetching data:", error);
-         setLoading(false);
-       }
-     };
+        setCourses(coursesWithId);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
 
-     fetchData();
-   }, []);
+    fetchData();
+  }, []);
   const columns = [
     { field: "course_id", headerName: "Mã môn học", width: 110 },
     { field: "course_title", headerName: "Môn học", width: 270 },
@@ -101,7 +108,7 @@ const ListClassAdmin = () => {
             <Grid container>
               <Grid item xs={12} sx={{ py: 3, pl: 5, ml: 4 }}>
                 <Grid container sx={{ mb: 3 }}>
-                  <Grid item xs={6}>
+                  {/* <Grid item xs={6}>
                     <Button
                       variant="contained"
                       sx={{ background: BLUE_COLOR }}
@@ -109,7 +116,7 @@ const ListClassAdmin = () => {
                     >
                       Thêm lớp học
                     </Button>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
                 <div style={{ height: 520, width: "100%" }}>
                   {loading ? (
@@ -129,7 +136,7 @@ const ListClassAdmin = () => {
           </Box>
         </Grid>
       </Grid>
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -138,7 +145,7 @@ const ListClassAdmin = () => {
         <Box sx={stylee}>
           <ModalAddClass />
         </Box>
-      </Modal>
+      </Modal> */}
     </React.Fragment>
   );
 };
