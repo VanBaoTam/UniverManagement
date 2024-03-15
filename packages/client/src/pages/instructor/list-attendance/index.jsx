@@ -22,7 +22,7 @@ const ListAttendanceInstructor = () => {
   const { user } = useContext(UserContext) ?? {};
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState("");
   const provider = useDataProvider();
   const [ids, setIds] = useState([]);
   const handleChange = (event) => {
