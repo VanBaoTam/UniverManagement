@@ -63,7 +63,7 @@ export class UserService {
       const token = jwt.sign(data, process.env.SECRET_KEY, {
         expiresIn: expiresIn,
       });
-      //console.log(data);
+      console.log(data);
       return res.status(200).json({
         message: "Login Successful",
         role: dataResult.rows[0].role,
@@ -72,7 +72,7 @@ export class UserService {
         expiresIn: expiresIn,
       });
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       return res.status(500).json({
         message: "Internal Server Errors",
       });
@@ -89,7 +89,7 @@ export class UserService {
         process.env.SECRET_KEY
       );
       const accountId = decodedToken.accountId;
-      //  //console.log(decodedToken);
+      //  console.log(decodedToken);
       if (!CredentialsValidation("id", accountId))
         return res.status(400).json({ message: "Invalid Account ID" });
       const dataQuery =
@@ -105,7 +105,7 @@ export class UserService {
         email: dataResult.rows[0].email,
       });
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       return res.status(500).json({
         message: "Internal Server Errors",
       });
@@ -133,10 +133,11 @@ export class UserService {
         return res.status(404).json({ message: "Profile not found!" });
       const profile = {
         profile_id: dataResult.rows[0].profile_id,
-        email: req.body.email ?? "",
-        phoneNumber: req.body.phone_number ?? "",
-        address: req.body.address ?? "",
+        email: req.body.data.email ?? "",
+        phoneNumber: req.body.data.phoneNumber ?? "",
+        address: req.body.data.address ?? "",
       };
+      console.log("PROFILE", profile);
       if (
         !CredentialsValidation("email", profile.email) ||
         !CredentialsValidation("phone", profile.phoneNumber)
@@ -170,7 +171,7 @@ export class UserService {
       await datasource.query(updateQuery, updateValues);
       return res.status(200).json("Profile updated successfully");
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       return res.status(500).json({
         message: "Internal Server Errors",
       });
@@ -236,7 +237,7 @@ export class UserService {
           .json({ message: "Password changed successfully" });
       });
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       return res.status(500).json({
         message: "Internal Server Errors",
       });
