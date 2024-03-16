@@ -68,7 +68,9 @@ const AttendanceInstructor = () => {
 
   return (
     <>
-      {" "}
+      <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>{" "}
       <Box
         sx={{
           width: "100%",

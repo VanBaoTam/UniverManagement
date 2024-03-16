@@ -137,6 +137,9 @@ const FaceAttendanceInstructor=()=>{
      }, [studentIds]);
     return (
       <>
+        <Backdrop open={loading} style={{ zIndex: 999, color: "#fff" }}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <div style={{ background: "white", width: "100%" }}>
           <Container>
             {course ? (
@@ -266,17 +269,15 @@ const FaceAttendanceInstructor=()=>{
             </Modal.Header>
             <Modal.Body>
               <Box sx={style}>
-              
-                  {course ? (
-                    <AttendanceWebcam
-                      studentIds={studentIds}
-                      setStudentIds={setStudentIds}
-                      days={course.days}
-                      shifts={course.shift}
-                      courseId={course.course_id}
-                    />
-                  ) : null}
-              
+                {course ? (
+                  <AttendanceWebcam
+                    studentIds={studentIds}
+                    setStudentIds={setStudentIds}
+                    days={course.days}
+                    shifts={course.shift}
+                    courseId={course.course_id}
+                  />
+                ) : null}
               </Box>
             </Modal.Body>
           </Modal>
