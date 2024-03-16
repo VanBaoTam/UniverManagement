@@ -6,6 +6,7 @@ const { VITE_ATTENDANCE_SERVICE, VITE_AUTHENTICATION_SERVICE } = import.meta
 import { displayToastTop } from "@utils";
 import { Box, Button } from "@mui/material";
 import { BLUE_COLOR } from "@constants/color";
+import "./webcam.scss"
 function AttendanceWebcam(chilrens) {
   const { studentIds, setStudentIds } = chilrens ?? {};
   // const [image, setImage] = useState();
@@ -129,9 +130,9 @@ function AttendanceWebcam(chilrens) {
   // }, [studentIds]);
 
   return (
-    <Box sx={{ display: "flex", height: "750px", flexDirection: "column" }}>
-      <Box sx={{ width: "100%", p: 4 }}>
-        <span style={{ textAlign: "center", display: "block" }}>Điểm danh</span>
+    <Box sx={{ display: "flex", height: "820px", flexDirection: "column" }}>
+      <Box sx={{ width: "100%", p: 4 }} >
+       
         {imgSrc ? (
           <img
             src={imgSrc}
@@ -144,8 +145,11 @@ function AttendanceWebcam(chilrens) {
           <Webcam
             height={550}
             width={550}
+   
+
             screenshotFormat="image/jpeg"
             ref={webcamRef}
+          
           />
         )}
       </Box>
@@ -175,9 +179,10 @@ function AttendanceWebcam(chilrens) {
             sx={{
               fontSize: "2rem",
               px: 3,
-              py: 1,
+             
               background: BLUE_COLOR,
             }}
+            className="py-md-1 py-0"
             onClick={capture}
           >
             Capture photo

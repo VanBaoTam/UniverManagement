@@ -10,6 +10,7 @@ import { UserContextProvider } from "@contexts/user";
 import AdminRoutes from "@routes/admin-routes";
 import StudentRoutes from "@routes/student-routes";
 import InstructorRoutes from "@routes/instructor-routes";
+import LoginInstuctor from "./pages/instructor/login-instrcutor";
 function App() {
   return (
     <React.Fragment>
@@ -21,6 +22,7 @@ function App() {
           <MainLayout>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LoginInstuctor />} />
               <Route path="/admin/*" element={<AdminRoutes />} />
               <Route path="/student/*" element={<StudentRoutes />} />
               <Route path="/instructor/*" element={<InstructorRoutes />} />

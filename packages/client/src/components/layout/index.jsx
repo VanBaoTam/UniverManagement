@@ -6,7 +6,12 @@ import Sidebarr from "./sidebar";
 function MainLayout({ children }) {
   const location = useLocation();
 
-  const isHomePage = location.pathname === "/";
+  const isHomePage =
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/instructor/attendance-student" ||
+    location.pathname === "/instructor/attendance-face-student"; 
+  
   const renderSidebar = !isHomePage ? (
     <Grid item xs={1.6}>
       <Sidebarr />

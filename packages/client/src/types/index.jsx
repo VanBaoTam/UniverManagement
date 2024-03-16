@@ -169,17 +169,20 @@ export const attendanceCourseCol = [
   {
     field: "id",
     headerName: "STT",
-    width: 80,
+    width: 100,
+ 
   },
   {
     field: "course_title",
     headerName: "Môn học",
     width: 300,
+ 
   },
   {
     field: "shift",
     headerName: "Ca",
     width: 100,
+
   },
   {
     field: "days",
@@ -189,6 +192,7 @@ export const attendanceCourseCol = [
     },
 
     width: 100,
+   
   },
   {
     field: "start_date",
@@ -197,6 +201,7 @@ export const attendanceCourseCol = [
       return dayjs(data.value).format("DD/MM/YYYY");
     },
     width: 200,
+ 
   },
   {
     field: "end_date",
@@ -205,5 +210,6 @@ export const attendanceCourseCol = [
       return dayjs(data.value).format("DD/MM/YYYY");
     },
     width: 200,
+ 
   },
 ];

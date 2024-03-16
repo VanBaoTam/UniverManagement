@@ -11,6 +11,7 @@ import { displayToast } from "@utils/toast";
 import { RED_COLOR } from "../../../constants/color";
 import { Button } from "@mui/material";
 import { PERMISSIONS } from "@constants/common";
+import "./header.scss"
 const Header = () => {
   const { logout } = useContext(UserContext);
   const navigation = useNavigate();
@@ -57,16 +58,16 @@ const Header = () => {
             <img
               src={logostu}
               style={{ width: "7rem", height: "5rem" }}
-              className="py-2 ms-5"
+              className="py-2 ms-md-5 hiddenimage"
             />
             {profileData && (
               <React.Fragment>
                 <Typography
-                  variant="h5"
+                  class="fontname"
                   component="div"
                   sx={{
                     flexGrow: 1,
-                    color: "black",
+                    
                     ml: 3,
                     fontFamily: "time",
                   }}
@@ -89,9 +90,9 @@ const Header = () => {
 
                   {profileData.name}
                 </Typography>
-                <Button
+                <Button 
                   variant="contained"
-                  sx={{ background: RED_COLOR }}
+                  sx={{ background: RED_COLOR ,mx:1}}
                   onClick={handleLogout}
                 >
                   Đăng xuất

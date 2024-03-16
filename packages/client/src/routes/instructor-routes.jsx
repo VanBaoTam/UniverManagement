@@ -5,6 +5,8 @@ import InformationInstructor from "@pages/instructor/information";
 import ChangePasswordInstructor from "@pages/instructor/change-password";
 import ListAttendanceInstructor from "@pages/instructor/list-attendance";
 import InstructorRestrict from "./instructor-Restrict";
+import AttendanceInstructor from "../pages/instructor/attendance-instructor";
+import FaceAttendanceInstructor from "../pages/instructor/face-attendance-instructor";
 function InstructorRoutes() {
   return (
     <Routes>
@@ -13,6 +15,14 @@ function InstructorRoutes() {
         element={
           <InstructorRestrict>
             <Attendance />
+          </InstructorRestrict>
+        }
+      />
+      <Route
+        path="/attendance-student"
+        element={
+          <InstructorRestrict>
+            <AttendanceInstructor />
           </InstructorRestrict>
         }
       />
@@ -37,6 +47,14 @@ function InstructorRoutes() {
         element={
           <InstructorRestrict>
             <AttendanceFaceInstructor />
+          </InstructorRestrict>
+        }
+      />
+      <Route
+        path="/attendance-face-student"
+        element={
+          <InstructorRestrict>
+            <FaceAttendanceInstructor />
           </InstructorRestrict>
         }
       />
