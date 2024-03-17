@@ -8,7 +8,7 @@ const {
 } = import.meta.env;
 import { displayToastTop } from "@utils";
 import { Box, Button } from "@mui/material";
-import { BLUE_COLOR } from "@constants/color";
+import { BLUE_COLOR, RED_COLOR } from "@constants/color";
 import "./webcam.scss";
 
 function AttendanceWebcam(children) {
@@ -183,20 +183,26 @@ function AttendanceWebcam(children) {
     >
       <Box sx={{ width: "100%", p: 4 }}>
         {imgSrc ? (
-          <img
-            src={imgSrc}
-            alt="webcam"
-            style={{ marginTop: "70px", marginBottom: "80px" }}
-            height={"100%"}
-            width={"100%"}
-          />
+          <div className="my-3 py-md-0 sizewebcam">
+            <img
+              className="py-5    px-md-0 py-0 mt-3"
+              src={imgSrc}
+              alt="webcam"
+             
+              height={"100%"}
+              width={"100%"}
+            />
+          </div>
         ) : (
-          <Webcam
-            height={"100%"}
-            width={"100%"}
-            screenshotFormat="image/jpeg"
-            ref={webcamRef}
-          />
+          <div className="my-3 py-md-0 sizewebcam">
+            <Webcam
+              className="py-5    px-md-0 py-0 mt-3"
+              height={"100%"}
+              width={"100%"}
+              screenshotFormat="image/jpeg"
+              ref={webcamRef}
+            />
+          </div>
         )}
       </Box>
       <input
@@ -221,7 +227,7 @@ function AttendanceWebcam(children) {
             variant="contained"
             sx={{
               fontSize: "2rem",
-              px: 3,
+
               py: 1,
               background: BLUE_COLOR,
             }}
@@ -236,12 +242,11 @@ function AttendanceWebcam(children) {
           <Button
             variant="contained"
             sx={{
-              fontSize: "2rem",
               px: 3,
 
               background: BLUE_COLOR,
             }}
-            className="py-md-1 py-0"
+            className="py-md-3 py-3 "
             onClick={() => {
               console.log("CLICK CAPTURED");
               setIsCaptured(true);
@@ -254,12 +259,12 @@ function AttendanceWebcam(children) {
           variant="contained"
           sx={{
             mt: 3,
-            fontSize: "2rem",
+
             px: 3,
 
-            background: BLUE_COLOR,
+            background: RED_COLOR,
           }}
-          className="py-md-1 py-0"
+          className="py-md-3 py-3 "
           onClick={handleChooseFiles}
         >
           Choose Files
