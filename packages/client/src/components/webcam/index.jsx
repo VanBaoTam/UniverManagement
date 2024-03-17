@@ -88,15 +88,18 @@ function AttendanceWebcam(children) {
 
   const authen = async (attendanceName) => {
     try {
-      const requestUrl = isMobileScreen
-        ? VITE_AUTHENTICATION_MOBILE_SERVICE +
-          new URLSearchParams({
-            objectKey: `${attendanceName}.jpeg`,
-          })
-        : VITE_AUTHENTICATION_SERVICE +
-          new URLSearchParams({
-            objectKey: `${attendanceName}.jpeg`,
-          });
+      console.log(attendanceName);
+      const requestUrl =
+        // isMobileScreen
+        // ? VITE_AUTHENTICATION_MOBILE_SERVICE +
+        //   new URLSearchParams({
+        //     objectKey: `${attendanceName}.jpeg`,
+        //   })
+        // :
+        VITE_AUTHENTICATION_SERVICE +
+        new URLSearchParams({
+          objectKey: `${attendanceName}.jpeg`,
+        });
       const response = await fetch(requestUrl, {
         method: "GET",
         headers: {
