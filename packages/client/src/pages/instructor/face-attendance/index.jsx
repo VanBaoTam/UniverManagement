@@ -232,7 +232,6 @@ const AttendanceFaceInstructor = () => {
                       },
                     }}
                     pageSize={10}
-                    pageSizeOptions={[10, 100]}
                     checkboxSelection
                     onRowSelectionModelChange={handleSelectionModel}
                   />

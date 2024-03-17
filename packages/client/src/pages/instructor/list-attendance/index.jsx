@@ -120,7 +120,7 @@ const ListAttendanceInstructor = () => {
                         {courses
                           ? courses.map((element) => (
                               <MenuItem key={element.id} value={element}>
-                                {element.course_title}, thứ {element.days} - ca{" "}
+                                {element.course_title}, thứ {element.days} - ca
                                 {element.shift}
                               </MenuItem>
                             ))

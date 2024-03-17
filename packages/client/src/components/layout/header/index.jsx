@@ -11,7 +11,7 @@ import { displayToast } from "@utils/toast";
 import { RED_COLOR } from "../../../constants/color";
 import { Button } from "@mui/material";
 import { PERMISSIONS } from "@constants/common";
-import "./header.scss"
+import "./header.scss";
 const Header = () => {
   const { logout } = useContext(UserContext);
   const navigation = useNavigate();
@@ -63,36 +63,36 @@ const Header = () => {
             {profileData && (
               <React.Fragment>
                 <Typography
-                  class="fontname"
+                  className="fontname"
                   component="div"
                   sx={{
                     flexGrow: 1,
-                    
+
                     ml: 3,
                     fontFamily: "time",
                   }}
                 >
                   {role === PERMISSIONS.STUDENT && (
                     <React.Fragment>
-                      <span style={{ fontWeight: "bold" }}>Sinh Viên/</span>{" "}
+                      <span style={{ fontWeight: "bold" }}>Sinh Viên/</span>
                     </React.Fragment>
                   )}
                   {role === PERMISSIONS.ADMIN && (
                     <React.Fragment>
-                      <span style={{ fontWeight: "bold" }}>Admin/</span>{" "}
+                      <span style={{ fontWeight: "bold" }}>Admin/</span>
                     </React.Fragment>
                   )}
                   {role === PERMISSIONS.TEACHER && (
                     <React.Fragment>
-                      <span style={{ fontWeight: "bold" }}>Giảng viên/</span>{" "}
+                      <span style={{ fontWeight: "bold" }}>Giảng viên/</span>
                     </React.Fragment>
                   )}
 
                   {profileData.name}
                 </Typography>
-                <Button 
+                <Button
                   variant="contained"
-                  sx={{ background: RED_COLOR ,mx:1}}
+                  sx={{ background: RED_COLOR, mx: 1 }}
                   onClick={handleLogout}
                 >
                   Đăng xuất

@@ -10,7 +10,8 @@ import { UserContextProvider } from "@contexts/user";
 import AdminRoutes from "@routes/admin-routes";
 import StudentRoutes from "@routes/student-routes";
 import InstructorRoutes from "@routes/instructor-routes";
-import LoginInstuctor from "./pages/instructor/login-instrcutor";
+import LoginInstuctor from "./pages/instructor/login-instructor";
+import MobileScreen from "./routes/mobile-screen";
 function App() {
   return (
     <React.Fragment>
@@ -21,7 +22,14 @@ function App() {
           <Toast />
           <MainLayout>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route
+                path="/"
+                element={
+                  <MobileScreen>
+                    <Home />
+                  </MobileScreen>
+                }
+              />
               <Route path="/login" element={<LoginInstuctor />} />
               <Route path="/admin/*" element={<AdminRoutes />} />
               <Route path="/student/*" element={<StudentRoutes />} />
