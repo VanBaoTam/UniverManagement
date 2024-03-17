@@ -188,7 +188,6 @@ function AttendanceWebcam(children) {
               className="py-5    px-md-0 py-0 mt-3"
               src={imgSrc}
               alt="webcam"
-             
               height={"100%"}
               width={"100%"}
             />
@@ -224,11 +223,10 @@ function AttendanceWebcam(children) {
       >
         {imgSrc ? (
           <Button
+            className="py-md-3 py-3 col-9 mx-auto"
             variant="contained"
             sx={{
               fontSize: "2rem",
-
-              py: 1,
               background: BLUE_COLOR,
             }}
             onClick={() => {
@@ -242,11 +240,9 @@ function AttendanceWebcam(children) {
           <Button
             variant="contained"
             sx={{
-              px: 3,
-
               background: BLUE_COLOR,
             }}
-            className="py-md-3 py-3 "
+            className="py-md-3 py-3 col-9 mx-auto"
             onClick={() => {
               console.log("CLICK CAPTURED");
               setIsCaptured(true);
@@ -264,7 +260,7 @@ function AttendanceWebcam(children) {
 
             background: RED_COLOR,
           }}
-          className="py-md-3 py-3 "
+          className="py-md-3 py-3 col-9 mx-auto"
           onClick={handleChooseFiles}
         >
           Choose Files
