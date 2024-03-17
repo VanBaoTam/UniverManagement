@@ -1,66 +1,102 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Webcam from "react-webcam";
-const { VITE_ATTENDANCE_SERVICE, VITE_AUTHENTICATION_SERVICE } = import.meta
-  .env;
+const {
+  VITE_ATTENDANCE_SERVICE,
+  VITE_AUTHENTICATION_SERVICE,
+  VITE_AUTHENTICATION_MOBILE_SERVICE,
+} = import.meta.env;
 import { displayToastTop } from "@utils";
 import { Box, Button } from "@mui/material";
 import { BLUE_COLOR } from "@constants/color";
-import "./webcam.scss"
-function AttendanceWebcam(chilrens) {
-  const { studentIds, setStudentIds } = chilrens ?? {};
-  // const [image, setImage] = useState();
-  const [imgSrc, setImgSrc] = useState(null);
-  const webcamRef = useRef(null);
-  const handleSubmit = async (image) => {
-    const visitorImageName = uuidv4();
-    try {
-      const response = await fetch(
-        VITE_ATTENDANCE_SERVICE + `/${visitorImageName}.jpeg`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "image/jpeg",
-          },
-          body: image,
-        }
-      );
-      if (response.ok) {
-        const authResponse = await authen(visitorImageName);
+import "./webcam.scss";
 
-        if (authResponse.Message === "success") {
-          const ids = authResponse.students.map((element) => element.mssv);
-          const newStudentIds = ids.filter((student) => {
-            return !studentIds.includes(student);
-          });
-          setStudentIds((prevData) => [...prevData, ...newStudentIds]);
-          if (newStudentIds.length) {
-            const messages = newStudentIds.map((mssv) => {
-              const student = authResponse.students.find(
-                (student) => student.mssv === mssv
-              );
-              return `${student.mssv} - ${student.firstName} ${student.lastName}`;
-            });
-            const allMessages = messages.join("\n");
-            displayToastTop(allMessages, "success");
-          } else {
-            displayToastTop("Bạn đã điêm danh rồi", "info");
+function AttendanceWebcam(children) {
+  const { studentIds, setStudentIds } = children ?? {};
+  const [images, setImages] = useState([]);
+  const [imgSrc, setImgSrc] = useState(null);
+  const [isMobileScreen, setIsMobileScreen] = useState(
+    window.screen.width < 949 ? true : false
+  );
+  const [isCaptured, setIsCaptured] = useState(false);
+  const webcamRef = useRef(null);
+  const imageRef = useRef(null);
+
+  const handleSubmit = useCallback(
+    async (image) => {
+      const visitorImageName = uuidv4();
+      try {
+        const response = await fetch(
+          VITE_ATTENDANCE_SERVICE + `/${visitorImageName}.jpeg`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "image/jpeg",
+            },
+            body: image,
           }
-          retake();
+        );
+        if (response.ok) {
+          const authResponse = await authen(visitorImageName);
+
+          if (authResponse.Message === "success") {
+            const ids = authResponse.students.map((element) => element.mssv);
+            console.log("MSSV:", ids);
+            const newStudentIds = ids.filter((student) => {
+              return !studentIds.includes(student);
+            });
+            console.log("NEWS", newStudentIds);
+            setStudentIds((prevData) => [...prevData, ...newStudentIds]);
+            if (newStudentIds.length) {
+              const messages = newStudentIds.map((mssv) => {
+                const student = authResponse.students.find(
+                  (student) => student.mssv === mssv
+                );
+                return `${student.mssv} - ${student.firstName} ${student.lastName}`;
+              });
+              console.log("MESSAGES:", messages);
+              const allMessages = messages.join("\n");
+              displayToastTop(allMessages, "success");
+            } else {
+              displayToastTop("Bạn đã điểm danh rồi", "info");
+            }
+            retake();
+          }
+        } else {
+          throw new Error("Error uploading image");
         }
-      } else {
-        throw new Error("Error uploading image");
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {}
+    },
+    [studentIds, setStudentIds]
+  );
+  const handleChooseFiles = () => {
+    if (imageRef.current) {
+      imageRef.current.click();
+    }
   };
+
+  useEffect(() => {
+    if (!images.length) return;
+    images.forEach((image) => {
+      console.log(image);
+      handleSubmit(image);
+    });
+    setImages([]);
+  }, [images, handleSubmit]);
 
   const authen = async (attendanceName) => {
     try {
-      const requestUrl =
-        VITE_AUTHENTICATION_SERVICE +
-        new URLSearchParams({
-          objectKey: `${attendanceName}.jpeg`,
-        });
+      const requestUrl = isMobileScreen
+        ? VITE_AUTHENTICATION_MOBILE_SERVICE +
+          new URLSearchParams({
+            objectKey: `${attendanceName}.jpeg`,
+          })
+        : VITE_AUTHENTICATION_SERVICE +
+          new URLSearchParams({
+            objectKey: `${attendanceName}.jpeg`,
+          });
       const response = await fetch(requestUrl, {
         method: "GET",
         headers: {
@@ -81,6 +117,11 @@ function AttendanceWebcam(chilrens) {
   };
 
   const capture = useCallback(() => {
+    console.log(isCaptured);
+    if (!isCaptured) {
+      console.log("RETURN");
+      return;
+    }
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       setImgSrc(imageSrc);
@@ -110,56 +151,68 @@ function AttendanceWebcam(chilrens) {
         img.src = imageSrc;
       }
     }
-  }, [webcamRef]);
+  }, [handleSubmit, isCaptured]);
 
-  // const handleImageChange = (e) => {
-  //   if (e.target.files && e.target.files.length > 0) {
-  //     const selectedFile = e.target.files[0];
-  //     setImage(selectedFile);
-  //   }
-  // };
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      console.log(e.target.files);
+      const selectedFile = e.target.files;
+      setImages((prev) => [...prev, ...selectedFile]);
+    }
+  };
+
   const retake = () => {
     setImgSrc(null);
-    capture();
+    console.log("HERE RETAKE");
+    setIsCaptured(false);
   };
-  // useEffect(() => {
-  //   handleSubmit(image);
-  // }, [image]);
-  // useEffect(() => {
-  //   // //console.log("IDS:", studentIds);
-  // }, [studentIds]);
-
+  useEffect(() => {
+    if (isCaptured) capture();
+  }, [isCaptured]);
   return (
-    <Box sx={{ display: "flex", height: "820px", flexDirection: "column" }}>
-      <Box sx={{ width: "100%", p: 4 }} >
-       
+    <Box
+      sx={{
+        display: "flex",
+        height: "820px",
+        width: "100%",
+        flexDirection: "column",
+      }}
+    >
+      <Box sx={{ width: "100%", p: 4 }}>
         {imgSrc ? (
           <img
             src={imgSrc}
             alt="webcam"
             style={{ marginTop: "70px", marginBottom: "80px" }}
-            height={410}
-            width={550}
+            height={"100%"}
+            width={"100%"}
           />
         ) : (
           <Webcam
-            height={550}
-            width={550}
-   
-
+            height={"100%"}
+            width={"100%"}
             screenshotFormat="image/jpeg"
             ref={webcamRef}
-          
           />
         )}
       </Box>
-      {/* <input
+      <input
         type="file"
         accept="image/*"
         name="image"
+        multiple
+        style={{ display: "none" }}
+        ref={imageRef}
         onChange={handleImageChange}
-      /> */}
-      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+      />
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-evenly",
+          flexDirection: "column",
+        }}
+      >
         {imgSrc ? (
           <Button
             variant="contained"
@@ -169,7 +222,10 @@ function AttendanceWebcam(chilrens) {
               py: 1,
               background: BLUE_COLOR,
             }}
-            onClick={retake}
+            onClick={() => {
+              console.log("CLICK CAPTURED");
+              retake();
+            }}
           >
             Retake photo
           </Button>
@@ -179,16 +235,32 @@ function AttendanceWebcam(chilrens) {
             sx={{
               fontSize: "2rem",
               px: 3,
-             
+
               background: BLUE_COLOR,
             }}
             className="py-md-1 py-0"
-            onClick={capture}
+            onClick={() => {
+              console.log("CLICK CAPTURED");
+              setIsCaptured(true);
+            }}
           >
             Capture photo
           </Button>
         )}
-        {/* <button onClick={handleSubmit}>SUBMIT</button> */}
+        <Button
+          variant="contained"
+          sx={{
+            mt: 3,
+            fontSize: "2rem",
+            px: 3,
+
+            background: BLUE_COLOR,
+          }}
+          className="py-md-1 py-0"
+          onClick={handleChooseFiles}
+        >
+          Choose Files
+        </Button>
       </Box>
     </Box>
   );

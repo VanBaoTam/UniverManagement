@@ -1,9 +1,5 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { Backdrop, Box, CircularProgress } from "@mui/material";
 import React, { useEffect, useContext, useState, useCallback } from "react";
-import Paper from "@mui/material/Paper";
 import { DataGrid } from "@mui/x-data-grid";
 import { attendanceCourseCol } from "@types";
 import UserContext from "@contexts/user";
@@ -73,32 +69,31 @@ const AttendanceInstructor = () => {
       </Backdrop>
       <Box
         sx={{
-          width: "100%",
+          width: "23rem",
+
           background: "white",
-          mt: 3,
+          pt: 3,
         }}
       >
-        <Container fluid>
-          {courses ? (
-            <Row>
-              <Col>
-                <Paper sx={{ mt: 3, overflowX: "auto" }}>
-                  <div style={{ width: "100%", overflowX: "auto" }}>
-                    <DataGrid
-                      rows={courses}
-                      columns={attendanceCourseCol}
-                      onRowSelectionModelChange={handleSelectionModel}
-                      pageSize={10}
-                      checkboxSelection
-                      autoHeight
-                      disableColumnMenu
-                    />
-                  </div>
-                </Paper>
-              </Col>
-            </Row>
-          ) : null}
-        </Container>
+        {" "}
+        {courses ? (
+          <DataGrid
+            sx={{ mx: 1 }}
+            rows={courses}
+            columns={attendanceCourseCol}
+            onRowSelectionModelChange={handleSelectionModel}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
+              },
+            }}
+            pageSize={10}
+            pageSizeOptions={[10, 100]}
+            checkboxSelection
+          />
+        ) : null}
       </Box>
     </>
   );

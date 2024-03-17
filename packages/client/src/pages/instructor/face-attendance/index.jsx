@@ -41,7 +41,6 @@ const AttendanceFaceInstructor = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [students, setStudents] = useState([]);
-  const [ids, setIds] = useState([]);
   const [course, setCourse] = useState();
   const [loading, setLoading] = useState(true);
   const handleSelectionModel = useCallback(
