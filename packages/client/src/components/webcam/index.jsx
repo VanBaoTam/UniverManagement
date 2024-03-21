@@ -195,7 +195,7 @@ function AttendanceWebcam(children) {
         ) : (
           <div className="my-3 py-md-0 sizewebcam">
             <Webcam
-              className="py-5    px-md-0 py-0 mt-3"
+              className="py-1    px-md-0 py-0 mt-3"
               height={"100%"}
               width={"100%"}
               screenshotFormat="image/jpeg"

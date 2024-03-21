@@ -202,7 +202,15 @@ const FaceAttendanceInstructor = () => {
                 </Button>
               </Col>
               <Col>
-                <Paper sx={{ mt: 3, overflowX: "auto" }}>
+                <Paper
+                  sx={{
+                    width: "22rem",
+                   
+
+                    background: "white",
+                    pt: 3,
+                  }}
+                >
                   <DataGrid
                     rows={students}
                     columns={attendanceFacesCols}
